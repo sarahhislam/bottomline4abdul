@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simulation History — Abdul for Senate</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/abdul-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
+    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .tool-header .brand em { color: #d21214; font-style: normal; }
+    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; }
+    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    .tool-hero p { opacity: 0.8; max-width: 500px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-body { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .input-group { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
+    .input-group label { width: 100%; font-weight: 600; font-size: 0.85rem; color: #121c50; margin-bottom: -0.25rem; }
+    .input-group .hint { width: 100%; font-size: 0.8rem; color: #888; margin-top: -0.25rem; }
+    .input-group input, .input-group select { flex: 1; min-width: 160px; padding: 0.6em 0.75em; border: 2px solid #e0d6cc; border-radius: 8px; font-family: inherit; font-size: 0.9rem; background: #fcf4ed; transition: border-color 0.15s; }
+    .input-group input:focus, .input-group select:focus { outline: none; border-color: #121c50; }
+    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+    .output-card pre { background: #fcf4ed; border-radius: 8px; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; min-height: 60px; color: #1c1d27; margin: 0; }
+    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
+    .story-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #d21214; }
+    .story-card .name { font-weight: 700; color: #121c50; }
+    .story-card .story { color: #555; font-style: italic; margin-top: 0.3rem; }
+    .badge { display: inline-block; padding: 0.2em 0.6em; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .badge-critical { background: #d21214; color: #fff; }
+    .badge-high { background: #e68a00; color: #fff; }
+    .badge-active { background: #2e7d32; color: #fff; }
+    .myth-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #121c50; }
+    .myth-card .q { font-weight: 700; color: #d21214; margin-bottom: 0.4rem; }
+    .myth-card .a { color: #2e7d32; }
+    @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
+  </style>
+</head>
+<body>
+<header class="tool-header">
+  <div class="brand">Abdul <em>for Senate</em></div>
+  <a href="/">← Back to Tools</a>
+</header>
+<section class="tool-hero">
+  <h1>🗃️ Classified Simulation Vault</h1>
+  <p>Unlock campaign lore, staff secrets, system statuses, and hidden policies. Enter the passcode to decrypt.</p>
+</section>
+<div class="tool-body">
+  <div class="input-group" data-module-form>
+    <label>Unlock Code</label>
+    <input name="unlock" placeholder="Enter passcode..." />
+    <div class="hint">Try: ABDU-2026</div>
+    <a class="btn" data-module-run="simulation_history" data-output="#out-sim">Decrypt →</a>
+  </div>
+  <div class="output-card">
+    <h3>🗃️ Classified Archive</h3>
+    <pre id="out-sim">Vault is sealed. Enter the unlock code above.</pre>
+  </div>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

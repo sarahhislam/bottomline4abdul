@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1 style="color: navy;">{{ title.upper() }}</h1>
+
+    <!-- Results Display -->
+    <div style="background: #f4f4f4; padding: 20px; border-left: 5px solid red; margin-bottom: 20px;">
+        <pre style="white-space: pre-wrap; font-family: sans-serif;">{{ content }}</pre>
+    </div>
+
+    <!-- Search Interface -->
+    <div class="search-container" style="padding: 20px; border: 1px solid #ccc;">
+        <h3>Regional Hazard Audit</h3>
+        <form action="/hazard" method="GET">
+            <input type="text" name="val" placeholder="Enter 5-digit ZIP code..." required>
+            <button type="submit">Run Diagnostics</button>
+        </form>
+    </div>
+
+    <br>
+    <a href="/">Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* 1. Base Variables - Easy to tweak colors here */
+:root {
+    --primary-color: #003366; /* Deep Professional Navy */
+    --accent-color: #cc0000;  /* Bold Action Red */
+    --bg-color: #f9f9f9;
+    --text-color: #333333;
+    --white: #ffffff;
+}
+
+/* 2. Reset & Typography */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* 3. Navigation Bar (The "Header" block) */
+nav {
+    background-color: var(--white);
+    padding: 1.5rem 10%;
+    border-bottom: 4px solid var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-left: 20px;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+/* 4. Main Content Area */
+main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
+    background: var(--white);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: var(--primary-color);
+    border-left: 5px solid var(--accent-color);
+    padding-left: 15px;
+}
+
+/* 5. Buttons (Call to Action) */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--accent-color);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background-color: #990000;
+}

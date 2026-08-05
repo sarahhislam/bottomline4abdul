@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abdul for Senate — Policy Tools</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/abdul-design-system.css" />
+  <style>
+    /* ─── Priorities Page Aesthetic ─── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #fcf4ed;
+      color: #030510;
+    }
+
+    .app-header {
+      background: #121c50;
+      color: #fff;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .app-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .app-header .brand {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .app-header .brand span {
+      color: #d21214;
+    }
+    .app-header nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-left: 1.25rem;
+      transition: color 0.15s;
+    }
+    .app-header nav a:hover { color: #fff; }
+
+    /* ─── Hero ─── */
+    .page-hero {
+      background: #121c50;
+      color: #fcf4ed;
+      text-align: center;
+      padding: 4rem 1.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.03)" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"/></svg>') no-repeat bottom;
+      background-size: cover;
+      pointer-events: none;
+    }
+    .page-hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0 0 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .page-hero h1 em { color: #d21214; font-style: normal; }
+    .page-hero p {
+      font-size: 1.15rem;
+      opacity: 0.85;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Module Cards Grid ─── */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 3rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .module-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .module-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .module-card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .module-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #121c50;
+      margin: 0 0 0.5rem;
+    }
+    .module-card p {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.5;
+      flex: 1;
+      margin: 0 0 1.25rem;
+    }
+    .module-card .btn {
+      align-self: flex-start;
+      font-size: 0.85rem;
+      padding: 0.45em 1em 0.6em;
+    }
+
+    /* ─── About section ─── */
+    .about-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      text-align: center;
+    }
+    .about-section h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #121c50;
+    }
+    .about-section p {
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* ─── Footer ─── */
+    .app-footer {
+      background: #121c50;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      .page-hero h1 { font-size: 2rem; }
+      .app-header .brand { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="container">
+    <div class="brand">Abdul <span>for Senate</span></div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="#modules">Tools</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero" style="padding:6rem 1.5rem 4rem;">
+  <h1 style="font-size:3.5rem;">Policy <em>Tools</em> & Research</h1>
+  <p style="font-size:1.3rem;max-width:700px;">Interactive simulations, calculators, and guides — built from real campaign logic modules. Explore the data behind the platform.</p>
+  <a class="btn btn--light" href="#modules" style="font-size:1.1rem !important;padding:0.7em 2em 0.85em !important;">Explore Tools ↓</a>
+</section>
+
+<section id="modules" class="modules-grid" style="padding:4rem 1.5rem;">
+
+  <article class="module-card" style="padding:2rem;">
+    <div class="icon">🏛️</div>
+    <h3>Endorsement Engine</h3>
+    <p>Simulate endorsement scenarios and policy-alignment analysis. Enter a topic and get a tailored response.</p>
+    <a class="btn" href="/pages/endorsement_engine.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">📊</div>
+    <h3>Financial Simulator</h3>
+    <p>Compare Abdul's economic model against corporate benchmarks. See exactly how much his policies save you.</p>
+    <a class="btn" href="/pages/financial_simulator.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">🌙</div>
+    <h3>Halal Economy</h3>
+    <p>Interest-free financing models and a directory of partnered Muslim-owned businesses across Michigan.</p>
+    <a class="btn" href="/pages/halal_economy.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">⚠️</div>
+    <h3>Hazard Lookup</h3>
+    <p>Search Michigan ZIP codes for environmental hazards, impact assessments, and recommended remedies.</p>
+    <a class="btn" href="/pages/hazard_lookup.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">💡</div>
+    <h3>Myth Buster</h3>
+    <p>Q&A-style myth busting. See the truth behind common political misconceptions — backed by data.</p>
+    <a class="btn" href="/pages/myth_buster.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">📜</div>
+    <h3>Policy Deep Dive</h3>
+    <p>Long-form policy analysis covering Medicare for All, Green New Deal, corporate finance reform, and more.</p>
+    <a class="btn" href="/pages/policy_deep_dive.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">👴</div>
+    <h3>Senior Engagement</h3>
+    <p>Policy commitments and real constituent stories. Housing, transit, healthcare, and community for seniors.</p>
+    <a class="btn" href="/pages/senior_engagement.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">🗃️</div>
+    <h3>Simulation History</h3>
+    <p>The classified vault. Unlock campaign lore, staff secrets, system statuses, and hidden policies.</p>
+    <a class="btn" href="/pages/simulation_history.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">🧮</div>
+    <h3>Tax Calculator</h3>
+    <p>Progressive tax analysis with the Abdul Model vs. Corporate Model comparison. See your real savings.</p>
+    <a class="btn" href="/pages/tax_calculator.html">Open</a>
+  </article>
+
+  <article class="module-card">
+    <div class="icon">🌱</div>
+    <h3>Youth Amanah</h3>
+    <p>Track youth mentorship programs, educational funding, and community organizations across Michigan.</p>
+    <a class="btn" href="/pages/youth_amanah.html">Open</a>
+  </article>
+
+</section>
+
+<section id="about" class="about-section" style="padding:4rem 1.5rem 5rem;">
+  <h3 style="font-size:2rem;">Built for Transparency</h3>
+  <p style="font-size:1.15rem;line-height:1.7;max-width:700px;margin:1rem auto;">Every tool on this dashboard runs live campaign logic — not static mockups. Enter your own data, see real calculations, and understand exactly how policy decisions translate into numbers. Data-driven. People-powered.</p>
+</section>
+
+<footer class="app-footer">
+  <div class="container">© Abdul for Senate — Policy tools for an informed Michigan</div>
+</footer>
+
+<script src="/js/main.js"></script>
+
+<!-- KONAMI CODE EASTER EGG -->
+<style>
+  #easter-egg-rocket { position: fixed; bottom: -150px; left: 50%; transform: translateX(-50%); font-size: 80px; opacity: 0; transition: opacity 0.5s ease; z-index: 9999; pointer-events: none; }
+  #easter-egg-rocket.launching { opacity: 1; animation: launchSequence 4s ease-in forwards; }
+  #rocket-trail { position: absolute; top: 100px; left: 50%; transform: translateX(-50%); font-size: 20px; color: gold; font-family: 'Courier New', monospace; font-weight: bold; white-space: nowrap; opacity: 0; }
+  #easter-egg-rocket.launching #rocket-trail { animation: trailFade 3s ease 0.5s forwards; }
+  @keyframes launchSequence { 0% { bottom: -150px; left: 50%; transform: translateX(-50%) rotate(0deg); } 10% { bottom: 50px; left: 50%; transform: translateX(-50%) rotate(-5deg); } 20% { bottom: 60px; left: 50%; transform: translateX(-50%) rotate(5deg); } 30% { bottom: 100px; left: 50%; transform: translateX(-50%) rotate(0deg); } 100% { bottom: 120vh; left: 90%; transform: translateX(-50%) rotate(25deg); } }
+  @keyframes trailFade { 0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+</style>
+<div id="easter-egg-rocket">🚀<div id="rocket-trail">CAMPAIGN BOOST! 2026</div></div>
+<script>
+  (function(){ const k = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a']; let i=0, l=false; document.addEventListener('keydown',function(e){ if(l) return; if(e.key===k[i]){ i++; if(i===k.length){ l=true; document.getElementById('easter-egg-rocket').classList.add('launching'); setTimeout(function(){ document.getElementById('easter-egg-rocket').classList.remove('launching'); l=false; },4000); i=0; } } else { i=0; } }); })();
+</script>
+
+</body>
+</html>

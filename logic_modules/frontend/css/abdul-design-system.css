@@ -1,0 +1,725 @@
+/* ============================================================
+   ABDUL FOR SENATE DESIGN SYSTEM
+   Based on https://abdulforsenate.com/
+   Fonts: halyard-text (body) & kensington (headings) from
+   Adobe Typekit — fallbacks included below.
+   ============================================================ */
+
+/* ─── Custom Properties / Design Tokens ─── */
+:root {
+  /* Font families */
+  --font-body: halyard-text, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-header: kensington, halyard-text, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-display: halyard-text, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-button: halyard-text, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+  /* Text transforms */
+  --text-transform-hed: none;
+  --text-transform-btn: uppercase;
+
+  /* ── Color Palette ── */
+  --color-black:        rgb(3, 5, 16);
+  --color-dark-gray:    #1c1d27;
+  --color-navy:         #121c50;
+  --color-blue:         rgb(64, 107, 191);
+  --color-light-blue:   rgb(214, 243, 255);
+  --color-red:          rgb(210, 18, 20);
+  --color-eggshell:     rgb(252, 244, 237);
+  --color-white:        rgb(255, 255, 255);
+
+  /* Functional aliases */
+  --color-link:         #1d4dc7;
+  --color-link-hover:   #133384;
+  --color-bg-body:      var(--color-blue);
+  --color-bg-content:   var(--color-eggshell);
+  --color-bg-hero:      var(--color-navy);
+  --color-text-hero:    var(--color-eggshell);
+  --color-text-body:    var(--color-black);
+
+  /* ── Typography scale ── */
+  --font-size-h1:       40px;
+  --font-size-h2:       32px;
+  --font-size-h3:       26px;
+  --font-size-h4:       22px;
+  --font-size-h5:       18px;
+  --font-size-h6:       16px;
+  --font-size-body:     20px;
+  --font-size-small:    13px;
+  --font-size-meta:     12px;
+
+  --line-height-h1:     1.1;
+  --line-height-h2:     1.15;
+  --line-height-h3:     1.2;
+  --line-height-h4:     1.3;
+  --line-height-h5:     1.3;
+  --line-height-h6:     1.3;
+  --line-height-body:   1.6;
+
+  --font-weight-heading: 700;
+  --font-weight-subhead: 600;
+
+  /* ── Layout ── */
+  --content-max-width:  768px;
+  --wide-max-width:     1056px;
+  --container-max:      1280px;
+  --block-gap:          24px;
+  --root-padding:       0px;
+
+  /* ── Buttons ── */
+  --btn-font-size:      18px;
+  --btn-font-size-lg:   22px;
+  --btn-font-size-sm:   15px;
+  --btn-font-weight:    700;
+  --btn-radius:         4px;
+  --btn-border-width:   3px;
+  --btn-shadow:         0 0.1875em 0.375em -0.1875em rgba(17, 17, 17, 0.25);
+  --btn-padding:        0.5em 1em 0.7em;
+
+  /* ── Misc ── */
+  --content-shadow:     0 0.675em 0.8em 0.675em rgba(17, 17, 17, 0.275);
+  --transition-fast:    150ms ease-in-out;
+}
+
+/* ─── Base Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body);
+  background-color: var(--color-bg-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--color-link-hover);
+}
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* ─── Content Container ─── */
+.content-container {
+  position: relative;
+  overflow-x: hidden;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-bg-content);
+  box-shadow: var(--content-shadow);
+}
+
+/* ─── Headings ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-header);
+  text-transform: var(--text-transform-hed);
+  margin: 0 0 0.4em 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-h1);
+}
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-h2);
+}
+h3 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-subhead);
+  line-height: var(--line-height-h3);
+}
+h4 {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-subhead);
+  line-height: var(--line-height-h4);
+}
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-subhead);
+  line-height: var(--line-height-h5);
+}
+h6 {
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-subhead);
+  line-height: var(--line-height-h6);
+}
+
+/* ─── Container / Layout ─── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container--narrow {
+  max-width: var(--wide-max-width);
+}
+
+/* ─── Buttons ─── */
+.btn {
+  /* Reset / base */
+  font-family: var(--font-button);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  text-transform: var(--text-transform-btn);
+  letter-spacing: normal;
+  line-height: normal;
+  text-decoration: none;
+  cursor: pointer;
+  outline: 0;
+  border: var(--btn-border-width) solid var(--color-red);
+  border-radius: var(--btn-radius);
+  background-color: var(--color-red);
+  color: var(--color-white);
+  padding: var(--btn-padding);
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: var(--btn-shadow);
+  transition: all var(--transition-fast);
+  /* Small bottom margin to account for shadow */
+  margin-bottom: 6px;
+}
+.btn:hover,
+.btn:focus {
+  text-decoration: none;
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* Button size variants */
+.btn--lg {
+  font-size: var(--btn-font-size-lg);
+}
+.btn--sm {
+  font-size: var(--btn-font-size-sm);
+}
+.btn--no-caps {
+  text-transform: none;
+}
+
+/* Button color variants */
+.btn--dark {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-white);
+}
+.btn--dark:hover,
+.btn--dark:focus {
+  background-color: var(--color-eggshell);
+  border-color: var(--color-navy);
+  color: var(--color-dark-gray);
+}
+
+.btn--light {
+  background-color: var(--color-eggshell);
+  border-color: var(--color-eggshell);
+  color: var(--color-dark-gray);
+}
+.btn--light:hover,
+.btn--light:focus {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+.btn--white {
+  background-color: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-navy);
+}
+.btn--white:hover,
+.btn--white:focus {
+  background-color: var(--color-red);
+  border-color: var(--color-red);
+  color: var(--color-dark-gray);
+}
+
+/* ─── Hero Section ─── */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: var(--color-bg-hero);
+  color: var(--color-text-hero);
+  padding: 28vw 0 0;
+  overflow: visible;
+  text-align: center;
+  min-height: 41.86vw;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: color-dodge;
+  opacity: 0.08;
+  background-image: url('/wp-content/themes/ms-launchpad/assets/img/texture7.png');
+  background-size: 350%;
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 41.86vw;
+  background: linear-gradient(180deg, rgba(17, 17, 17, 0.15) 0%, rgba(17, 17, 17, 0) 15%);
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 24px 1.5rem 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__hed {
+  font-family: var(--font-header);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: var(--text-transform-hed);
+  text-shadow: 0 0 0.08em #111;
+  color: var(--color-text-hero);
+  margin-bottom: 0.25em;
+}
+
+.hero__hed strong,
+.hero__hed b {
+  color: var(--color-red);
+}
+
+.hero__sub {
+  font-family: var(--font-header);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: var(--text-transform-hed);
+  text-shadow: 0 0 0.08em #111;
+  color: var(--color-text-hero);
+  margin-bottom: 0.6em;
+}
+
+/* ─── Utility Classes ─── */
+.screen-reader-text {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
+/* ─── Underline link style ─── */
+.under-link {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+.under-link--dark {
+  color: var(--color-navy);
+}
+.under-link--dark:hover {
+  color: var(--color-blue);
+}
+
+/* ─── Form / Signup (matching site style) ─── */
+.signup__field-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  max-width: 464px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+.signup__field-wrap input {
+  font-family: var(--font-body);
+  font-size: 16px;
+  padding: 0.6em 0.75em;
+  border: none;
+  border-radius: var(--btn-radius);
+  box-shadow: 0 3.3px 12.36px 0 rgba(0, 0, 0, 0.25);
+  background: var(--color-white);
+  color: var(--color-black);
+  width: 100%;
+}
+
+.signup__field-wrap input::placeholder {
+  color: #888;
+}
+
+.signup__btn.btn {
+  margin-top: 0;
+  margin-bottom: 8px;
+  border: 0;
+  padding-top: 11px;
+  padding-bottom: 14px;
+}
+
+.signup__btn.btn:hover,
+.signup__btn.btn:focus {
+  background-color: var(--color-blue);
+  border-color: var(--color-blue);
+}
+
+.signup__disclaimer {
+  text-align: center;
+  margin-bottom: 1.2em;
+  line-height: 1.25;
+  color: var(--color-white);
+  font-size: var(--font-size-meta);
+  max-width: 464px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.signup__disclaimer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* ─── Intro Section (used on homepage) ─── */
+.intro {
+  padding: 3rem 0;
+}
+.intro__inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+}
+.intro__content {
+  flex: 1 1 50%;
+  min-width: 300px;
+}
+.intro__ft {
+  flex: 1 1 40%;
+  min-width: 280px;
+}
+.intro__hed {
+  font-family: var(--font-header);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-h2);
+  color: var(--color-navy);
+  margin-bottom: 0.75rem;
+}
+.intro__dek {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-black);
+  margin-bottom: 1.5rem;
+}
+.intro__more {
+  font-size: 18px;
+}
+
+/* ─── Topbar / Social nav ─── */
+.topbar {
+  background-color: var(--color-navy);
+  padding: 0.4rem 0;
+}
+.topbar__inner {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.smnav__list {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.smnav__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+.smnav__link:hover {
+  opacity: 1;
+  color: var(--color-white);
+}
+.smnav__link svg {
+  fill: currentColor;
+  width: 26px;
+  height: 26px;
+}
+
+/* ─── Header / Main navigation ─── */
+.mainhed {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.mainhed__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+.mainhed__hed {
+  margin: 0;
+}
+.mainhed__link {
+  display: block;
+  text-decoration: none;
+}
+.mainhed__link:hover {
+  opacity: 0.92;
+}
+.mainhed__svg-logo svg {
+  display: block;
+  max-width: 233px;
+  height: auto;
+}
+@media (min-width: 768px) {
+  .mainhed__svg-logo svg {
+    max-width: 311px;
+  }
+}
+@media (min-width: 1024px) {
+  .mainhed__svg-logo svg {
+    max-width: 363px;
+  }
+}
+
+/* Navigation list */
+.nav__list {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.nav__link {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  color: var(--color-white);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: var(--btn-radius);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  text-transform: none;
+}
+.nav__link:hover,
+.nav__link:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+}
+/* Donate button in nav */
+.nav__item.button .nav__link {
+  font-family: var(--font-button);
+  font-size: 15px;
+  font-weight: var(--btn-font-weight);
+  text-transform: var(--text-transform-btn);
+  border: var(--btn-border-width) solid var(--color-red);
+  border-radius: var(--btn-radius);
+  background-color: var(--color-red);
+  color: var(--color-white);
+  padding: 0.4em 0.85em;
+  box-shadow: var(--btn-shadow);
+  transition: all var(--transition-fast);
+}
+.nav__item.button .nav__link:hover,
+.nav__item.button .nav__link:focus {
+  background-color: var(--color-eggshell);
+  border-color: var(--color-eggshell);
+  color: var(--color-navy);
+}
+
+/* ─── Priority circle cards (homepage) ─── */
+.kicker__list--priorities {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  justify-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+@media (min-width: 700px) {
+  .kicker__list--priorities {
+    grid-template-columns: repeat(2, minmax(220px, 320px));
+    justify-content: center;
+  }
+  .kicker__list--priorities .kicker__item:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+.kicker__list--priorities .kicker__link {
+  width: clamp(220px, 28vw, 320px);
+  min-height: clamp(220px, 28vw, 320px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.25rem;
+  line-height: 1.2;
+  text-decoration: none;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  font-family: var(--font-header);
+  font-weight: var(--font-weight-heading);
+  font-size: 22px;
+  transition: all var(--transition-fast);
+}
+.kicker__list--priorities .kicker__link:hover {
+  background-color: var(--color-red);
+  transform: scale(1.03);
+}
+
+/* ─── Language Selector ─── */
+#lang-selector-wrap {
+  position: relative;
+  display: inline-block;
+  margin-left: 12px;
+}
+#lang-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+#lang-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+#lang-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 9999;
+  background: #121c50;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  min-width: 180px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+#lang-dropdown a {
+  display: block;
+  padding: 8px 14px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-family: inherit;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background 0.15s;
+}
+#lang-dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── RTL support ─── */
+html[dir="rtl"] body {
+  text-align: right;
+}
+html[dir="rtl"] .container {
+  direction: rtl;
+}
+html[dir="rtl"] .hero__hed,
+html[dir="rtl"] .hero__sub,
+html[dir="rtl"] .intro__hed {
+  text-align: right;
+}
+
+/* ─── Responsive tweaks ─── */
+@media (max-width: 768px) {
+  .hero__hed {
+    font-size: 28px;
+  }
+  .hero__sub {
+    font-size: 28px;
+  }
+  .intro__inner {
+    flex-direction: column;
+  }
+  .nav__list {
+    justify-content: center;
+  }
+}

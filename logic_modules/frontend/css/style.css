@@ -1,0 +1,45 @@
+/* Minimal styles inspired by abdulforsenate.com: warm neutrals, clean layout */
+:root{
+  --bg:#f6f4f1;
+  --card:#fff;
+  --accent:#c0392b;
+  --muted:#000000;
+  --max-width:1100px;
+}
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:#222; margin:0}
+.container{max-width:var(--max-width); margin:0 auto; padding:24px}
+.site-header{background:linear-gradient(90deg, rgba(192,57,43,0.95), rgba(231,76,60,0.95)); color:#fff}
+.site-header .container{display:flex; align-items:center; justify-content:space-between}
+.brand{margin:12px 0; font-weight:700}
+.nav a{color:rgba(255,255,255,0.95); text-decoration:none; margin-left:16px}
+.hero{padding:56px 24px; text-align:left}
+.hero .lead{color:var(--muted)}
+.cta{display:inline-block; margin-top:12px; background:#fff; color:var(--accent); padding:10px 14px; border-radius:6px; text-decoration:none; font-weight:600}
+.modules-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px; margin-top:16px}
+.card{background:var(--card); padding:18px; border-radius:10px; box-shadow:0 6px 18px rgba(20,20,20,0.06)}
+.card h3{margin-top:0}
+.btn{display:inline-block; margin-top:12px; background:var(--accent); color:white; padding:8px 12px; text-decoration:none; border-radius:8px}
+.about{margin-top:32px; color:var(--muted)}
+.site-footer{padding:18px 0; text-align:center; color:var(--muted)}
+
+/* page content */
+.module-hero{background:linear-gradient(180deg,#fff,#faf7f6); padding:36px; border-radius:10px; margin-bottom:18px}
+.module-actions{display:flex; gap:12px; flex-wrap:wrap}
+.module-actions .btn-secondary{background:#fff; color:var(--accent); border:1px solid #eee}
+
+/* Form input styling inside modules */
+.module-actions input[name]{
+  padding:10px 12px; border-radius:8px; border:1px solid #e6e6e6; background: #fff; min-width:160px; font-size:14px
+}
+.module-actions input::placeholder{color:var(--muted)}
+
+/* Output pre blocks */
+pre{background:linear-gradient(180deg,#fff,#fbf9f8); padding:18px; border-radius:10px; box-shadow:0 6px 18px rgba(20,20,20,0.04); overflow:auto; white-space:pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace}
+
+.module-hero .btn{border-radius:8px}
+
+@media (max-width:600px){
+  .site-header .container{flex-direction:column; align-items:flex-start}
+  .nav{margin-top:8px}
+}
