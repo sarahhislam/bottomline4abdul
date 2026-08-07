@@ -17,12 +17,23 @@ def index():
     return send_from_directory(app.static_folder, 'index.html')
 
 
-from translator import translate_batch, LANGUAGES, is_rtl
+try:
+    from translator import translate_batch, LANGUAGES, is_rtl
+    _TRANSLATOR_AVAILABLE = True
+except ImportError:
+    _TRANSLATOR_AVAILABLE = False
+    LANGUAGES = {}
+    def is_rtl(_code):
+        return False
+    def translate_batch(texts, _target):
+        raise RuntimeError('deep-translator is not installed')
 
 
 @app.route('/api/languages')
 def api_languages():
     """Return the list of supported languages."""
+    if not _TRANSLATOR_AVAILABLE:
+        return jsonify({'error': 'Translation unavailable (install deep-translator)'}), 503
     return jsonify({
         code: {"name": name, "rtl": is_rtl(code)}
         for code, name in LANGUAGES.items()
@@ -37,6 +48,9 @@ def api_translate():
     POST JSON body: { "texts": [...], "target": "ar" }
     Response: { "translations": [...] }
     """
+    if not _TRANSLATOR_AVAILABLE:
+        return jsonify({'error': 'Translation unavailable (install deep-translator)'}), 503
+
     data = request.get_json(silent=True)
     if not data:
         return jsonify({'error': 'Request body must be JSON'}), 400
