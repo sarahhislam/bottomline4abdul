@@ -4,9 +4,9 @@ Interactive policy calculators and research tools for the Abdul for Senate campa
 
 ## Live site (GitHub Pages)
 
-After enabling Pages (Settings → Pages → Source: **GitHub Actions**), the site deploys from `logic_modules/frontend/` on every push to `main`:
+After the maintainer enables Pages (Settings → Pages → Source: **GitHub Actions**), the site deploys from `logic_modules/frontend/` on every push to `main`:
 
-`https://tools4abdul.github.io/bottomline4abdul/`
+`https://sarahhislam.github.io/bottomline4abdul/`
 
 The live site is behind a **beta passcode gate** (client-side; keeps casual visitors out, not real auth). Unlock lasts for the browser tab session.
 
