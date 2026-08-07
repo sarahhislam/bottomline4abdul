@@ -31,7 +31,7 @@ const LANGUAGES = [
   { code: 'ur',    name: 'Urdu',       native: 'اردو',       flag: '🇵🇰' },
   { code: 'es',    name: 'Spanish',    native: 'Español',    flag: '🇪🇸' },
   { code: 'bn',    name: 'Bangla',     native: 'বাংলা',      flag: '🇧🇩' },
-  { code: 'iw',    name: 'Hebrew',     native: 'עברית',      flag: '🇮🇱' },
+  { code: 'iw',    name: 'Hebrew',     native: 'עברית',      flag: '🇵🇸' },
   { code: 'fa',    name: 'Farsi',      native: 'فارسی',      flag: '🇮🇷' },
   { code: 'it',    name: 'Italian',    native: 'Italiano',   flag: '🇮🇹' },
   { code: 'pl',    name: 'Polish',     native: 'Polski',     flag: '🇵🇱' },
@@ -41,7 +41,7 @@ const LANGUAGES = [
 ];
 
 // ─── Default Language ───
-const DEFAULT_LANG = 'en';
+const DEFAULT_LANG = 'enhi';
 
 // ─── Build the language selector UI ───
 function buildLanguageSelector() {
