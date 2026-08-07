@@ -8,6 +8,8 @@ After enabling Pages (Settings → Pages → Source: **GitHub Actions**), the si
 
 `https://tools4abdul.github.io/bottomline4abdul/`
 
+The live site is behind a **beta passcode gate** (client-side; keeps casual visitors out, not real auth). Unlock lasts for the browser tab session.
+
 ## Local development
 
 ```bash
