@@ -312,6 +312,23 @@
   <div class="container">© Abdul for Senate — Policy tools for an informed Michigan</div>
 </footer>
 
+<!--
+  ═══════════════════════════════════════════════════════════
+  HIDDEN ENTRY POINT — SIMULATED HISTORY EASTER EGG
+  ═══════════════════════════════════════════════════════════
+  This subtle button in the bottom-right corner is the hidden
+  entry to the classified simulation vault. It's intentionally
+  low-opacity so only curious users will find it.
+  To change the destination, edit the href below.
+  ═══════════════════════════════════════════════════════════
+-->
+<a class="hidden-entry" href="/pages/simulation_history.html" aria-label="Hidden entry"></a>
+<style>
+  .hidden-entry { position: fixed; bottom: 10px; right: 10px; width: 20px; height: 20px; background: transparent; border: none; cursor: pointer; opacity: 0.15; transition: opacity 0.3s; z-index: 999; text-decoration: none; }
+  .hidden-entry:hover { opacity: 0.6; }
+  .hidden-entry::after { content: '▮'; color: #121c50; font-size: 16px; }
+</style>
+
 <script src="/js/main.js"></script>
 <script src="/js/language-selector.js"></script>
 

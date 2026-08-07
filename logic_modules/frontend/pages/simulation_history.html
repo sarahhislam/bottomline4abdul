@@ -8,36 +8,97 @@
   <link rel="stylesheet" href="/css/abdul-design-system.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
-    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
-    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
-    .tool-header .brand em { color: #d21214; font-style: normal; }
-    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
-    .tool-header a:hover { color: #fff; }
-    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
-    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    /* ─── Retro Classified Aesthetic ─── */
+    body { font-family: 'Courier New', 'IBM Plex Mono', monospace; background: #0a0a0a; margin: 0; color: #33ff33; }
+    .tool-header { background: #000; color: #33ff33; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #33ff33; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; letter-spacing: 2px; }
+    .tool-header .brand em { color: #ff3333; font-style: normal; }
+    .tool-header a { color: #33ff33; text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; text-shadow: 0 0 8px #33ff33; }
+    .tool-hero { background: #000; color: #33ff33; padding: 2.5rem 1.5rem 2rem; text-align: center; border-bottom: 2px solid #33ff33; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: 0.1em; margin: 0 0 0.5rem; text-shadow: 0 0 12px #33ff33; }
     .tool-hero p { opacity: 0.8; max-width: 500px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
     .tool-body { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
-    .input-group { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
-    .input-group label { width: 100%; font-weight: 600; font-size: 0.85rem; color: #121c50; margin-bottom: -0.25rem; }
-    .input-group .hint { width: 100%; font-size: 0.8rem; color: #888; margin-top: -0.25rem; }
-    .input-group input, .input-group select { flex: 1; min-width: 160px; padding: 0.6em 0.75em; border: 2px solid #e0d6cc; border-radius: 8px; font-family: inherit; font-size: 0.9rem; background: #fcf4ed; transition: border-color 0.15s; }
-    .input-group input:focus, .input-group select:focus { outline: none; border-color: #121c50; }
-    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
-    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
-    .output-card pre { background: #fcf4ed; border-radius: 8px; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; min-height: 60px; color: #1c1d27; margin: 0; }
-    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
-    .story-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #d21214; }
-    .story-card .name { font-weight: 700; color: #121c50; }
-    .story-card .story { color: #555; font-style: italic; margin-top: 0.3rem; }
-    .badge { display: inline-block; padding: 0.2em 0.6em; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-    .badge-critical { background: #d21214; color: #fff; }
-    .badge-high { background: #e68a00; color: #fff; }
-    .badge-active { background: #2e7d32; color: #fff; }
-    .myth-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #121c50; }
-    .myth-card .q { font-weight: 700; color: #d21214; margin-bottom: 0.4rem; }
-    .myth-card .a { color: #2e7d32; }
-    @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
+
+    /* ─── Step 1: Warning Gate ─── */
+    .step-screen { display: none; animation: fadeIn 0.5s ease; }
+    .step-screen.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+    @keyframes glitch { 0% { text-shadow: 2px 0 #ff3333, -2px 0 #33ff33; } 25% { text-shadow: -2px 0 #ff3333, 2px 0 #33ff33; } 50% { text-shadow: 2px 0 #33ff33, -2px 0 #ff3333; } 75% { text-shadow: -2px 0 #33ff33, 2px 0 #ff3333; } 100% { text-shadow: 2px 0 #ff3333, -2px 0 #33ff33; } }
+
+    .warning-gate { background: #000; border: 3px solid #ff3333; border-radius: 12px; padding: 2.5rem 2rem; text-align: center; position: relative; overflow: hidden; }
+    .warning-gate::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%; background: linear-gradient(transparent 50%, rgba(51, 255, 51, 0.05) 50%); background-size: 100% 4px; animation: scanline 3s linear infinite; pointer-events: none; }
+    .warning-icon { font-size: 4rem; margin-bottom: 1rem; animation: glitch 2s infinite; }
+    .warning-title { font-size: 1.8rem; font-weight: 800; color: #ff3333; letter-spacing: 0.15em; margin: 0 0 1rem; text-shadow: 0 0 16px #ff3333; }
+    .warning-text { font-size: 1.1rem; color: #33ff33; line-height: 1.6; margin-bottom: 2rem; }
+    .warning-text .blink { animation: blink 1s infinite; }
+    .warning-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-retro { font-family: 'Courier New', monospace; font-size: 1rem; font-weight: 700; padding: 0.9em 2em; border-radius: 8px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 2px; border: 2px solid; }
+    .btn-proceed { background: #ff3333; border-color: #ff3333; color: #000; }
+    .btn-proceed:hover { background: #000; color: #ff3333; box-shadow: 0 0 20px #ff3333; transform: scale(1.05); }
+    .btn-turnback { background: transparent; border-color: #33ff33; color: #33ff33; }
+    .btn-turnback:hover { background: #33ff33; color: #000; box-shadow: 0 0 20px #33ff33; transform: scale(1.05); }
+
+    /* ─── Step 2: Password Terminal ─── */
+    .terminal { background: #000; border: 3px solid #33ff33; border-radius: 12px; overflow: hidden; }
+    .terminal-header { background: #111; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid #33ff33; }
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff3333; }
+    .dot-yellow { background: #ffcc00; }
+    .dot-green { background: #33ff33; }
+    .terminal-title { font-size: 0.8rem; color: #33ff33; margin-left: 0.5rem; letter-spacing: 1px; }
+    .terminal-body { padding: 2rem; min-height: 300px; }
+    .terminal-line { font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.5rem; }
+    .terminal-line .prompt { color: #33ff33; font-weight: 700; }
+    .terminal-line .output { color: #33ff33; }
+    .terminal-line .error { color: #ff3333; }
+    .terminal-line .hint { color: #ffcc00; }
+    .terminal-input-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; }
+    .terminal-input-row .prompt { color: #33ff33; font-weight: 700; font-size: 1.1rem; }
+    .terminal-input { flex: 1; background: transparent; border: none; border-bottom: 2px solid #33ff33; color: #33ff33; font-family: 'Courier New', monospace; font-size: 1.1rem; padding: 0.5rem; outline: none; }
+    .terminal-input:focus { border-bottom-color: #fff; }
+    .terminal-input::placeholder { color: rgba(51, 255, 51, 0.3); }
+    .terminal-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    .btn-submit { background: #33ff33; border-color: #33ff33; color: #000; }
+    .btn-submit:hover { background: #000; color: #33ff33; box-shadow: 0 0 20px #33ff33; transform: scale(1.05); }
+    .btn-back { background: transparent; border-color: #ff3333; color: #ff3333; }
+    .btn-back:hover { background: #ff3333; color: #000; box-shadow: 0 0 20px #ff3333; transform: scale(1.05); }
+    .hint-box { background: rgba(255, 204, 0, 0.1); border: 1px solid #ffcc00; border-radius: 8px; padding: 1rem; margin-top: 1.5rem; font-size: 0.85rem; color: #ffcc00; line-height: 1.6; }
+    .hint-box .hint-label { font-weight: 700; letter-spacing: 2px; margin-bottom: 0.5rem; }
+    .hint-box .hint-riddle { font-style: italic; }
+
+    /* ─── Step 3: Vault Feed ─── */
+    .vault { background: #000; border: 3px solid #33ff33; border-radius: 12px; overflow: hidden; }
+    .vault-header { background: #111; padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #33ff33; }
+    .vault-header .title { font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; color: #33ff33; }
+    .vault-header .status { font-size: 0.75rem; color: #ffcc00; }
+    .vault-body { padding: 1.5rem; max-height: 500px; overflow-y: auto; }
+    .vault-note { background: rgba(51, 255, 51, 0.05); border-left: 3px solid #33ff33; border-radius: 6px; padding: 1rem; margin-bottom: 1rem; animation: fadeIn 0.5s ease; }
+    .vault-note .note-meta { font-size: 0.7rem; color: #ffcc00; margin-bottom: 0.4rem; letter-spacing: 1px; }
+    .vault-note .note-text { font-size: 0.9rem; color: #33ff33; line-height: 1.5; }
+    .vault-note .note-tag { display: inline-block; background: #33ff33; color: #000; font-size: 0.65rem; font-weight: 700; padding: 0.15em 0.5em; border-radius: 4px; margin-top: 0.5rem; letter-spacing: 1px; }
+    .vault-actions { display: flex; gap: 1rem; padding: 1rem 1.5rem; border-top: 2px solid #33ff33; }
+    .btn-random { background: #ffcc00; border-color: #ffcc00; color: #000; }
+    .btn-random:hover { background: #000; color: #ffcc00; box-shadow: 0 0 20px #ffcc00; transform: scale(1.05); }
+    .btn-lock { background: transparent; border-color: #ff3333; color: #ff3333; }
+    .btn-lock:hover { background: #ff3333; color: #000; box-shadow: 0 0 20px #ff3333; transform: scale(1.05); }
+    .vault-footer { padding: 0.75rem 1.5rem; border-top: 1px solid rgba(51, 255, 51, 0.3); font-size: 0.7rem; color: rgba(51, 255, 51, 0.5); text-align: center; letter-spacing: 1px; }
+
+    /* ─── Hidden Entry Point ─── */
+    .hidden-entry { position: fixed; bottom: 10px; right: 10px; width: 20px; height: 20px; background: transparent; border: none; cursor: pointer; opacity: 0.15; transition: opacity 0.3s; z-index: 999; }
+    .hidden-entry:hover { opacity: 0.6; }
+    .hidden-entry::after { content: '▮'; color: #33ff33; font-size: 16px; }
+
+    @media (max-width: 600px) {
+      .tool-hero h1 { font-size: 1.5rem; }
+      .warning-title { font-size: 1.3rem; }
+      .warning-actions { flex-direction: column; }
+      .btn-retro { width: 100%; }
+      .terminal-actions { flex-direction: column; }
+      .vault-actions { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
@@ -47,26 +108,282 @@
     <div class="translate-widget-container">
       <div id="google_translate_element"></div>
     </div>
+    <div id="lang-selector-wrap"></div>
     <a href="/">← Back to Tools</a>
   </div>
 </header>
 <section class="tool-hero">
-  <h1>🗃️ Classified Simulation Vault</h1>
-  <p>Unlock campaign lore, staff secrets, system statuses, and hidden policies. Enter the passcode to decrypt.</p>
+  <h1>🗃️ CLASSIFIED SIMULATION VAULT</h1>
+  <p>// ACCESS RESTRICTED // Authorized personnel only //</p>
 </section>
 <div class="tool-body">
-  <div class="input-group" data-module-form>
-    <label>Unlock Code</label>
-    <input name="unlock" placeholder="Enter passcode..." />
-    <div class="hint">Try: ABDU-2026</div>
-    <a class="btn" data-module-run="simulation_history" data-output="#out-sim">Decrypt →</a>
-  </div>
-  <div class="output-card">
-    <h3>🗃️ Classified Archive</h3>
-    <pre id="out-sim">Vault is sealed. Enter the unlock code above.</pre>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STEP 1: WARNING GATE
+       This is the first screen users see. It asks for confirmation
+       before proceeding to the classified area.
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="step-screen active" id="step-warning">
+    <div class="warning-gate">
+      <div class="warning-icon">⚠️</div>
+      <h2 class="warning-title">WARNING</h2>
+      <p class="warning-text">
+        Are you sure you want to enter our history?<br />
+        <span class="blink">▮ This is classified stuff.</span>
+      </p>
+      <div class="warning-actions">
+        <button class="btn-retro btn-proceed" id="btn-proceed">Proceed →</button>
+        <button class="btn-retro btn-turnback" id="btn-turnback">← Turn Back</button>
+      </div>
+    </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       STEP 2: PASSWORD TERMINAL
+       Requires the secret password to unlock the vault.
+       The hint/riddle is displayed below the input.
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="step-screen" id="step-terminal">
+    <div class="terminal">
+      <div class="terminal-header">
+        <span class="terminal-dot dot-red"></span>
+        <span class="terminal-dot dot-yellow"></span>
+        <span class="terminal-dot dot-green"></span>
+        <span class="terminal-title">SECURE TERMINAL v2.6</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="prompt">$</span> <span class="output">Initializing secure connection...</span></div>
+        <div class="terminal-line"><span class="prompt">$</span> <span class="output">Encryption layer: ACTIVE</span></div>
+        <div class="terminal-line"><span class="prompt">$</span> <span class="output">Access level: CLASSIFIED</span></div>
+        <div class="terminal-line"><span class="prompt">$</span> <span class="output">Please enter the access password:</span></div>
+        <div class="terminal-line" id="terminal-error" style="display:none;"><span class="prompt">$</span> <span class="error">✗ ACCESS DENIED — Invalid password. Try again.</span></div>
+        <div class="terminal-input-row">
+          <span class="prompt">$</span>
+          <input type="password" class="terminal-input" id="password-input" placeholder="Enter password..." autocomplete="off" />
+        </div>
+        <div class="terminal-actions">
+          <button class="btn-retro btn-submit" id="btn-submit">Unlock →</button>
+          <button class="btn-retro btn-back" id="btn-back">← Back</button>
+        </div>
+        <!--
+          ═══════════════════════════════════════════════════════════
+          HINT / RIDDLE
+          This riddle hints at the password: "abdulbenches350"
+          - "Abdul" → the candidate's first name
+          - "benches" → the gym / workout reference
+          - "350" → the number
+          To change the hint, edit the text below.
+          To change the password, edit the PASSWORD constant in the script.
+          ═══════════════════════════════════════════════════════════
+        -->
+        <div class="hint-box">
+          <div class="hint-label">🔐 CLASSIFIED HINT</div>
+          <div class="hint-riddle">
+            "The candidate's first name, followed by what he does at the gym,
+            followed by the number of reps he does. All lowercase, no spaces."
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STEP 3: VAULT OF RANDOMNESS
+       Once unlocked, shows a retro feed of funny insider notes.
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="step-screen" id="step-vault">
+    <div class="vault">
+      <div class="vault-header">
+        <span class="title">🔓 VAULT UNLOCKED</span>
+        <span class="status">// DECRYPTED //</span>
+      </div>
+      <div class="vault-body" id="vault-feed"></div>
+      <div class="vault-actions">
+        <button class="btn-retro btn-random" id="btn-random">🎲 Random Note</button>
+        <button class="btn-retro btn-lock" id="btn-lock">🔒 Lock Vault</button>
+      </div>
+      <div class="vault-footer">// ABDUL FOR SENATE — INTERNAL ARCHIVE // DO NOT DISTRIBUTE //</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Hidden entry point (subtle, bottom-right corner) -->
+<button class="hidden-entry" id="hidden-entry" aria-label="Hidden entry"></button>
+
+<script>
+/**
+ * ═══════════════════════════════════════════════════════════
+ * SIMULATED HISTORY — EASTER EGG CONFIGURATION
+ * ═══════════════════════════════════════════════════════════
+ * 
+ * HOW TO CHANGE THE PASSWORD:
+ *   Edit the PASSWORD constant below.
+ *   The current password is: "abdulbenches350"
+ * 
+ * HOW TO CHANGE THE HINT / RIDDLE:
+ *   Edit the HINT_TEXT constant below.
+ *   This is displayed on the password terminal screen.
+ * 
+ * HOW TO ADD A NEW NOTE:
+ *   Add a new object to the VAULT_NOTES array below.
+ *   Each note has:
+ *     - text:  The funny/insider commentary
+ *     - tag:   A category label (e.g. "LORE", "SECRET", "POLICY")
+ *     - meta:  A timestamp or source label
+ * 
+ * HOW TO REMOVE A NOTE:
+ *   Delete the entire object from the VAULT_NOTES array.
+ * 
+ * HOW TO ADD MORE NOTES:
+ *   Just add more objects to the array. The random feed
+ *   will automatically pick from all available notes.
+ * ═══════════════════════════════════════════════════════════
+ */
+
+// ─── SECRET PASSWORD ───
+// This is the exact password required to unlock the vault.
+// Change this to update the access code.
+const PASSWORD = 'abdulbenches350';
+
+// ─── HINT / RIDDLE TEXT ───
+// This is the clever hint shown on the password terminal.
+// Edit this to change the riddle displayed to users.
+const HINT_TEXT = "The candidate's first name, followed by what he does at the gym, followed by the number of reps he does. All lowercase, no spaces.";
+
+// ═══════════════════════════════════════════════════════════════════
+// 📝 HOW TO ADD A NEW NOTE — SUPER EASY GUIDE
+// ═══════════════════════════════════════════════════════════════════
+//
+// STEP 1: Find the last note in the array below (it ends with a `},`).
+// STEP 2: Copy this EXACT template and paste it right after that `},`:
+//
+//   { text: "YOUR FUNNY NOTE GOES HERE", tag: "LORE", meta: "ARCHIVE-021" },
+//
+// STEP 3: Replace the three parts:
+//   - "YOUR FUNNY NOTE GOES HERE"  →  Type your funny note text
+//   - "LORE"                        →  Pick a tag from the list below
+//   - "ARCHIVE-021"                 →  Use the next number (022, 023, etc.)
+//
+// ─── AVAILABLE TAGS (pick one) ───
+//   "LORE"    →  Campaign history / fun facts
+//   "SECRET"  →  Insider staff secrets
+//   "POLICY"  →  Funny policy proposals
+//   "SYSTEM"  →  Tech / server / system jokes
+//
+// ─── EXAMPLE ───
+//   { text: "The campaign van has a secret snack drawer. Location: under the seat.", tag: "SECRET", meta: "ARCHIVE-021" },
+//
+// ─── TO REMOVE A NOTE ───
+//   Just delete the entire line (from `{` to `},`).
+//
+// ─── TO EDIT A NOTE ───
+//   Just change the text, tag, or meta on the existing line.
+//
+// ═══════════════════════════════════════════════════════════════════
+// VAULT NOTES — Edit below this line
+// ═══════════════════════════════════════════════════════════════════
+const VAULT_NOTES = [
+  { text: "Abdul once debated a squirrel on economic policy for 20 minutes. The squirrel won on tax reform.", tag: "LORE", meta: "ARCHIVE-001" },
+  { text: "The campaign logo was inspired by a 1970s Detroit transit map. The designer still regrets not adding a train.", tag: "LORE", meta: "ARCHIVE-002" },
+  { text: "Policy team discovered that 'Medicare for All' also covers the office goldfish. Goldfish now has full dental.", tag: "POLICY", meta: "ARCHIVE-003" },
+  { text: "The interns are technically running the world. The campaign manager is just their figurehead.", tag: "SECRET", meta: "ARCHIVE-004" },
+  { text: "Chief Strategist writes policy drafts as rap lyrics first, then translates. 'Healthcare flow' is a real document.", tag: "SECRET", meta: "ARCHIVE-005" },
+  { text: "The policy database runs on a repurposed PlayStation 3. It has never crashed. Sony should be worried.", tag: "SYSTEM", meta: "ARCHIVE-006" },
+  { text: "Proposal to replace congressional ties with bow ties. Mandatory. The Senate would look fabulous.", tag: "POLICY", meta: "ARCHIVE-007" },
+  { text: "Campaign Manager is secretly a competitive bird-watcher. Has a spreadsheet ranking every Michigan bird by charisma.", tag: "SECRET", meta: "ARCHIVE-008" },
+  { text: "The 'Youth Amanah' module code is hidden behind a poem about the riverfront. Nobody has found it yet.", tag: "LORE", meta: "ARCHIVE-009" },
+  { text: "Neural network has started writing its own campaign speeches. They're surprisingly good at pizza policy.", tag: "SYSTEM", meta: "ARCHIVE-010" },
+  { text: "Outdated: Coffee machine has been promoted to Junior Policy Advisor. It now has veto power over morning meetings.", tag: "SECRET", meta: "ARCHIVE-011" },
+  { text: "Mandatory 15-minute nap time for all district officials. Productivity up 400%. Nobody questions it.", tag: "POLICY", meta: "ARCHIVE-012" },
+  { text: "The simulated 'Halal Economy' is currently outperforming reality. The simulation is confused about this.", tag: "SYSTEM", meta: "ARCHIVE-013" },
+  { text: "Design lead has a secret stash of emergency snacks in the server room. Location: behind the 'Do Not Touch' sign.", tag: "SECRET", meta: "ARCHIVE-014" },
+  { text: "Proposal to establish a formal alliance with the local neighborhood cats. They've already agreed to patrol the alleys.", tag: "POLICY", meta: "ARCHIVE-015" },
+  { text: "A time capsule is buried under the campaign headquarters parking lot. Contains a signed copy of the healthcare plan.", tag: "LORE", meta: "ARCHIVE-016" },
+  { text: "Quantum encryption layer: ACTIVE. NSA decryption estimate: 42 years. The answer to everything.", tag: "SYSTEM", meta: "ARCHIVE-017" },
+  { text: "Every policy document has at least one typo that acts as a watermarked 'trap'. The typo is always 'teh'.", tag: "SECRET", meta: "ARCHIVE-018" },
+  { text: "Proposing free coffee for every citizen within 5 miles of a library. Libraries are now the most popular place in Michigan.", tag: "POLICY", meta: "ARCHIVE-019" },
+  { text: "Backup battery: powered by a hamster wheel. The hamster is unionizing and demanding better treats.", tag: "SYSTEM", meta: "ARCHIVE-020" }
+];
+
+// ─── State Management ───
+let currentStep = 'warning';
+
+// ─── Step Navigation ───
+function showStep(step) {
+  document.querySelectorAll('.step-screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('step-' + step).classList.add('active');
+  currentStep = step;
+  if (step === 'terminal') {
+    document.getElementById('password-input').value = '';
+    document.getElementById('terminal-error').style.display = 'none';
+    setTimeout(function() { document.getElementById('password-input').focus(); }, 300);
+  }
+}
+
+// ─── Step 1: Warning Gate ───
+document.getElementById('btn-proceed').addEventListener('click', function() {
+  showStep('terminal');
+});
+document.getElementById('btn-turnback').addEventListener('click', function() {
+  window.location.href = '/';
+});
+
+// ─── Step 2: Password Terminal ───
+document.getElementById('btn-submit').addEventListener('click', function() {
+  checkPassword();
+});
+document.getElementById('btn-back').addEventListener('click', function() {
+  showStep('warning');
+});
+document.getElementById('password-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+
+function checkPassword() {
+  const input = document.getElementById('password-input').value.trim().toLowerCase();
+  if (input === PASSWORD) {
+    showStep('vault');
+    showRandomNote();
+  } else {
+    document.getElementById('terminal-error').style.display = 'block';
+    document.getElementById('password-input').value = '';
+    document.getElementById('password-input').focus();
+  }
+}
+
+// ─── Step 3: Vault Feed ───
+function showRandomNote() {
+  const feed = document.getElementById('vault-feed');
+  const note = VAULT_NOTES[Math.floor(Math.random() * VAULT_NOTES.length)];
+  const timestamp = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  const html =
+    '<div class="vault-note">' +
+    '<div class="note-meta">[' + note.meta + '] // ' + timestamp + '</div>' +
+    '<div class="note-text">' + note.text + '</div>' +
+    '<span class="note-tag">' + note.tag + '</span>' +
+    '</div>';
+  feed.innerHTML = html + feed.innerHTML;
+}
+
+document.getElementById('btn-random').addEventListener('click', function() {
+  showRandomNote();
+});
+document.getElementById('btn-lock').addEventListener('click', function() {
+  showStep('warning');
+});
+
+// ─── Hidden Entry Point ───
+// This subtle button in the bottom-right corner is the
+// hidden entry to the classified vault. It's intentionally
+// low-opacity so only curious users will find it.
+document.getElementById('hidden-entry').addEventListener('click', function() {
+  showStep('warning');
+});
+</script>
+
 <script src="/js/main.js"></script>
+<script src="/js/language-selector.js"></script>
 
 <!-- Google Translate Element Scripts -->
 <script type="text/javascript">
