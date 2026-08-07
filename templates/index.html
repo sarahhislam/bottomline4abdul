@@ -2,9 +2,15 @@
 <html>
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Abdul For Senate</title>
 </head>
 <body class="bg-gray-100 p-10">
+    <!-- Google Translate Widget -->
+    <div class="translate-widget-container">
+        <div id="google_translate_element"></div>
+    </div>
+
     <h1 class="text-4xl font-bold text-blue-900 mb-8">Campaign Dashboard</h1>
     <div class="grid grid-cols-2 gap-4">
         <a href="/financial-simulator" class="bg-blue-600 text-white p-6 rounded-lg text-center hover:bg-blue-700">Financial Simulator</a>
@@ -12,5 +18,35 @@
         <a href="/youth-amanah" class="bg-blue-600 text-white p-6 rounded-lg text-center hover:bg-blue-700">Youth Amanah</a>
         <a href="/tax-calculator" class="bg-blue-600 text-white p-6 rounded-lg text-center hover:bg-blue-700">Tax Calculator</a>
     </div>
+
+    <!-- Google Translate Element Scripts -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Ensure dynamically generated content is translated automatically
+        (function() {
+            const observer = new MutationObserver(function(mutations) {
+                if (typeof google !== 'undefined' && google.translate) {
+                    // Trigger re-translation of newly added nodes
+                    mutations.forEach(function(mutation) {
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeType === 1) { // Element node
+                                google.translate.TranslateElement.reload();
+                            }
+                        });
+                    });
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        })();
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

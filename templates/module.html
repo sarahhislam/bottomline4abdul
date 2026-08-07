@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ title.upper() }}</title>
+</head>
 <body>
+    <!-- Google Translate Widget -->
+    <div class="translate-widget-container">
+        <div id="google_translate_element"></div>
+    </div>
+
     <h1 style="color: navy;">{{ title.upper() }}</h1>
 
     <!-- Results Display -->
@@ -19,5 +28,35 @@
 
     <br>
     <a href="/">Back to Dashboard</a>
+
+    <!-- Google Translate Element Scripts -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Ensure dynamically generated content is translated automatically
+        (function() {
+            const observer = new MutationObserver(function(mutations) {
+                if (typeof google !== 'undefined' && google.translate) {
+                    // Trigger re-translation of newly added nodes
+                    mutations.forEach(function(mutation) {
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeType === 1) { // Element node
+                                google.translate.TranslateElement.reload();
+                            }
+                        });
+                    });
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        })();
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

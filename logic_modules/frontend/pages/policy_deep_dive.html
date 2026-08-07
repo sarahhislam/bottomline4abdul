@@ -43,7 +43,12 @@
 <body>
 <header class="tool-header">
   <div class="brand">Abdul <em>for Senate</em></div>
-  <a href="/">← Back to Tools</a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="translate-widget-container">
+      <div id="google_translate_element"></div>
+    </div>
+    <a href="/">← Back to Tools</a>
+  </div>
 </header>
 <section class="tool-hero">
   <h1>📜 Policy Deep Dive</h1>
@@ -57,5 +62,33 @@
   <a class="btn" data-module-run="policy_deep_dive" data-output="#out-policy">Load Policies →</a>
 
 <script src="/js/main.js"></script>
+
+<!-- Google Translate Element Scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  (function() {
+    const observer = new MutationObserver(function(mutations) {
+      if (typeof google !== 'undefined' && google.translate) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              google.translate.TranslateElement.reload();
+            }
+          });
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
