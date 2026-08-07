@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Permanent Mail Ballot List & Tracking — Abdul for Senate</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/abdul-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
+    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .tool-header .brand em { color: #d21214; font-style: normal; }
+    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; }
+    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    .tool-hero p { opacity: 0.8; max-width: 500px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-body { max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
+    .step-list { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+    .step-list li { counter-increment: step; display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #f0e8e0; }
+    .step-list li:last-child { border-bottom: none; }
+    .step-number { flex-shrink: 0; width: 32px; height: 32px; background: #121c50; color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; margin-top: 0.1rem; }
+    .step-content { flex: 1; }
+    .step-content .title { font-weight: 700; color: #121c50; font-size: 0.95rem; }
+    .step-content .desc { font-size: 0.85rem; color: #555; line-height: 1.5; margin-top: 0.25rem; }
+    .info-box { background: #fcf4ed; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.9rem; line-height: 1.6; color: #555; }
+    .info-box strong { color: #121c50; }
+    .info-box-green { background: #e8f5e9; border-left: 4px solid #2e7d32; }
+    .info-box-blue { background: #e3f2fd; border-left: 4px solid #1565c0; }
+    .info-box-amber { background: #fff8e1; border-left: 4px solid #e68a00; }
+    .tracking-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+    .tracking-step { background: #fcf4ed; border-radius: 8px; padding: 0.85rem; text-align: center; }
+    .tracking-step .icon { font-size: 1.5rem; }
+    .tracking-step .label { font-size: 0.75rem; font-weight: 600; color: #121c50; margin-top: 0.35rem; }
+    .tracking-step .status { font-size: 0.7rem; color: #888; margin-top: 0.2rem; }
+    .official-link { display: inline-block; margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; }
+    .faq-item { border-bottom: 1px solid #f0e8e0; padding: 1rem 0; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-item .q { font-weight: 700; color: #121c50; font-size: 0.9rem; }
+    .faq-item .a { font-size: 0.85rem; color: #555; line-height: 1.5; margin-top: 0.35rem; }
+    @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
+  </style>
+</head>
+<body>
+<header class="tool-header">
+  <div class="brand">Abdul <em>for Senate</em></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="translate-widget-container">
+      <div id="google_translate_element"></div>
+    </div>
+    <div id="lang-selector-wrap"></div>
+    <a href="/">← Back to Tools</a>
+  </div>
+</header>
+<section class="tool-hero">
+  <h1>📬 Michigan Permanent Mail Ballot List & Tracking</h1>
+  <p>Michigan's no-reason absentee voting explained. Join the permanent mail ballot list and track your ballot every step of the way.</p>
+</section>
+<div class="tool-body">
+  <div class="output-card">
+    <h3>✅ No-Reason Absentee Voting in Michigan</h3>
+    <div class="info-box info-box-green">
+      <strong>Good news:</strong> Michigan voters approved Proposal 2 in 2022, which established <strong>no-reason absentee voting</strong> as a constitutional right. Any registered Michigan voter can request an absentee ballot — <strong>no excuse or reason required</strong>.
+    </div>
+    <div class="info-box">
+      <strong>How it works:</strong> Once you're on the permanent mail ballot list, your clerk will automatically send you an absentee ballot application before every election. You don't need to re-apply each time.
+    </div>
+  </div>
+
+  <div class="output-card">
+    <h3>📋 How to Join the Permanent Mail Ballot List</h3>
+    <ol class="step-list">
+      <li>
+        <span class="step-number">1</span>
+        <div class="step-content">
+          <div class="title">Check Your Voter Registration</div>
+          <div class="desc">Visit the Michigan Voter Information Center (mvic.sos.state.mi.us) to confirm you're registered to vote and your address is current.</div>
+        </div>
+      </li>
+      <li>
+        <span class="step-number">2</span>
+        <div class="step-content">
+          <div class="title">Request to Join the Permanent List</div>
+          <div class="desc">You can request to join the permanent mail ballot list online through the Michigan Voter Information Center, or by contacting your local city or township clerk's office.</div>
+        </div>
+      </li>
+      <li>
+        <span class="step-number">3</span>
+        <div class="step-content">
+          <div class="title">Receive Your Ballot Application</div>
+          <div class="desc">Before each election, your clerk will mail you an absentee ballot application automatically. Complete and return it to receive your ballot.</div>
+        </div>
+      </li>
+      <li>
+        <span class="step-number">4</span>
+        <div class="step-content">
+          <div class="title">Vote and Return Your Ballot</div>
+          <div class="desc">Mark your ballot, sign the return envelope, and return it by mail, in person to your clerk's office, or via a secure drop box by 8 PM on Election Day.</div>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="output-card">
+    <h3>📦 Track Your Ballot</h3>
+    <div class="info-box info-box-blue">
+      <strong>Track every step:</strong> Michigan's official ballot tracking portal lets you see exactly where your absentee ballot is — from the moment it's mailed to you until it's received and counted.
+    </div>
+    <div class="tracking-steps">
+      <div class="tracking-step">
+        <div class="icon">📨</div>
+        <div class="label">Ballot Mailed</div>
+        <div class="status">Your ballot is on its way</div>
+      </div>
+      <div class="tracking-step">
+        <div class="icon">✍️</div>
+        <div class="label">Ballot Received</div>
+        <div class="status">Your clerk received your ballot</div>
+      </div>
+      <div class="tracking-step">
+        <div class="icon">✅</div>
+        <div class="label">Ballot Accepted</div>
+        <div class="status">Your ballot was verified</div>
+      </div>
+      <div class="tracking-step">
+        <div class="icon">🗳️</div>
+        <div class="label">Ballot Counted</div>
+        <div class="status">Your vote was counted</div>
+      </div>
+    </div>
+    <!--
+      ═══════════════════════════════════════════════════════════
+      OFFICIAL MICHIGAN BALLOT TRACKING PORTAL
+      ═══════════════════════════════════════════════════════════
+      This is the official Michigan Voter Information Center.
+      To update this link, replace the href URL below.
+      The current URL is: https://mvic.sos.state.mi.us/
+      ═══════════════════════════════════════════════════════════
+    -->
+    <p><a class="official-link" href="https://mvic.sos.state.mi.us/" target="_blank" rel="noopener">Track Your Ballot on the Official Michigan Portal →</a></p>
+  </div>
+
+  <div class="output-card">
+    <h3>❓ Frequently Asked Questions</h3>
+    <div class="faq-item">
+      <div class="q">Do I need a reason to vote absentee in Michigan?</div>
+      <div class="a">No. Michigan voters approved no-reason absentee voting as a constitutional right. Any registered voter can request an absentee ballot for any reason — or no reason at all.</div>
+    </div>
+    <div class="faq-item">
+      <div class="q">What is the permanent mail ballot list?</div>
+      <div class="a">The permanent mail ballot list ensures your clerk automatically sends you an absentee ballot application before every election. You don't need to re-apply each time.</div>
+    </div>
+    <div class="faq-item">
+      <div class="q">When will I receive my ballot?</div>
+      <div class="a">Absentee ballots are typically mailed 40 days before Election Day. If you haven't received yours within two weeks of the election, contact your local clerk.</div>
+    </div>
+    <div class="faq-item">
+      <div class="q">Can I track my ballot?</div>
+      <div class="a">Yes. Michigan's official ballot tracking portal at mvic.sos.state.mi.us lets you see the status of your absentee ballot in real time.</div>
+    </div>
+    <div class="faq-item">
+      <div class="q">What if I want to vote in person instead?</div>
+      <div class="a">You can still vote in person on Election Day even if you requested an absentee ballot. Simply bring your ballot (if you received it) to the polls to be spoiled, or vote a provisional ballot if needed.</div>
+    </div>
+  </div>
+
+<script src="/js/main.js"></script>
+<script src="/js/language-selector.js"></script>
+
+<!-- Google Translate Element Scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  (function() {
+    const observer = new MutationObserver(function(mutations) {
+      if (typeof google !== 'undefined' && google.translate) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              google.translate.TranslateElement.reload();
+            }
+          });
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sample Ballot Preview — Abdul for Senate</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/abdul-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
+    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .tool-header .brand em { color: #d21214; font-style: normal; }
+    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; }
+    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    .tool-hero p { opacity: 0.8; max-width: 500px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-body { max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
+    .ballot-section { border: 2px solid #e0d6cc; border-radius: 12px; margin-bottom: 1.25rem; overflow: hidden; }
+    .ballot-section-header { background: #121c50; color: #fff; padding: 0.75rem 1.25rem; font-weight: 700; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+    .ballot-section-header .badge { background: rgba(255,255,255,0.2); padding: 0.2em 0.6em; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+    .ballot-section-header .toggle-icon { font-size: 0.8rem; transition: transform 0.2s; }
+    .ballot-section-header.open .toggle-icon { transform: rotate(180deg); }
+    .ballot-section-body { padding: 1rem 1.25rem; }
+    .ballot-race { margin-bottom: 1rem; }
+    .ballot-race:last-child { margin-bottom: 0; }
+    .ballot-race-title { font-weight: 700; color: #121c50; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .ballot-race-candidates { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .candidate-chip { display: inline-flex; align-items: center; gap: 0.4rem; background: #fcf4ed; border: 2px solid #e0d6cc; border-radius: 20px; padding: 0.35em 0.85em; font-size: 0.8rem; font-weight: 600; color: #333; }
+    .candidate-chip .party { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 0.15em 0.5em; border-radius: 4px; }
+    .party-dem { background: #2e7d32; color: #fff; }
+    .party-rep { background: #d21214; color: #fff; }
+    .party-ind { background: #e68a00; color: #fff; }
+    .ballot-race-placeholder { background: #fcf4ed; border: 2px dashed #d0c4b8; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.85rem; color: #888; display: flex; align-items: center; gap: 0.5rem; }
+    .ballot-race-placeholder .icon { font-size: 1.1rem; }
+    .ballot-proposal { background: #fcf4ed; border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 0.75rem; }
+    .ballot-proposal:last-child { margin-bottom: 0; }
+    .ballot-proposal .prop-title { font-weight: 700; color: #121c50; font-size: 0.9rem; }
+    .ballot-proposal .prop-desc { font-size: 0.85rem; color: #555; line-height: 1.5; margin-top: 0.25rem; }
+    .ballot-proposal .prop-status { display: inline-block; padding: 0.15em 0.5em; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-top: 0.4rem; }
+    .prop-status-pending { background: #fff8e1; color: #e68a00; }
+    .prop-status-info { background: #e3f2fd; color: #1565c0; }
+    .ballot-note { font-size: 0.8rem; color: #888; line-height: 1.5; margin-top: 1rem; padding: 0.75rem; background: #fcf4ed; border-radius: 8px; }
+    .official-link { display: inline-block; margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; }
+    @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
+  </style>
+</head>
+<body>
+<header class="tool-header">
+  <div class="brand">Abdul <em>for Senate</em></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="translate-widget-container">
+      <div id="google_translate_element"></div>
+    </div>
+    <div id="lang-selector-wrap"></div>
+    <a href="/">← Back to Tools</a>
+  </div>
+</header>
+<section class="tool-hero">
+  <h1>🗳️ Interactive Sample Ballot Preview</h1>
+  <p>Preview the races and proposals you'll see on your Michigan ballot. Click sections to expand. Placeholders shown for local races.</p>
+</section>
+<div class="tool-body">
+  <div class="output-card">
+    <h3>📋 2026 Michigan General Election — Sample Ballot Preview</h3>
+    <div id="ballot-container"></div>
+
+    <div class="ballot-note">
+      ⚠️ <strong>Important:</strong> This is a <strong>preview</strong> showing the types of races and proposals you may see on your ballot. Actual candidates, proposals, and ballot order vary by county and district. Always check your official sample ballot before voting.
+    </div>
+    <!--
+      ═══════════════════════════════════════════════════════════
+      OFFICIAL MICHIGAN VOTER INFORMATION CENTER
+      ═══════════════════════════════════════════════════════════
+      This is the official Michigan Voter Information Center.
+      To update this link, replace the href URL below.
+      The current URL is: https://mvic.sos.state.mi.us/
+      ═══════════════════════════════════════════════════════════
+    -->
+    <p><a class="official-link" href="https://mvic.sos.state.mi.us/" target="_blank" rel="noopener">View Your Official Sample Ballot →</a></p>
+  </div>
+
+<script>
+/**
+ * ============================================================
+ * SAMPLE BALLOT DATA STRUCTURE
+ * ============================================================
+ * 
+ * HOW TO ADD A NEW RACE:
+ *   Add a new object to the BALLOT_SECTIONS array below.
+ *   Each race object has:
+ *     - title:       The race name shown on the ballot
+ *     - candidates:  Array of candidate objects with name + party
+ *     - placeholder: (optional) Text shown if no candidates are listed yet
+ * 
+ * HOW TO ADD A NEW CANDIDATE:
+ *   Add a new object to the `candidates` array of a race:
+ *     { name: 'Candidate Name', party: 'dem' | 'rep' | 'ind' }
+ * 
+ * HOW TO REMOVE A RACE:
+ *   Delete the entire race object from the array.
+ * 
+ * HOW TO ADD A NEW BALLOT PROPOSAL:
+ *   Add a new object to the `proposals` array of a section:
+ *     { title: 'Proposal 26-4', desc: 'Description text', status: 'pending' }
+ * 
+ * HOW TO CHANGE SECTION ORDER:
+ *   Reorder the objects in the BALLOT_SECTIONS array.
+ * ============================================================
+ */
+
+// ─── BALLOT DATA ───
+// Edit this array to add, remove, or modify races and proposals.
+const BALLOT_SECTIONS = [
+  {
+    title: '🏛️ Federal Races',
+    badge: 'Statewide',
+    races: [
+      {
+        title: 'U.S. Senate',
+        candidates: [
+          { name: 'Abdul El-Sayed', party: 'dem' },
+          { name: 'Mike Rogers', party: 'rep' }
+        ]
+      },
+      {
+        title: 'U.S. House of Representatives — District [Your District]',
+        candidates: [],
+        placeholder: 'Candidate names will appear on your official ballot based on your district.'
+      }
+    ],
+    proposals: []
+  },
+  {
+    title: '🏛️ Statewide Races',
+    badge: 'Statewide',
+    races: [
+      {
+        title: 'Governor',
+        candidates: [
+          { name: 'Jocelyn Benson', party: 'dem' }
+        ]
+      },
+      {
+        title: 'Attorney General',
+        candidates: [],
+        placeholder: 'Candidate names will appear on your official ballot.'
+      },
+      {
+        title: 'Secretary of State',
+        candidates: [],
+        placeholder: 'Candidate names will appear on your official ballot.'
+      }
+    ],
+    proposals: []
+  },
+  {
+    title: '⚖️ State & Judicial Races',
+    badge: 'Local',
+    races: [
+      {
+        title: 'Michigan Supreme Court',
+        candidates: [],
+        placeholder: 'Judicial candidates will appear on your official ballot. Placeholder shown for preview.'
+      },
+      {
+        title: 'Michigan Court of Appeals',
+        candidates: [],
+        placeholder: 'Judicial candidates will appear on your official ballot. Placeholder shown for preview.'
+      },
+      {
+        title: 'Circuit Court — [Your County]',
+        candidates: [],
+        placeholder: 'Local judicial candidates will appear on your official ballot. Placeholder shown for preview.'
+      },
+      {
+        title: 'District Court — [Your District]',
+        candidates: [],
+        placeholder: 'Local judicial candidates will appear on your official ballot. Placeholder shown for preview.'
+      }
+    ],
+    proposals: []
+  },
+  {
+    title: '📜 State Proposals',
+    badge: 'Ballot Proposals',
+    races: [],
+    proposals: [
+      {
+        title: 'Proposal 26-1',
+        desc: 'A proposal regarding [placeholder — description will appear on your official ballot].',
+        status: 'pending'
+      },
+      {
+        title: 'Proposal 26-2',
+        desc: 'A proposal regarding [placeholder — description will appear on your official ballot].',
+        status: 'pending'
+      },
+      {
+        title: 'Proposal 26-3',
+        desc: 'A proposal regarding [placeholder — description will appear on your official ballot].',
+        status: 'pending'
+      }
+    ]
+  },
+  {
+    title: '🏫 Local Races',
+    badge: 'County & Municipal',
+    races: [
+      {
+        title: 'County Commission — [Your District]',
+        candidates: [],
+        placeholder: 'Local candidates will appear on your official ballot. Placeholder shown for preview.'
+      },
+      {
+        title: 'City Council — [Your City]',
+        candidates: [],
+        placeholder: 'Local candidates will appear on your official ballot. Placeholder shown for preview.'
+      },
+      {
+        title: 'School Board — [Your District]',
+        candidates: [],
+        placeholder: 'Local candidates will appear on your official ballot. Placeholder shown for preview.'
+      }
+    ],
+    proposals: []
+  }
+];
+
+// ─── Party label mapping ───
+const PARTY_LABELS = {
+  'dem': 'Dem',
+  'rep': 'Rep',
+  'ind': 'Ind'
+};
+
+// ─── Render the ballot from data ───
+function renderBallot() {
+  const container = document.getElementById('ballot-container');
+  let html = '';
+
+  BALLOT_SECTIONS.forEach(function(section, sectionIndex) {
+    html += '<div class="ballot-section">';
+    html += '<div class="ballot-section-header" data-section="' + sectionIndex + '">';
+    html += '<span>' + section.title + '</span>';
+    html += '<span style="display:flex;align-items:center;gap:0.75rem;"><span class="badge">' + section.badge + '</span><span class="toggle-icon">▾</span></span>';
+    html += '</div>';
+    html += '<div class="ballot-section-body">';
+
+    // Render races
+    section.races.forEach(function(race) {
+      html += '<div class="ballot-race">';
+      html += '<div class="ballot-race-title">' + race.title + '</div>';
+      if (race.candidates && race.candidates.length > 0) {
+        html += '<div class="ballot-race-candidates">';
+        race.candidates.forEach(function(candidate) {
+          html += '<span class="candidate-chip">' + candidate.name + ' <span class="party party-' + candidate.party + '">' + PARTY_LABELS[candidate.party] + '</span></span>';
+        });
+        html += '</div>';
+      } else if (race.placeholder) {
+        html += '<div class="ballot-race-placeholder"><span class="icon">👤</span> ' + race.placeholder + '</div>';
+      }
+      html += '</div>';
+    });
+
+    // Render proposals
+    section.proposals.forEach(function(prop) {
+      html += '<div class="ballot-proposal">';
+      html += '<div class="prop-title">' + prop.title + '</div>';
+      html += '<div class="prop-desc">' + prop.desc + '</div>';
+      html += '<span class="prop-status prop-status-' + prop.status + '">' + (prop.status === 'pending' ? 'Pending Certification' : 'Info') + '</span>';
+      html += '</div>';
+    });
+
+    html += '</div>';
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+
+  // Add accordion toggle functionality
+  document.querySelectorAll('.ballot-section-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      const body = header.nextElementSibling;
+      const isOpen = body.style.display !== 'none';
+      body.style.display = isOpen ? 'none' : 'block';
+      header.classList.toggle('open', !isOpen);
+    });
+  });
+}
+
+// Render on load
+renderBallot();
+</script>
+
+<script src="/js/main.js"></script>
+<script src="/js/language-selector.js"></script>
+
+<!-- Google Translate Element Scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  (function() {
+    const observer = new MutationObserver(function(mutations) {
+      if (typeof google !== 'undefined' && google.translate) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              google.translate.TranslateElement.reload();
+            }
+          });
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

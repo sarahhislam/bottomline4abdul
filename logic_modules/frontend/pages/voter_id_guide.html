@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Voter Rights & ID Requirements — Abdul for Senate</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/abdul-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
+    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .tool-header .brand em { color: #d21214; font-style: normal; }
+    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; }
+    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    .tool-hero p { opacity: 0.8; max-width: 500px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-body { max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
+    .checklist { list-style: none; padding: 0; margin: 0; }
+    .checklist li { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.85rem 0; border-bottom: 1px solid #f0e8e0; cursor: pointer; transition: background 0.15s; border-radius: 8px; padding-left: 0.5rem; padding-right: 0.5rem; }
+    .checklist li:hover { background: #fcf4ed; }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist .check { flex-shrink: 0; width: 28px; height: 28px; border: 2px solid #2e7d32; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #2e7d32; font-size: 0.85rem; font-weight: 700; margin-top: 0.1rem; transition: all 0.15s; }
+    .checklist .check.checked { background: #2e7d32; color: #fff; }
+    .checklist .item-text { flex: 1; font-size: 0.9rem; line-height: 1.5; color: #333; }
+    .checklist .item-text strong { color: #121c50; }
+    .checklist .item-text .note { display: block; font-size: 0.8rem; color: #888; margin-top: 0.25rem; }
+    .alert-box { background: #fff8e1; border-left: 4px solid #e68a00; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.25rem 0; font-size: 0.9rem; line-height: 1.6; color: #555; }
+    .alert-box strong { color: #121c50; }
+    .alert-box-green { background: #e8f5e9; border-left-color: #2e7d32; }
+    .alert-box-red { background: #fdecea; border-left-color: #d21214; }
+    .id-card { background: #fcf4ed; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; transition: all 0.15s; border: 2px solid transparent; }
+    .id-card:hover { border-color: #121c50; transform: translateX(4px); }
+    .id-card .icon { font-size: 1.5rem; flex-shrink: 0; }
+    .id-card .label { font-weight: 600; color: #121c50; font-size: 0.9rem; }
+    .id-card .desc { font-size: 0.8rem; color: #888; }
+    .official-link { display: inline-block; margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; }
+    .progress-bar { background: #f0e8e0; border-radius: 20px; height: 8px; margin: 1rem 0; overflow: hidden; }
+    .progress-fill { background: #2e7d32; height: 100%; width: 0%; border-radius: 20px; transition: width 0.3s ease; }
+    .progress-label { font-size: 0.8rem; color: #888; text-align: right; margin-bottom: 0.5rem; }
+    @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
+  </style>
+</head>
+<body>
+<header class="tool-header">
+  <div class="brand">Abdul <em>for Senate</em></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="translate-widget-container">
+      <div id="google_translate_element"></div>
+    </div>
+    <div id="lang-selector-wrap"></div>
+    <a href="/">← Back to Tools</a>
+  </div>
+</header>
+<section class="tool-hero">
+  <h1>🪪 Voter Rights & ID Requirements Guide</h1>
+  <p>Know your rights at the polls. Michigan's voter ID laws explained — including what to do if you don't have ID.</p>
+</section>
+<div class="tool-body">
+  <div class="output-card">
+    <h3>✅ Michigan Voter ID Checklist — Tap each item to check it off</h3>
+    <div class="progress-label" id="progress-label">0 of 6 items checked</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <ul class="checklist" id="id-checklist">
+      <li data-checked="false">
+        <span class="check">✓</span>
+        <div class="item-text">
+          <strong>Bring a Photo ID if you have one</strong>
+          <span class="note">Michigan law asks voters to show a photo ID at the polls. Acceptable forms include a Michigan driver's license, state ID card, U.S. passport, military ID, or tribal ID.</span>
+        </div>
+      </li>
+      <li data-checked="false">
+        <span class="check">✓</span>
+        <div class="item-text">
+          <strong>No ID? You can still vote!</strong>
+          <span class="note">If you don't have a photo ID, you can sign an <strong>Affidavit of Voter</strong> at the polls and vote a <strong>regular ballot</strong> — not a provisional ballot. Your vote will count fully.</span>
+        </div>
+      </li>
+      <li data-checked="false">
+        <span class="check">✓</span>
+        <div class="item-text">
+          <strong>First-time voters may need additional ID</strong>
+          <span class="note">If you registered by mail and haven't voted in Michigan before, you may need to show a photo ID or a current utility bill, bank statement, paycheck, or government document with your name and address.</span>
+        </div>
+      </li>
+      <li data-checked="false">
+        <span class="check">✓</span>
+        <div class="item-text">
+          <strong>Your signature is verified</strong>
+          <span class="note">Poll workers will ask you to sign the poll book. Your signature is compared to the one on file from your voter registration.</span>
+        </div>
+      </li>
+      <li data-checked="false">
+        <span class="check">✓</span>
+        <div class="item-text">
+          <strong>You have the right to assistance</strong>
+          <span class="note">If you have a disability or need help reading or marking your ballot, you can request assistance from a poll worker or bring someone to help you.</span>
+        </div>
+      </li>
+      <li data-checked="false">
+        <span class="check">✓</span>
+        <div class="item-text">
+          <strong>You have the right to a provisional ballot</strong>
+          <span class="note">If your eligibility is challenged, you can still vote a provisional ballot. It will be counted if election officials confirm your eligibility.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="output-card">
+    <h3>🪪 Acceptable Forms of Photo ID — Tap to highlight</h3>
+    <div class="id-card" data-id="1">
+      <div class="icon">🚗</div>
+      <div>
+        <div class="label">Michigan Driver's License</div>
+        <div class="desc">Current or expired within the last 6 months</div>
+      </div>
+    </div>
+    <div class="id-card" data-id="2">
+      <div class="icon">🪪</div>
+      <div>
+        <div class="label">Michigan State ID Card</div>
+        <div class="desc">Current or expired within the last 6 months</div>
+      </div>
+    </div>
+    <div class="id-card" data-id="3">
+      <div class="icon">🛂</div>
+      <div>
+        <div class="label">U.S. Passport</div>
+        <div class="desc">Current or expired within the last 6 months</div>
+      </div>
+    </div>
+    <div class="id-card" data-id="4">
+      <div class="icon">🎖️</div>
+      <div>
+        <div class="label">Military ID</div>
+        <div class="desc">Current U.S. military or veteran photo ID</div>
+      </div>
+    </div>
+    <div class="id-card" data-id="5">
+      <div class="icon">🏹</div>
+      <div>
+        <div class="label">Tribal ID</div>
+        <div class="desc">Current tribal photo ID with name and signature</div>
+      </div>
+    </div>
+    <div class="id-card" data-id="6">
+      <div class="icon">🏫</div>
+      <div>
+        <div class="label">Student ID</div>
+        <div class="desc">Current student photo ID from a Michigan high school or college</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="output-card">
+    <h3>🚨 Know Your Rights</h3>
+    <div class="alert-box alert-box-green">
+      <strong>✅ You CANNOT be turned away for not having ID.</strong><br />
+      If you don't have a photo ID, simply sign an <strong>Affidavit of Voter</strong> at the polls. You will vote a <strong>regular ballot</strong> that counts fully — not a provisional ballot.
+    </div>
+    <div class="alert-box">
+      <strong>⏰ Polls are open 7:00 AM – 8:00 PM.</strong><br />
+      If you are in line by 8:00 PM, you have the right to vote. Do not leave the line.
+    </div>
+    <div class="alert-box">
+      <strong>🗳️ You have the right to vote if you're registered.</strong><br />
+      Check your registration status at the Michigan Voter Information Center. If you moved, update your address before Election Day.
+    </div>
+    <div class="alert-box alert-box-red">
+      <strong>📞 Report problems.</strong><br />
+      If you experience voter intimidation or problems at the polls, call the Michigan Secretary of State at <strong>1-800-292-VOTE</strong> or the Election Protection hotline at <strong>1-866-OUR-VOTE</strong>.
+    </div>
+    <!--
+      ═══════════════════════════════════════════════════════════
+      OFFICIAL MICHIGAN VOTER INFORMATION CENTER
+      ═══════════════════════════════════════════════════════════
+      This is the official Michigan Voter Information Center.
+      To update this link, replace the href URL below.
+      The current URL is: https://mvic.sos.state.mi.us/
+      ═══════════════════════════════════════════════════════════
+    -->
+    <p><a class="official-link" href="https://mvic.sos.state.mi.us/" target="_blank" rel="noopener">Check Your Voter Registration →</a></p>
+  </div>
+
+<script>
+  // ─── Interactive Checklist ───
+  const checklistItems = document.querySelectorAll('#id-checklist li');
+  const progressFill = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+
+  function updateProgress() {
+    const checked = document.querySelectorAll('#id-checklist li[data-checked="true"]').length;
+    const total = checklistItems.length;
+    const pct = Math.round((checked / total) * 100);
+    progressFill.style.width = pct + '%';
+    progressLabel.textContent = checked + ' of ' + total + ' items checked';
+  }
+
+  checklistItems.forEach(function(item) {
+    item.addEventListener('click', function() {
+      const isChecked = item.getAttribute('data-checked') === 'true';
+      item.setAttribute('data-checked', isChecked ? 'false' : 'true');
+      const check = item.querySelector('.check');
+      check.classList.toggle('checked', !isChecked);
+      updateProgress();
+    });
+  });
+
+  // ─── Interactive ID Cards ───
+  document.querySelectorAll('.id-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      card.style.borderColor = '#2e7d32';
+      card.style.background = '#e8f5e9';
+      setTimeout(function() {
+        card.style.borderColor = 'transparent';
+        card.style.background = '#fcf4ed';
+      }, 800);
+    });
+  });
+</script>
+
+<script src="/js/main.js"></script>
+<script src="/js/language-selector.js"></script>
+
+<!-- Google Translate Element Scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  (function() {
+    const observer = new MutationObserver(function(mutations) {
+      if (typeof google !== 'undefined' && google.translate) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              google.translate.TranslateElement.reload();
+            }
+          });
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

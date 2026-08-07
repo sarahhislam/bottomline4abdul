@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Polling Place & Absentee Ballot Locator — Abdul for Senate</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/abdul-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
+    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .tool-header .brand em { color: #d21214; font-style: normal; }
+    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; }
+    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    .tool-hero p { opacity: 0.8; max-width: 500px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-body { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .input-group { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
+    .input-group label { width: 100%; font-weight: 600; font-size: 0.85rem; color: #121c50; margin-bottom: -0.25rem; }
+    .input-group .hint { width: 100%; font-size: 0.8rem; color: #888; margin-top: -0.25rem; }
+    .input-group input, .input-group select { flex: 1; min-width: 160px; padding: 0.6em 0.75em; border: 2px solid #e0d6cc; border-radius: 8px; font-family: inherit; font-size: 0.9rem; background: #fcf4ed; transition: border-color 0.15s; }
+    .input-group input:focus, .input-group select:focus { outline: none; border-color: #121c50; }
+    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
+    .loc-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #121c50; }
+    .loc-card .name { font-weight: 700; color: #121c50; font-size: 1.05rem; }
+    .loc-card .type { display: inline-block; padding: 0.2em 0.6em; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin: 0.3rem 0; }
+    .loc-card .type-polling { background: #2e7d32; color: #fff; }
+    .loc-card .type-dropbox { background: #e68a00; color: #fff; }
+    .loc-card .type-absentee { background: #121c50; color: #fff; }
+    .loc-card .address { color: #555; font-size: 0.9rem; margin: 0.3rem 0; }
+    .loc-card .hours { color: #888; font-size: 0.85rem; }
+    .loc-card .distance { color: #d21214; font-weight: 600; font-size: 0.85rem; }
+    .results-count { font-size: 0.85rem; color: #888; margin-bottom: 1rem; }
+    .empty-state { text-align: center; padding: 2rem; color: #888; }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .official-link { display: inline-block; margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; }
+    @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
+  </style>
+</head>
+<body>
+<header class="tool-header">
+  <div class="brand">Abdul <em>for Senate</em></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="translate-widget-container">
+      <div id="google_translate_element"></div>
+    </div>
+    <div id="lang-selector-wrap"></div>
+    <a href="/">← Back to Tools</a>
+  </div>
+</header>
+<section class="tool-hero">
+  <h1>🗳️ Polling Place & Absentee Ballot Locator</h1>
+  <p>Find your Michigan voting site, drop-box locations, and absentee ballot resources — all in one place.</p>
+</section>
+<div class="tool-body">
+  <div class="input-group">
+    <label>City or ZIP Code</label>
+    <input id="loc-search" type="text" placeholder="e.g. Detroit, Dearborn, 48201" />
+    <div class="hint">Enter a Michigan city name or 5-digit ZIP code. Try: Detroit, Dearborn, Lansing, 48201</div>
+    <a class="btn" id="loc-search-btn">Search Locations →</a>
+  </div>
+
+  <div class="output-card">
+    <h3>🗳️ Voting Locations & Drop Boxes</h3>
+    <div id="loc-results">
+      <div class="empty-state">
+        <div class="icon">📍</div>
+        <p>Enter a city or ZIP code above to find your polling place, drop boxes, and absentee ballot resources.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="output-card">
+    <h3>ℹ️ Important Voting Information</h3>
+    <div style="font-size:0.9rem;line-height:1.6;color:#555;">
+      <p><strong style="color:#121c50;">Election Day:</strong> Polls are open from 7:00 AM to 8:00 PM in Michigan.</p>
+      <p><strong style="color:#121c50;">Absentee Voting:</strong> Any registered Michigan voter may request an absentee ballot — no reason required.</p>
+      <p><strong style="color:#121c50;">Drop Boxes:</strong> Secure ballot drop boxes are available at every clerk's office and many satellite locations.</p>
+      <p><strong style="color:#121c50;">Voter ID:</strong> Bring a photo ID if you have one. If you don't have ID, you can sign an affidavit and still vote a regular ballot.</p>
+      <!--
+        ═══════════════════════════════════════════════════════════
+        OFFICIAL MICHIGAN VOTER INFORMATION CENTER
+        ═══════════════════════════════════════════════════════════
+        This is the official Michigan Voter Information Center.
+        To update this link, replace the href URL below.
+        The current URL is: https://mvic.sos.state.mi.us/
+        ═══════════════════════════════════════════════════════════
+      -->
+      <p><a class="official-link" href="https://mvic.sos.state.mi.us/" target="_blank" rel="noopener">Official Michigan Voter Information Center →</a></p>
+    </div>
+  </div>
+
+<script>
+  // Michigan voting location sample data
+  const MI_LOCATIONS = {
+    'detroit': [
+      { name: 'Detroit City Clerk\'s Office', type: 'absentee', address: '2978 W Grand Blvd, Detroit, MI 48202', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.5 mi' },
+      { name: 'Huntington Place Convention Center', type: 'polling', address: '1 Washington Blvd, Detroit, MI 48226', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '1.2 mi' },
+      { name: 'Detroit Public Library — Main Branch', type: 'dropbox', address: '5201 Woodward Ave, Detroit, MI 48202', hours: '24/7 Secure Drop Box', distance: '0.8 mi' },
+      { name: 'Northwest Activities Center', type: 'polling', address: '18100 Meyers Rd, Detroit, MI 48235', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '3.4 mi' },
+      { name: 'Butzel Family Center', type: 'dropbox', address: '7737 Kercheval Ave, Detroit, MI 48214', hours: '24/7 Secure Drop Box', distance: '2.1 mi' }
+    ],
+    'dearborn': [
+      { name: 'Dearborn City Clerk\'s Office', type: 'absentee', address: '16901 Michigan Ave, Dearborn, MI 48126', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.3 mi' },
+      { name: 'Ford Community & Performing Arts Center', type: 'polling', address: '15801 Michigan Ave, Dearborn, MI 48126', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '0.6 mi' },
+      { name: 'Dearborn Police Department — West', type: 'dropbox', address: '4700 Greenfield Rd, Dearborn, MI 48126', hours: '24/7 Secure Drop Box', distance: '1.1 mi' },
+      { name: 'Bryant Community Center', type: 'polling', address: '18000 Oakwood Blvd, Dearborn, MI 48124', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '2.3 mi' }
+    ],
+    'lansing': [
+      { name: 'Lansing City Clerk\'s Office', type: 'absentee', address: '124 W Michigan Ave, Lansing, MI 48933', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.2 mi' },
+      { name: 'Lansing Center', type: 'polling', address: '333 E Michigan Ave, Lansing, MI 48933', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '0.4 mi' },
+      { name: 'Lansing City Hall — Drop Box', type: 'dropbox', address: '124 W Michigan Ave, Lansing, MI 48933', hours: '24/7 Secure Drop Box', distance: '0.2 mi' },
+      { name: 'Eastern High School', type: 'polling', address: '220 N Pennsylvania Ave, Lansing, MI 48912', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '1.8 mi' }
+    ],
+    '48201': [
+      { name: 'Detroit City Clerk\'s Office', type: 'absentee', address: '2978 W Grand Blvd, Detroit, MI 48202', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.5 mi' },
+      { name: 'Huntington Place Convention Center', type: 'polling', address: '1 Washington Blvd, Detroit, MI 48226', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '1.2 mi' },
+      { name: 'Detroit Public Library — Main Branch', type: 'dropbox', address: '5201 Woodward Ave, Detroit, MI 48202', hours: '24/7 Secure Drop Box', distance: '0.8 mi' }
+    ],
+    '48202': [
+      { name: 'Detroit City Clerk\'s Office', type: 'absentee', address: '2978 W Grand Blvd, Detroit, MI 48202', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.1 mi' },
+      { name: 'Detroit Public Library — Main Branch', type: 'dropbox', address: '5201 Woodward Ave, Detroit, MI 48202', hours: '24/7 Secure Drop Box', distance: '0.3 mi' },
+      { name: 'Northwestern High School', type: 'polling', address: '2200 W Grand Blvd, Detroit, MI 48208', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '1.5 mi' }
+    ],
+    '48126': [
+      { name: 'Dearborn City Clerk\'s Office', type: 'absentee', address: '16901 Michigan Ave, Dearborn, MI 48126', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.3 mi' },
+      { name: 'Ford Community & Performing Arts Center', type: 'polling', address: '15801 Michigan Ave, Dearborn, MI 48126', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '0.6 mi' },
+      { name: 'Dearborn Police Department — West', type: 'dropbox', address: '4700 Greenfield Rd, Dearborn, MI 48126', hours: '24/7 Secure Drop Box', distance: '1.1 mi' }
+    ],
+    '48933': [
+      { name: 'Lansing City Clerk\'s Office', type: 'absentee', address: '124 W Michigan Ave, Lansing, MI 48933', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.2 mi' },
+      { name: 'Lansing Center', type: 'polling', address: '333 E Michigan Ave, Lansing, MI 48933', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '0.4 mi' },
+      { name: 'Lansing City Hall — Drop Box', type: 'dropbox', address: '124 W Michigan Ave, Lansing, MI 48933', hours: '24/7 Secure Drop Box', distance: '0.2 mi' }
+    ]
+  };
+
+  const TYPE_LABELS = {
+    'polling': 'Polling Place',
+    'dropbox': 'Secure Drop Box',
+    'absentee': 'Absentee Ballot Office'
+  };
+  const TYPE_CLASSES = {
+    'polling': 'type-polling',
+    'dropbox': 'type-dropbox',
+    'absentee': 'type-absentee'
+  };
+
+  function searchLocations() {
+    const query = document.getElementById('loc-search').value.trim().toLowerCase();
+    const resultsEl = document.getElementById('loc-results');
+
+    if (!query) {
+      resultsEl.innerHTML = '<div class="empty-state"><div class="icon">📍</div><p>Enter a city or ZIP code above to find your polling place, drop boxes, and absentee ballot resources.</p></div>';
+      return;
+    }
+
+    const locations = MI_LOCATIONS[query] || [];
+    if (locations.length === 0) {
+      resultsEl.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>No locations found for "' + query + '". Try a different city or ZIP code.</p></div>';
+      return;
+    }
+
+    let html = '<div class="results-count">Found ' + locations.length + ' location(s) near "' + query + '"</div>';
+    locations.forEach(function(loc) {
+      html += '<div class="loc-card">' +
+        '<div class="name">' + loc.name + '</div>' +
+        '<span class="type ' + TYPE_CLASSES[loc.type] + '">' + TYPE_LABELS[loc.type] + '</span>' +
+        '<div class="address">📍 ' + loc.address + '</div>' +
+        '<div class="hours">🕐 ' + loc.hours + '</div>' +
+        '<div class="distance">📏 ' + loc.distance + ' away</div>' +
+        '</div>';
+    });
+    resultsEl.innerHTML = html;
+  }
+
+  document.getElementById('loc-search-btn').addEventListener('click', searchLocations);
+  document.getElementById('loc-search').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') searchLocations();
+  });
+</script>
+
+<script src="/js/main.js"></script>
+<script src="/js/language-selector.js"></script>
+
+<!-- Google Translate Element Scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  (function() {
+    const observer = new MutationObserver(function(mutations) {
+      if (typeof google !== 'undefined' && google.translate) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              google.translate.TranslateElement.reload();
+            }
+          });
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

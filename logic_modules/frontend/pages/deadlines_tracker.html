@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Election Deadlines & SMS Reminders — Abdul for Senate</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/abdul-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
+    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .tool-header .brand em { color: #d21214; font-style: normal; }
+    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; }
+    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    .tool-hero p { opacity: 0.8; max-width: 500px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-body { max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
+    .countdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .countdown-card { background: #fcf4ed; border-radius: 12px; padding: 1.25rem; text-align: center; border: 2px solid #e0d6cc; }
+    .countdown-card .days { font-size: 2.5rem; font-weight: 800; color: #121c50; line-height: 1; }
+    .countdown-card .label { font-size: 0.8rem; color: #888; margin-top: 0.5rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+    .countdown-card .date { font-size: 0.75rem; color: #aaa; margin-top: 0.25rem; }
+    .countdown-card.urgent { border-color: #d21214; }
+    .countdown-card.urgent .days { color: #d21214; }
+    .deadline-list { list-style: none; padding: 0; margin: 0; }
+    .deadline-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #f0e8e0; }
+    .deadline-item:last-child { border-bottom: none; }
+    .deadline-date { flex-shrink: 0; background: #121c50; color: #fff; border-radius: 8px; padding: 0.5rem 0.75rem; text-align: center; min-width: 70px; }
+    .deadline-date .month { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+    .deadline-date .day { font-size: 1.4rem; font-weight: 800; line-height: 1.1; }
+    .deadline-info { flex: 1; }
+    .deadline-info .title { font-weight: 700; color: #121c50; font-size: 0.95rem; }
+    .deadline-info .desc { font-size: 0.85rem; color: #555; line-height: 1.5; margin-top: 0.25rem; }
+    .deadline-info .countdown { font-size: 0.8rem; color: #d21214; font-weight: 600; margin-top: 0.25rem; }
+    .sms-form { background: #fcf4ed; border-radius: 12px; padding: 1.5rem; }
+    .sms-form label { display: block; font-weight: 600; font-size: 0.85rem; color: #121c50; margin-bottom: 0.5rem; }
+    .sms-form input { width: 100%; padding: 0.6em 0.75em; border: 2px solid #e0d6cc; border-radius: 8px; font-family: inherit; font-size: 0.9rem; background: #fff; transition: border-color 0.15s; margin-bottom: 0.75rem; }
+    .sms-form input:focus { outline: none; border-color: #121c50; }
+    .sms-form .hint { font-size: 0.8rem; color: #888; margin-bottom: 1rem; }
+    .sms-success { display: none; background: #e8f5e9; border-left: 4px solid #2e7d32; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; font-size: 0.9rem; color: #2e7d32; font-weight: 600; }
+    .sms-success.show { display: block; }
+    .official-link { display: inline-block; margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; }
+    @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
+  </style>
+</head>
+<body>
+<header class="tool-header">
+  <div class="brand">Abdul <em>for Senate</em></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="translate-widget-container">
+      <div id="google_translate_element"></div>
+    </div>
+    <div id="lang-selector-wrap"></div>
+    <a href="/">← Back to Tools</a>
+  </div>
+</header>
+<section class="tool-hero">
+  <h1>⏰ Election Deadlines & SMS Reminders</h1>
+  <p>Live countdown to Michigan's key election dates. Sign up for SMS alerts so you never miss a deadline.</p>
+</section>
+<div class="tool-body">
+  <div class="output-card">
+    <h3>📅 Countdown to Key Dates</h3>
+    <div class="countdown-grid" id="countdown-grid">
+      <div class="countdown-card" id="cd-election">
+        <div class="days" id="cd-election-days">--</div>
+        <div class="label">Election Day</div>
+        <div class="date">November 3, 2026</div>
+      </div>
+      <div class="countdown-card" id="cd-register">
+        <div class="days" id="cd-register-days">--</div>
+        <div class="label">Voter Registration Deadline</div>
+        <div class="date">October 5, 2026</div>
+      </div>
+      <div class="countdown-card" id="cd-absentee">
+        <div class="days" id="cd-absentee-days">--</div>
+        <div class="label">Absentee Ballot Request</div>
+        <div class="date">October 30, 2026</div>
+      </div>
+      <div class="countdown-card" id="cd-mail">
+        <div class="days" id="cd-mail-days">--</div>
+        <div class="label">Mail Ballot Return</div>
+        <div class="date">November 3, 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="output-card">
+    <h3>🗓️ Key Michigan Election Deadlines</h3>
+    <ul class="deadline-list" id="deadline-list">
+      <li class="deadline-item" data-date="2026-10-05">
+        <div class="deadline-date"><div class="month">Oct</div><div class="day">5</div></div>
+        <div class="deadline-info">
+          <div class="title">Voter Registration Deadline</div>
+          <div class="desc">Last day to register to vote online or by mail for the November general election.</div>
+          <div class="countdown" data-countdown="2026-10-05"></div>
+        </div>
+      </li>
+      <li class="deadline-item" data-date="2026-10-30">
+        <div class="deadline-date"><div class="month">Oct</div><div class="day">30</div></div>
+        <div class="deadline-info">
+          <div class="title">Absentee Ballot Request Deadline</div>
+          <div class="desc">Last day to request an absentee ballot by mail. You can also request one in person at your clerk's office until Election Day.</div>
+          <div class="countdown" data-countdown="2026-10-30"></div>
+        </div>
+      </li>
+      <li class="deadline-item" data-date="2026-11-03">
+        <div class="deadline-date"><div class="month">Nov</div><div class="day">3</div></div>
+        <div class="deadline-info">
+          <div class="title">Election Day — Polls Open 7 AM – 8 PM</div>
+          <div class="desc">Vote in person at your polling place, or return your completed absentee ballot to your clerk's office or a secure drop box by 8 PM.</div>
+          <div class="countdown" data-countdown="2026-11-03"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="output-card">
+    <h3>📱 SMS Reminder Sign-Up</h3>
+    <div class="sms-form">
+      <label>Phone Number</label>
+      <input type="tel" id="sms-phone" placeholder="e.g. (313) 555-1234" />
+      <label>ZIP Code (optional)</label>
+      <input type="text" id="sms-zip" placeholder="e.g. 48201" maxlength="5" />
+      <div class="hint">We'll text you reminders before each important election deadline. Message and data rates may apply. You can opt out anytime by replying STOP.</div>
+      <a class="btn" id="sms-signup-btn">Sign Up for SMS Alerts →</a>
+      <div class="sms-success" id="sms-success">✅ You're signed up! We'll send you reminders before each important election deadline.</div>
+    </div>
+  </div>
+
+<script>
+  // Countdown logic
+  const ELECTION_DAY = new Date('2026-11-03T08:00:00');
+  const REG_DEADLINE = new Date('2026-10-05T23:59:59');
+  const ABSENTEE_DEADLINE = new Date('2026-10-30T23:59:59');
+  const MAIL_RETURN = new Date('2026-11-03T20:00:00');
+
+  function daysUntil(date) {
+    const now = new Date();
+    const diff = date - now;
+    if (diff <= 0) return 0;
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  }
+
+  function updateCountdowns() {
+    document.getElementById('cd-election-days').textContent = daysUntil(ELECTION_DAY);
+    document.getElementById('cd-register-days').textContent = daysUntil(REG_DEADLINE);
+    document.getElementById('cd-absentee-days').textContent = daysUntil(ABSENTEE_DEADLINE);
+    document.getElementById('cd-mail-days').textContent = daysUntil(MAIL_RETURN);
+
+    // Update per-item countdowns
+    document.querySelectorAll('[data-countdown]').forEach(function(el) {
+      const target = new Date(el.getAttribute('data-countdown'));
+      const days = daysUntil(target);
+      el.textContent = days === 0 ? 'Today!' : days + ' days away';
+    });
+
+    // Mark urgent cards (within 30 days)
+    document.querySelectorAll('.countdown-card').forEach(function(card) {
+      const daysEl = card.querySelector('.days');
+      const days = parseInt(daysEl.textContent, 10);
+      if (days <= 30) card.classList.add('urgent');
+    });
+  }
+
+  updateCountdowns();
+  setInterval(updateCountdowns, 60000); // update every minute
+
+  // SMS signup
+  document.getElementById('sms-signup-btn').addEventListener('click', function() {
+    const phone = document.getElementById('sms-phone').value.trim();
+    const zip = document.getElementById('sms-zip').value.trim();
+    if (!phone) {
+      alert('Please enter your phone number.');
+      return;
+    }
+    // Simple phone validation
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (phoneDigits.length < 10) {
+      alert('Please enter a valid 10-digit phone number.');
+      return;
+    }
+    document.getElementById('sms-success').classList.add('show');
+    document.getElementById('sms-phone').value = '';
+    document.getElementById('sms-zip').value = '';
+  });
+</script>
+
+<script src="/js/main.js"></script>
+<script src="/js/language-selector.js"></script>
+
+<!-- Google Translate Element Scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  (function() {
+    const observer = new MutationObserver(function(mutations) {
+      if (typeof google !== 'undefined' && google.translate) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              google.translate.TranslateElement.reload();
+            }
+          });
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
