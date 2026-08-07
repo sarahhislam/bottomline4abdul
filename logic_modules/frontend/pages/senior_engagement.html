@@ -38,6 +38,37 @@
     .myth-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #121c50; }
     .myth-card .q { font-weight: 700; color: #d21214; margin-bottom: 0.4rem; }
     .myth-card .a { color: #2e7d32; }
+
+    /* ─── Interactive Policies & Stories ─── */
+    .senior-hint { color: #888; font-size: 0.9rem; margin: 0; }
+    .senior-section-title { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 1.25rem 0 0.6rem; }
+    .policy-item { border: 2px solid #e0d6cc; border-radius: 10px; margin-bottom: 0.6rem; overflow: hidden; background: #fff; transition: border-color 0.15s; }
+    .policy-item.open { border-color: #121c50; }
+    .policy-head { display: flex; align-items: center; gap: 0.6rem; width: 100%; text-align: left; background: none; border: none; padding: 0.8rem 1rem; cursor: pointer; font-family: inherit; font-size: 0.95rem; font-weight: 700; color: #121c50; }
+    .policy-head:hover { background: #fcf4ed; }
+    .policy-head .policy-num { background: #121c50; color: #fff; border-radius: 6px; font-size: 0.75rem; padding: 0.15em 0.5em; flex-shrink: 0; }
+    .policy-head .policy-arrow { margin-left: auto; transition: transform 0.2s; color: #d21214; }
+    .policy-item.open .policy-arrow { transform: rotate(180deg); }
+    .policy-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .policy-body-inner { padding: 0 1rem 0.9rem; color: #555; font-size: 0.9rem; line-height: 1.5; }
+    .story-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #d21214; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+    .story-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+    .story-card .name { font-weight: 700; color: #121c50; }
+    .story-card .loc { font-size: 0.8rem; color: #888; }
+    .story-card .story { color: #555; font-style: italic; margin-top: 0.3rem; }
+    .story-nav { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+    .story-nav .btn { font-size: 0.8rem !important; padding: 0.4em 0.9em 0.5em !important; }
+    .story-dots { display: flex; gap: 0.4rem; align-items: center; margin-top: 0.75rem; }
+    .story-dot { width: 10px; height: 10px; border-radius: 50%; background: #e0d6cc; border: none; cursor: pointer; padding: 0; transition: background 0.15s, transform 0.15s; }
+    .story-dot.active { background: #d21214; transform: scale(1.2); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; }
+    .stat-card { background: #fff; border: 2px solid #e0d6cc; border-radius: 10px; padding: 1rem; text-align: center; cursor: pointer; transition: border-color 0.15s, transform 0.15s, background 0.15s; }
+    .stat-card:hover { transform: translateY(-2px); }
+    .stat-card.active { border-color: #d21214; background: #fcf4ed; }
+    .stat-card .stat-value { font-size: 1.5rem; font-weight: 800; color: #121c50; }
+    .stat-card .stat-label { font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem; }
+    .stat-card .stat-detail { font-size: 0.8rem; color: #555; margin-top: 0.4rem; display: none; }
+    .stat-card.active .stat-detail { display: block; }
     @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
   </style>
 </head>
@@ -58,12 +89,152 @@
 <div class="tool-body">
   <div class="output-card">
     <h3>👴 Policies & Stories</h3>
-    <pre id="out-senior">Click "Load Report" to see the data.</pre>
+    <p class="senior-hint">Expand a policy, click through the stories, or tap a stat to learn more.</p>
+
+    <div class="senior-section-title">📋 Policy Commitments</div>
+    <div id="senior-policies"></div>
+
+    <div class="senior-section-title">💬 Real Stories, Real Impact</div>
+    <div id="senior-story-card" class="story-card"></div>
+    <div class="story-nav">
+      <button class="btn" id="story-prev" type="button">← Prev</button>
+      <button class="btn" id="story-next" type="button">Next →</button>
+    </div>
+    <div class="story-dots" id="story-dots"></div>
+
+    <div class="senior-section-title">📊 Impact Stats</div>
+    <div class="stats-grid" id="senior-stats"></div>
   </div>
-  <a class="btn" data-module-run="senior_engagement" data-output="#out-senior">Load Report →</a>
 
 <script src="../js/modules.js"></script>
 <script src="../js/main.js"></script>
+<script>
+  (function () {
+    'use strict';
+
+    // Data mirrors the senior_engagement module (modules.js)
+    var POLICY_DATA = [
+      { id: '1', title: 'Housing Stability', impact: 'Capping property tax increases for residents 65+. No senior should lose their home to rising taxes.' },
+      { id: '2', title: 'Public Transit', impact: 'New seating and increased frequency on key senior routes. Transportation is a right, not a privilege.' },
+      { id: '3', title: 'Healthcare Support', impact: 'Direct connection to low-cost prescription clinics. No senior should skip medication due to cost.' },
+      { id: '4', title: 'Community Access', impact: 'Senior-only digital literacy workshops. Bridging the technology gap for our elders.' },
+      { id: '5', title: 'Meal Delivery', impact: 'Expanded home-delivered meal programs for homebound seniors. Nutrition is dignity.' },
+      { id: '6', title: 'Social Connection', impact: 'Funded community center programs for seniors. Loneliness is a health crisis — we\'re solving it.' }
+    ];
+    var STORY_DATA = [
+      { name: 'Martha, 72', location: 'Detroit', story: 'The property tax cap saved my home. I can finally afford my medication.' },
+      { name: 'James, 78', location: 'Flint', story: 'The new bus routes mean I can see my grandchildren every Sunday.' },
+      { name: 'Eleanor, 81', location: 'Grand Rapids', story: 'The digital workshop taught me to video call my daughter in Chicago. I cry every time.' }
+    ];
+    var STAT_DATA = [
+      { value: '6', label: 'Policies', detail: 'Housing, transit, healthcare, community, meals, and connection.' },
+      { value: '12,400+', label: 'Constituents', detail: 'Seniors directly impacted across Michigan.' },
+      { value: '0%', label: 'Interest', detail: 'No senior loses their home to rising taxes.' },
+      { value: '3', label: 'Stories', detail: 'Real constituent voices from Detroit, Flint, and Grand Rapids.' }
+    ];
+
+    // ─── Policies (expandable accordion) ───
+    var policiesWrap = document.getElementById('senior-policies');
+    POLICY_DATA.forEach(function (p) {
+      var item = document.createElement('div');
+      item.className = 'policy-item';
+
+      var head = document.createElement('button');
+      head.type = 'button';
+      head.className = 'policy-head';
+      head.setAttribute('aria-expanded', 'false');
+      head.innerHTML =
+        '<span class="policy-num">' + p.id + '</span>' +
+        '<span>' + p.title + '</span>' +
+        '<span class="policy-arrow">▾</span>';
+
+      var body = document.createElement('div');
+      body.className = 'policy-body';
+      var inner = document.createElement('div');
+      inner.className = 'policy-body-inner';
+      inner.textContent = p.impact;
+      body.appendChild(inner);
+
+      head.addEventListener('click', function () {
+        var isOpen = item.classList.toggle('open');
+        head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0px';
+      });
+
+      item.appendChild(head);
+      item.appendChild(body);
+      policiesWrap.appendChild(item);
+    });
+
+    // ─── Stories (clickable carousel) ───
+    var storyCard = document.getElementById('senior-story-card');
+    var storyDots = document.getElementById('story-dots');
+    var storyIndex = 0;
+
+    function renderStory() {
+      var s = STORY_DATA[storyIndex];
+      storyCard.innerHTML =
+        '<div class="name">' + s.name + '</div>' +
+        '<div class="loc">📍 ' + s.location + '</div>' +
+        '<div class="story">"' + s.story + '"</div>';
+      var dots = storyDots.querySelectorAll('.story-dot');
+      dots.forEach(function (d, i) {
+        d.classList.toggle('active', i === storyIndex);
+      });
+    }
+
+    STORY_DATA.forEach(function (_, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'story-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Story ' + (i + 1));
+      dot.addEventListener('click', function () {
+        storyIndex = i;
+        renderStory();
+      });
+      storyDots.appendChild(dot);
+    });
+
+    document.getElementById('story-prev').addEventListener('click', function () {
+      storyIndex = (storyIndex - 1 + STORY_DATA.length) % STORY_DATA.length;
+      renderStory();
+    });
+    document.getElementById('story-next').addEventListener('click', function () {
+      storyIndex = (storyIndex + 1) % STORY_DATA.length;
+      renderStory();
+    });
+    storyCard.addEventListener('click', function () {
+      storyIndex = (storyIndex + 1) % STORY_DATA.length;
+      renderStory();
+    });
+
+    renderStory();
+
+    // ─── Stats (clickable cards) ───
+    var statsWrap = document.getElementById('senior-stats');
+    STAT_DATA.forEach(function (stat, i) {
+      var card = document.createElement('div');
+      card.className = 'stat-card' + (i === 0 ? ' active' : '');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.innerHTML =
+        '<div class="stat-value">' + stat.value + '</div>' +
+        '<div class="stat-label">' + stat.label + '</div>' +
+        '<div class="stat-detail">' + stat.detail + '</div>';
+      card.addEventListener('click', function () {
+        statsWrap.querySelectorAll('.stat-card').forEach(function (c) { c.classList.remove('active'); });
+        card.classList.add('active');
+      });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.click();
+        }
+      });
+      statsWrap.appendChild(card);
+    });
+  })();
+</script>
 
 <!-- Google Translate Element Scripts -->
 <script type="text/javascript">

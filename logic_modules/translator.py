@@ -39,6 +39,9 @@ LANGUAGES = {
     "fr": "French",
     "bs": "Bosnian",
     "fa": "Farsi / Persian",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
 }
 
 # Direction: RTL languages
