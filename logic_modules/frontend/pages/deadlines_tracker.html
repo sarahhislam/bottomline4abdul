@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Election Deadlines & SMS Reminders — Abdul for Senate</title>
+  <title>Election Deadlines — Abdul for Senate</title>
   <script src="../js/gate.js"></script>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/abdul-design-system.css" />
@@ -39,13 +39,10 @@
     .deadline-info .title { font-weight: 700; color: #121c50; font-size: 0.95rem; }
     .deadline-info .desc { font-size: 0.85rem; color: #555; line-height: 1.5; margin-top: 0.25rem; }
     .deadline-info .countdown { font-size: 0.8rem; color: #d21214; font-weight: 600; margin-top: 0.25rem; }
-    .sms-form { background: #fcf4ed; border-radius: 12px; padding: 1.5rem; }
-    .sms-form label { display: block; font-weight: 600; font-size: 0.85rem; color: #121c50; margin-bottom: 0.5rem; }
-    .sms-form input { width: 100%; padding: 0.6em 0.75em; border: 2px solid #e0d6cc; border-radius: 8px; font-family: inherit; font-size: 0.9rem; background: #fff; transition: border-color 0.15s; margin-bottom: 0.75rem; }
-    .sms-form input:focus { outline: none; border-color: #121c50; }
-    .sms-form .hint { font-size: 0.8rem; color: #888; margin-bottom: 1rem; }
-    .sms-success { display: none; background: #e8f5e9; border-left: 4px solid #2e7d32; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; font-size: 0.9rem; color: #2e7d32; font-weight: 600; }
-    .sms-success.show { display: block; }
+    .poll-cta { background: #fcf4ed; border-radius: 12px; padding: 1.5rem; text-align: center; }
+    .poll-cta .poll-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .poll-cta h4 { font-size: 1.1rem; font-weight: 700; color: #121c50; margin: 0 0 0.5rem; }
+    .poll-cta p { font-size: 0.85rem; color: #555; line-height: 1.5; margin: 0 0 1rem; }
     .official-link { display: inline-block; margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; }
     @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
   </style>
@@ -62,8 +59,8 @@
   </div>
 </header>
 <section class="tool-hero">
-  <h1>⏰ Election Deadlines & SMS Reminders</h1>
-  <p>Live countdown to Michigan's key election dates. Sign up for SMS alerts so you never miss a deadline.</p>
+  <h1>⏰ Election Deadlines</h1>
+  <p>Live countdown to Michigan's key election dates so you never miss a deadline.</p>
 </section>
 <div class="tool-body">
   <div class="output-card">
@@ -123,15 +120,12 @@
   </div>
 
   <div class="output-card">
-    <h3>📱 SMS Reminder Sign-Up</h3>
-    <div class="sms-form">
-      <label>Phone Number</label>
-      <input type="tel" id="sms-phone" placeholder="e.g. (313) 555-1234" />
-      <label>ZIP Code (optional)</label>
-      <input type="text" id="sms-zip" placeholder="e.g. 48201" maxlength="5" />
-      <div class="hint">We'll text you reminders before each important election deadline. Message and data rates may apply. You can opt out anytime by replying STOP.</div>
-      <a class="btn" id="sms-signup-btn">Sign Up for SMS Alerts →</a>
-      <div class="sms-success" id="sms-success">✅ You're signed up! We'll send you reminders before each important election deadline.</div>
+    <h3>🗳️ What Matters Most to Voters?</h3>
+    <div class="poll-cta">
+      <div class="poll-icon">📊</div>
+      <h4>Voter Issues Priority Poll</h4>
+      <p>Cast your vote on the issues that matter most — Housing, Infrastructure, Education, Economy, Halal Economy, Senior Advocacy, and more. Watch live results update in real time.</p>
+      <a class="btn" href="issues_poll.html">Open the Live Poll →</a>
     </div>
   </div>
 
@@ -172,62 +166,6 @@
 
   updateCountdowns();
   setInterval(updateCountdowns, 60000); // update every minute
-
-  // SMS signup — sends via the backend /api/sms/send endpoint
-  function apiBase() {
-    const scripts = document.querySelectorAll('script[src]');
-    for (const s of scripts) {
-      if (s.src && s.src.indexOf('language-selector.js') !== -1) {
-        return s.src.replace(/js\/language-selector\.js(\?.*)?$/, '');
-      }
-    }
-    return './';
-  }
-
-  document.getElementById('sms-signup-btn').addEventListener('click', function() {
-    const phone = document.getElementById('sms-phone').value.trim();
-    const zip = document.getElementById('sms-zip').value.trim();
-    const successEl = document.getElementById('sms-success');
-
-    if (!phone) {
-      alert('Please enter your phone number.');
-      return;
-    }
-    // Simple phone validation
-    const phoneDigits = phone.replace(/\D/g, '');
-    if (phoneDigits.length < 10) {
-      alert('Please enter a valid 10-digit phone number.');
-      return;
-    }
-
-    const btn = document.getElementById('sms-signup-btn');
-    btn.setAttribute('aria-busy', 'true');
-    btn.textContent = 'Sending…';
-
-    fetch(apiBase() + 'api/sms/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: phone, zip: zip })
-    })
-      .then(function (res) { return res.json().catch(function () { return {}; }).then(function (data) { return { ok: res.ok, data: data }; }); })
-      .then(function (result) {
-        if (result.ok) {
-          successEl.textContent = "✅ You're signed up! We'll send you reminders before each important election deadline.";
-          successEl.classList.add('show');
-          document.getElementById('sms-phone').value = '';
-          document.getElementById('sms-zip').value = '';
-        } else {
-          alert(result.data.error || 'SMS sign-up failed. Please try again.');
-        }
-      })
-      .catch(function () {
-        alert('Could not reach the SMS service. Please try again.');
-      })
-      .finally(function () {
-        btn.removeAttribute('aria-busy');
-        btn.textContent = 'Sign Up for SMS Alerts →';
-      });
-  });
 </script>
 
 <script src="../js/modules.js"></script>
