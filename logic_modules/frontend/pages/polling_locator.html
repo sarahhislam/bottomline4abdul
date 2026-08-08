@@ -151,8 +151,14 @@
     'absentee': 'type-absentee'
   };
 
+  // Normalize a search term (strip punctuation/spaces, lowercase)
+  function normalize(s) {
+    return s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
   function searchLocations() {
-    const query = document.getElementById('loc-search').value.trim().toLowerCase();
+    const raw = document.getElementById('loc-search').value;
+    const query = normalize(raw);
     const resultsEl = document.getElementById('loc-results');
 
     if (!query) {
@@ -160,13 +166,42 @@
       return;
     }
 
-    const locations = MI_LOCATIONS[query] || [];
+    // 1) Exact key match (e.g. "detroit" or "48201")
+    let matchedKey = MI_LOCATIONS[query] ? query : null;
+
+    // 2) Partial / fuzzy city match — find any key that CONTAINS the query
+    //    (or the query contains the key), so "det" → detroit, "grand rap" → grandrapids-ish
+    if (!matchedKey) {
+      const keys = Object.keys(MI_LOCATIONS);
+      const parts = query;
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        // City keys are pure letters; ZIP keys are pure digits — avoid weird overlaps
+        if (/^\d+$/.test(query) === /^\d+$/.test(key)) {
+          if (key.indexOf(parts) !== -1 || parts.indexOf(key) !== -1) {
+            matchedKey = key;
+            break;
+          }
+        }
+      }
+    }
+
+    // 3) ZIP prefix match — "482" should match all keys starting with 482
+    if (!matchedKey && /^\d+$/.test(query) && query.length < 5) {
+      const matchingKeys = Object.keys(MI_LOCATIONS).filter(function (k) {
+        return /^\d+$/.test(k) && k.indexOf(query) === 0;
+      });
+      if (matchingKeys.length > 0) matchedKey = matchingKeys[0];
+    }
+
+    const locations = matchedKey ? MI_LOCATIONS[matchedKey] : [];
     if (locations.length === 0) {
-      resultsEl.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>No locations found for "' + query + '". Try a different city or ZIP code.</p></div>';
+      resultsEl.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>No locations found for "' + raw + '". Try a different city or ZIP code.</p></div>';
       return;
     }
 
-    let html = '<div class="results-count">Found ' + locations.length + ' location(s) near "' + query + '"</div>';
+    const matchedLabel = matchedKey.charAt(0).toUpperCase() + matchedKey.slice(1);
+    let html = '<div class="results-count">Found ' + locations.length + ' location(s) near "' + matchedLabel + '"</div>';
     locations.forEach(function(loc) {
       html += '<div class="loc-card">' +
         '<div class="name">' + loc.name + '</div>' +

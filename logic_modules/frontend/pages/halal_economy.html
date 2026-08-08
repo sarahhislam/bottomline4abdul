@@ -38,6 +38,17 @@
     .myth-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #121c50; }
     .myth-card .q { font-weight: 700; color: #d21214; margin-bottom: 0.4rem; }
     .myth-card .a { color: #2e7d32; }
+
+    /* ─── Interactive Dashboard Options ─── */
+    .halal-options { display: grid; gap: 0.75rem; }
+    .halal-option { background: #fff; border: 2px solid #e0d6cc; border-radius: 12px; padding: 1.25rem; cursor: pointer; text-align: left; transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s; font-family: inherit; }
+    .halal-option:hover { border-color: #121c50; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+    .halal-option.active { border-color: #d21214; background: #fcf4ed; }
+    .halal-option .opt-num { display: inline-block; background: #121c50; color: #fff; border-radius: 6px; font-size: 0.75rem; font-weight: 700; padding: 0.2em 0.6em; margin-right: 0.6rem; vertical-align: middle; }
+    .halal-option .opt-title { font-weight: 700; color: #121c50; font-size: 1rem; vertical-align: middle; }
+    .halal-option .opt-desc { color: #555; font-size: 0.85rem; line-height: 1.5; margin-top: 0.5rem; }
+    .halal-result { background: #fcf4ed; border-radius: 10px; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; min-height: 60px; color: #1c1d27; border: 2px solid #e0d6cc; margin-top: 1rem; }
+    .halal-res-title { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 1.25rem 0 0.5rem; }
     @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
   </style>
 </head>
@@ -70,11 +81,61 @@
   </div>
   <div class="output-card">
     <h3>🌙 Dashboard Output</h3>
-    <pre id="out-halal">Select an option and click "Go".</pre>
+    <p style="color:#888;font-size:0.9rem;margin:0 0 1rem;">Click an option below to run the live Halal Economy module.</p>
+
+    <div class="halal-options" id="halal-options">
+      <button class="halal-option" type="button" data-opt="1">
+        <span class="opt-num">1</span><span class="opt-title">Financing Simulator</span>
+        <div class="opt-desc">Calculate interest-free financing equity buy-in for a community asset.</div>
+      </button>
+      <button class="halal-option" type="button" data-opt="2">
+        <span class="opt-num">2</span><span class="opt-title">View Partner Network</span>
+        <div class="opt-desc">Browse the directory of partnered Muslim-owned businesses across Michigan.</div>
+      </button>
+      <button class="halal-option" type="button" data-opt="3">
+        <span class="opt-num">3</span><span class="opt-title">Read Policy Brief</span>
+        <div class="opt-desc">Read the Halal economy policy briefing on interest-free community financing.</div>
+      </button>
+    </div>
+
+    <div class="halal-res-title">📄 Result</div>
+    <div class="halal-result" id="halal-result">Select an option above to see the live output.</div>
   </div>
 
 <script src="../js/modules.js"></script>
 <script src="../js/main.js"></script>
+<script>
+  (function () {
+    'use strict';
+
+    var options = document.querySelectorAll('#halal-options .halal-option');
+    var resultEl = document.getElementById('halal-result');
+    var investmentInput = document.querySelector('input[name="investment"]');
+
+    options.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        options.forEach(function (o) { o.classList.remove('active'); });
+        opt.classList.add('active');
+
+        var optionVal = opt.getAttribute('data-opt');
+        var params = { option: optionVal };
+        if (investmentInput && investmentInput.value) {
+          params.investment = investmentInput.value;
+        }
+
+        resultEl.textContent = 'Running…';
+
+        window.BottomlineModules.run('halal_economy', params)
+          .then(function (result) {
+            resultEl.textContent = result;
+          })
+          .catch(function (err) {
+            resultEl.textContent = 'Error: ' + (err && err.message ? err.message : err);
+          });
+      });
+    });
+  })();
+</script>
 
 <!-- Google Translate Element Scripts -->
 <script type="text/javascript">

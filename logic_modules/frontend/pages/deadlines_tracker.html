@@ -173,10 +173,22 @@
   updateCountdowns();
   setInterval(updateCountdowns, 60000); // update every minute
 
-  // SMS signup
+  // SMS signup — sends via the backend /api/sms/send endpoint
+  function apiBase() {
+    const scripts = document.querySelectorAll('script[src]');
+    for (const s of scripts) {
+      if (s.src && s.src.indexOf('language-selector.js') !== -1) {
+        return s.src.replace(/js\/language-selector\.js(\?.*)?$/, '');
+      }
+    }
+    return './';
+  }
+
   document.getElementById('sms-signup-btn').addEventListener('click', function() {
     const phone = document.getElementById('sms-phone').value.trim();
     const zip = document.getElementById('sms-zip').value.trim();
+    const successEl = document.getElementById('sms-success');
+
     if (!phone) {
       alert('Please enter your phone number.');
       return;
@@ -187,9 +199,34 @@
       alert('Please enter a valid 10-digit phone number.');
       return;
     }
-    document.getElementById('sms-success').classList.add('show');
-    document.getElementById('sms-phone').value = '';
-    document.getElementById('sms-zip').value = '';
+
+    const btn = document.getElementById('sms-signup-btn');
+    btn.setAttribute('aria-busy', 'true');
+    btn.textContent = 'Sending…';
+
+    fetch(apiBase() + 'api/sms/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: phone, zip: zip })
+    })
+      .then(function (res) { return res.json().catch(function () { return {}; }).then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (result.ok) {
+          successEl.textContent = "✅ You're signed up! We'll send you reminders before each important election deadline.";
+          successEl.classList.add('show');
+          document.getElementById('sms-phone').value = '';
+          document.getElementById('sms-zip').value = '';
+        } else {
+          alert(result.data.error || 'SMS sign-up failed. Please try again.');
+        }
+      })
+      .catch(function () {
+        alert('Could not reach the SMS service. Please try again.');
+      })
+      .finally(function () {
+        btn.removeAttribute('aria-busy');
+        btn.textContent = 'Sign Up for SMS Alerts →';
+      });
   });
 </script>
 
