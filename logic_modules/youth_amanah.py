@@ -34,8 +34,7 @@ def run(user_input=None, **kwargs):
             "🔥 YOUTH HELP SYSTEM\n"
             "If you are a young person in crisis, contact:\n"
             "  Youth Crisis Line: 1-800-334-HELP\n"
-            "  Campaign Youth Desk: (313) 555-YOUTH\n"
-            "  Or text START to 22777"
+            "  Campaign Youth Desk: (313) 555-YOUTH"
         )
 
     lines = []

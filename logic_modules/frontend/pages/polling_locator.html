@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Polling Place & Absentee Ballot Locator — Abdul for Senate</title>
+  <title>Voter Readiness & Pledge-to-Vote Card Generator — Abdul for Senate</title>
   <script src="../js/gate.js"></script>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/abdul-design-system.css" />
@@ -17,7 +17,7 @@
     .tool-header a:hover { color: #fff; }
     .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
     .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
-    .tool-hero p { opacity: 0.8; max-width: 500px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-hero p { opacity: 0.8; max-width: 550px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
     .tool-body { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
     .input-group { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
     .input-group label { width: 100%; font-weight: 600; font-size: 0.85rem; color: #121c50; margin-bottom: -0.25rem; }
@@ -27,19 +27,106 @@
     .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
     .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
     .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
-    .loc-card { background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1rem; border-left: 4px solid #121c50; }
-    .loc-card .name { font-weight: 700; color: #121c50; font-size: 1.05rem; }
-    .loc-card .type { display: inline-block; padding: 0.2em 0.6em; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin: 0.3rem 0; }
-    .loc-card .type-polling { background: #2e7d32; color: #fff; }
-    .loc-card .type-dropbox { background: #e68a00; color: #fff; }
-    .loc-card .type-absentee { background: #121c50; color: #fff; }
-    .loc-card .address { color: #555; font-size: 0.9rem; margin: 0.3rem 0; }
-    .loc-card .hours { color: #888; font-size: 0.85rem; }
-    .loc-card .distance { color: #d21214; font-weight: 600; font-size: 0.85rem; }
-    .results-count { font-size: 0.85rem; color: #888; margin-bottom: 1rem; }
+
+    /* ─── Pledge Card ─── */
+    .pledge-card {
+      background: linear-gradient(135deg, #121c50 0%, #1a2c70 60%, #d21214 100%);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      max-width: 480px;
+      margin: 0 auto;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .pledge-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .pledge-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 140px; height: 140px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .pledge-card .pledge-badge {
+      display: inline-block;
+      background: #d21214;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.35em 1em;
+      border-radius: 30px;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .pledge-card .pledge-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 0 0 0.25rem;
+      position: relative;
+      z-index: 1;
+    }
+    .pledge-card .pledge-plan {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin: 0 0 1rem;
+      position: relative;
+      z-index: 1;
+      line-height: 1.5;
+    }
+    .pledge-card .pledge-details {
+      background: rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 1rem 0;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+    .pledge-card .pledge-details div {
+      font-size: 0.85rem;
+      padding: 0.25rem 0;
+      line-height: 1.4;
+    }
+    .pledge-card .pledge-details .detail-label {
+      opacity: 0.7;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+    .pledge-card .pledge-footer {
+      font-size: 0.7rem;
+      opacity: 0.6;
+      margin-top: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .pledge-card .pledge-flag {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
     .empty-state { text-align: center; padding: 2rem; color: #888; }
     .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    .official-link { display: inline-block; margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; }
+    .readiness-checklist { margin-top: 1rem; }
+    .readiness-check { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid #f0e8e0; font-size: 0.9rem; color: #555; }
+    .readiness-check:last-child { border-bottom: none; }
+    .readiness-check input[type="checkbox"] { accent-color: #d21214; width: 18px; height: 18px; }
+    .readiness-check .check-label { flex: 1; }
     @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
   </style>
 </head>
@@ -55,174 +142,103 @@
   </div>
 </header>
 <section class="tool-hero">
-  <h1>🗳️ Polling Place & Absentee Ballot Locator</h1>
-  <p>Find your Michigan voting site, drop-box locations, and absentee ballot resources — all in one place.</p>
+  <h1>🗳️ Voter Readiness & Pledge-to-Vote Card Generator</h1>
+  <p>Build your personal voting plan and generate a digital pledge card showing your commitment — all entirely self-contained.</p>
 </section>
 <div class="tool-body">
-  <div class="input-group">
-    <label>City or ZIP Code</label>
-    <input id="loc-search" type="text" placeholder="e.g. Detroit, Dearborn, 48201" />
-    <div class="hint">Enter a Michigan city name or 5-digit ZIP code. Try: Detroit, Dearborn, Lansing, 48201</div>
-    <a class="btn" id="loc-search-btn">Search Locations →</a>
+  <div class="output-card">
+    <h3>📝 Your Voting Plan</h3>
+    <div class="input-group" id="plan-form">
+      <label>Full Name</label>
+      <input id="voter-name" type="text" placeholder="e.g. Aisha Johnson" />
+      <label>Voting Method</label>
+      <select id="voting-method">
+        <option value="Election Day - In Person">Election Day — In Person</option>
+        <option value="Absentee Ballot by Mail">Absentee Ballot by Mail</option>
+        <option value="Early In-Person Voting">Early In-Person Voting</option>
+        <option value="Secure Drop Box">Secure Drop Box</option>
+      </select>
+      <label>Voting Location (optional)</label>
+      <input id="voting-location" type="text" placeholder="e.g. Detroit, MI / Polling Place Name" />
+      <label>Planned Voting Time (optional)</label>
+      <input id="voting-time" type="text" placeholder="e.g. 7:30 AM or Lunch break" />
+      <label>One Thing I'm Voting For</label>
+      <input id="voting-issue" type="text" placeholder="e.g. Healthcare, Housing, Education" />
+      <div class="hint">Fill in the details above, then click "Generate My Pledge Card" below.</div>
+      <button class="btn" id="generate-card-btn" type="button">Generate My Pledge Card →</button>
+    </div>
   </div>
 
   <div class="output-card">
-    <h3>🗳️ Voting Locations & Drop Boxes</h3>
-    <div id="loc-results">
+    <h3>✅ Voter Readiness Checklist</h3>
+    <div class="readiness-checklist">
+      <div class="readiness-check"><input type="checkbox" id="check-registered" /><span class="check-label">I am registered to vote in Michigan</span></div>
+      <div class="readiness-check"><input type="checkbox" id="check-id" /><span class="check-label">I have my Voter ID or know the affidavit option</span></div>
+      <div class="readiness-check"><input type="checkbox" id="check-plan" /><span class="check-label">I know when and where I will vote</span></div>
+      <div class="readiness-check"><input type="checkbox" id="check-absentee" /><span class="check-label">I know Michigan allows no-reason absentee voting</span></div>
+      <div class="readiness-check"><input type="checkbox" id="check-deadline" /><span class="check-label">I know Election Day: November 3, 2026 — polls open 7 AM to 8 PM</span></div>
+    </div>
+  </div>
+
+  <div class="output-card">
+    <h3>🪪 Your Digital Pledge Card</h3>
+    <div id="pledge-card-output">
       <div class="empty-state">
-        <div class="icon">📍</div>
-        <p>Enter a city or ZIP code above to find your polling place, drop boxes, and absentee ballot resources.</p>
+        <div class="icon">🗳️</div>
+        <p>Fill in your voting plan above and generate your personalized pledge card.</p>
       </div>
     </div>
   </div>
 
-  <div class="output-card">
-    <h3>ℹ️ Important Voting Information</h3>
-    <div style="font-size:0.9rem;line-height:1.6;color:#555;">
-      <p><strong style="color:#121c50;">Election Day:</strong> Polls are open from 7:00 AM to 8:00 PM in Michigan.</p>
-      <p><strong style="color:#121c50;">Absentee Voting:</strong> Any registered Michigan voter may request an absentee ballot — no reason required.</p>
-      <p><strong style="color:#121c50;">Drop Boxes:</strong> Secure ballot drop boxes are available at every clerk's office and many satellite locations.</p>
-      <p><strong style="color:#121c50;">Voter ID:</strong> Bring a photo ID if you have one. If you don't have ID, you can sign an affidavit and still vote a regular ballot.</p>
-      <!--
-        ═══════════════════════════════════════════════════════════
-        OFFICIAL MICHIGAN VOTER INFORMATION CENTER
-        ═══════════════════════════════════════════════════════════
-        This is the official Michigan Voter Information Center.
-        To update this link, replace the href URL below.
-        The current URL is: https://mvic.sos.state.mi.us/
-        ═══════════════════════════════════════════════════════════
-      -->
-      <p><a class="official-link" href="https://mvic.sos.state.mi.us/" target="_blank" rel="noopener">Official Michigan Voter Information Center →</a></p>
-    </div>
-  </div>
-
-<script>
-  // Michigan voting location sample data
-  const MI_LOCATIONS = {
-    'detroit': [
-      { name: 'Detroit City Clerk\'s Office', type: 'absentee', address: '2978 W Grand Blvd, Detroit, MI 48202', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.5 mi' },
-      { name: 'Huntington Place Convention Center', type: 'polling', address: '1 Washington Blvd, Detroit, MI 48226', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '1.2 mi' },
-      { name: 'Detroit Public Library — Main Branch', type: 'dropbox', address: '5201 Woodward Ave, Detroit, MI 48202', hours: '24/7 Secure Drop Box', distance: '0.8 mi' },
-      { name: 'Northwest Activities Center', type: 'polling', address: '18100 Meyers Rd, Detroit, MI 48235', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '3.4 mi' },
-      { name: 'Butzel Family Center', type: 'dropbox', address: '7737 Kercheval Ave, Detroit, MI 48214', hours: '24/7 Secure Drop Box', distance: '2.1 mi' }
-    ],
-    'dearborn': [
-      { name: 'Dearborn City Clerk\'s Office', type: 'absentee', address: '16901 Michigan Ave, Dearborn, MI 48126', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.3 mi' },
-      { name: 'Ford Community & Performing Arts Center', type: 'polling', address: '15801 Michigan Ave, Dearborn, MI 48126', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '0.6 mi' },
-      { name: 'Dearborn Police Department — West', type: 'dropbox', address: '4700 Greenfield Rd, Dearborn, MI 48126', hours: '24/7 Secure Drop Box', distance: '1.1 mi' },
-      { name: 'Bryant Community Center', type: 'polling', address: '18000 Oakwood Blvd, Dearborn, MI 48124', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '2.3 mi' }
-    ],
-    'lansing': [
-      { name: 'Lansing City Clerk\'s Office', type: 'absentee', address: '124 W Michigan Ave, Lansing, MI 48933', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.2 mi' },
-      { name: 'Lansing Center', type: 'polling', address: '333 E Michigan Ave, Lansing, MI 48933', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '0.4 mi' },
-      { name: 'Lansing City Hall — Drop Box', type: 'dropbox', address: '124 W Michigan Ave, Lansing, MI 48933', hours: '24/7 Secure Drop Box', distance: '0.2 mi' },
-      { name: 'Eastern High School', type: 'polling', address: '220 N Pennsylvania Ave, Lansing, MI 48912', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '1.8 mi' }
-    ],
-    '48201': [
-      { name: 'Detroit City Clerk\'s Office', type: 'absentee', address: '2978 W Grand Blvd, Detroit, MI 48202', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.5 mi' },
-      { name: 'Huntington Place Convention Center', type: 'polling', address: '1 Washington Blvd, Detroit, MI 48226', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '1.2 mi' },
-      { name: 'Detroit Public Library — Main Branch', type: 'dropbox', address: '5201 Woodward Ave, Detroit, MI 48202', hours: '24/7 Secure Drop Box', distance: '0.8 mi' }
-    ],
-    '48202': [
-      { name: 'Detroit City Clerk\'s Office', type: 'absentee', address: '2978 W Grand Blvd, Detroit, MI 48202', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.1 mi' },
-      { name: 'Detroit Public Library — Main Branch', type: 'dropbox', address: '5201 Woodward Ave, Detroit, MI 48202', hours: '24/7 Secure Drop Box', distance: '0.3 mi' },
-      { name: 'Northwestern High School', type: 'polling', address: '2200 W Grand Blvd, Detroit, MI 48208', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '1.5 mi' }
-    ],
-    '48126': [
-      { name: 'Dearborn City Clerk\'s Office', type: 'absentee', address: '16901 Michigan Ave, Dearborn, MI 48126', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.3 mi' },
-      { name: 'Ford Community & Performing Arts Center', type: 'polling', address: '15801 Michigan Ave, Dearborn, MI 48126', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '0.6 mi' },
-      { name: 'Dearborn Police Department — West', type: 'dropbox', address: '4700 Greenfield Rd, Dearborn, MI 48126', hours: '24/7 Secure Drop Box', distance: '1.1 mi' }
-    ],
-    '48933': [
-      { name: 'Lansing City Clerk\'s Office', type: 'absentee', address: '124 W Michigan Ave, Lansing, MI 48933', hours: 'Mon–Fri 8:00 AM – 5:00 PM', distance: '0.2 mi' },
-      { name: 'Lansing Center', type: 'polling', address: '333 E Michigan Ave, Lansing, MI 48933', hours: 'Election Day 7:00 AM – 8:00 PM', distance: '0.4 mi' },
-      { name: 'Lansing City Hall — Drop Box', type: 'dropbox', address: '124 W Michigan Ave, Lansing, MI 48933', hours: '24/7 Secure Drop Box', distance: '0.2 mi' }
-    ]
-  };
-
-  const TYPE_LABELS = {
-    'polling': 'Polling Place',
-    'dropbox': 'Secure Drop Box',
-    'absentee': 'Absentee Ballot Office'
-  };
-  const TYPE_CLASSES = {
-    'polling': 'type-polling',
-    'dropbox': 'type-dropbox',
-    'absentee': 'type-absentee'
-  };
-
-  // Normalize a search term (strip punctuation/spaces, lowercase)
-  function normalize(s) {
-    return s.toLowerCase().replace(/[^a-z0-9]/g, '');
-  }
-
-  function searchLocations() {
-    const raw = document.getElementById('loc-search').value;
-    const query = normalize(raw);
-    const resultsEl = document.getElementById('loc-results');
-
-    if (!query) {
-      resultsEl.innerHTML = '<div class="empty-state"><div class="icon">📍</div><p>Enter a city or ZIP code above to find your polling place, drop boxes, and absentee ballot resources.</p></div>';
-      return;
-    }
-
-    // 1) Exact key match (e.g. "detroit" or "48201")
-    let matchedKey = MI_LOCATIONS[query] ? query : null;
-
-    // 2) Partial / fuzzy city match — find any key that CONTAINS the query
-    //    (or the query contains the key), so "det" → detroit, "grand rap" → grandrapids-ish
-    if (!matchedKey) {
-      const keys = Object.keys(MI_LOCATIONS);
-      const parts = query;
-      for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
-        // City keys are pure letters; ZIP keys are pure digits — avoid weird overlaps
-        if (/^\d+$/.test(query) === /^\d+$/.test(key)) {
-          if (key.indexOf(parts) !== -1 || parts.indexOf(key) !== -1) {
-            matchedKey = key;
-            break;
-          }
-        }
-      }
-    }
-
-    // 3) ZIP prefix match — "482" should match all keys starting with 482
-    if (!matchedKey && /^\d+$/.test(query) && query.length < 5) {
-      const matchingKeys = Object.keys(MI_LOCATIONS).filter(function (k) {
-        return /^\d+$/.test(k) && k.indexOf(query) === 0;
-      });
-      if (matchingKeys.length > 0) matchedKey = matchingKeys[0];
-    }
-
-    const locations = matchedKey ? MI_LOCATIONS[matchedKey] : [];
-    if (locations.length === 0) {
-      resultsEl.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>No locations found for "' + raw + '". Try a different city or ZIP code.</p></div>';
-      return;
-    }
-
-    const matchedLabel = matchedKey.charAt(0).toUpperCase() + matchedKey.slice(1);
-    let html = '<div class="results-count">Found ' + locations.length + ' location(s) near "' + matchedLabel + '"</div>';
-    locations.forEach(function(loc) {
-      html += '<div class="loc-card">' +
-        '<div class="name">' + loc.name + '</div>' +
-        '<span class="type ' + TYPE_CLASSES[loc.type] + '">' + TYPE_LABELS[loc.type] + '</span>' +
-        '<div class="address">📍 ' + loc.address + '</div>' +
-        '<div class="hours">🕐 ' + loc.hours + '</div>' +
-        '<div class="distance">📏 ' + loc.distance + ' away</div>' +
-        '</div>';
-    });
-    resultsEl.innerHTML = html;
-  }
-
-  document.getElementById('loc-search-btn').addEventListener('click', searchLocations);
-  document.getElementById('loc-search').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') searchLocations();
-  });
-</script>
-
 <script src="../js/modules.js"></script>
 <script src="../js/main.js"></script>
-<script src="../js/language-selector.js"></script>
+<script>
+  (function () {
+    'use strict';
+
+    var nameInput = document.getElementById('voter-name');
+    var methodSelect = document.getElementById('voting-method');
+    var locationInput = document.getElementById('voting-location');
+    var timeInput = document.getElementById('voting-time');
+    var issueInput = document.getElementById('voting-issue');
+    var generateBtn = document.getElementById('generate-card-btn');
+    var outputEl = document.getElementById('pledge-card-output');
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str == null ? '' : String(str);
+      return div.innerHTML;
+    }
+
+    generateBtn.addEventListener('click', function () {
+      var name = nameInput.value.trim() || 'A Michigan Voter';
+      var method = methodSelect.value;
+      var location = locationInput.value.trim() || 'Michigan';
+      var time = timeInput.value.trim() || 'On Election Day';
+      var issue = issueInput.value.trim() || 'A better Michigan for all';
+
+      var date = new Date();
+      var dateStr = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+      var html =
+        '<div class="pledge-card">' +
+        '<div class="pledge-flag">🗳️</div>' +
+        '<div class="pledge-badge">★ Pledge to Vote ★</div>' +
+        '<div class="pledge-name">' + escapeHtml(name) + '</div>' +
+        '<div class="pledge-plan">I pledge to vote in the Michigan General Election on <strong>November 3, 2026</strong>.</div>' +
+        '<div class="pledge-details">' +
+        '<div><span class="detail-label">Voting Method</span><br>' + escapeHtml(method) + '</div>' +
+        '<div><span class="detail-label">Location</span><br>' + escapeHtml(location) + '</div>' +
+        '<div><span class="detail-label">Planned Time</span><br>' + escapeHtml(time) + '</div>' +
+        '<div><span class="detail-label">Voting For</span><br>' + escapeHtml(issue) + '</div>' +
+        '</div>' +
+        '<div class="pledge-footer">Generated on ' + escapeHtml(dateStr) + ' · Abdul for Senate · #VoteReady</div>' +
+        '</div>';
+
+      outputEl.innerHTML = html;
+    });
+  })();
+</script>
 
 <!-- Google Translate Element Scripts -->
 <script type="text/javascript">

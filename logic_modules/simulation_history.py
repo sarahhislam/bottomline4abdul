@@ -58,10 +58,10 @@ def run(unlock=None, **kwargs):
 
     Usage:
       /api/simulation_history                → Shows sealed archive
-      /api/simulation_history?unlock=ABDU-2026  → Unlocks classified intel
+      /api/simulation_history?unlock=abdulwillbenchtovictory26  → Unlocks classified intel
     """
     # ─── MASTER KEY UNLOCK ────────────────────────────────
-    if unlock == "ABDU-2026":
+    if unlock == "abdulwillbenchtovictory26":
         category = random.choice(list(VAULT.keys()))
         entry = random.choice(VAULT[category])
         return (

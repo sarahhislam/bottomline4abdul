@@ -7,7 +7,7 @@ app = Flask(__name__, static_folder='frontend', static_url_path='')
 ALLOWED_MODULES = {
     'endorsement_engine', 'financial_simulator', 'halal_economy', 'hazard_lookup',
     'myth_buster', 'policy_deep_dive', 'senior_engagement', 'simulation_history',
-    'tax_calculator', 'youth_amanah', 'issues_poll'
+    'tax_calculator', 'youth_amanah'
 }
 
 

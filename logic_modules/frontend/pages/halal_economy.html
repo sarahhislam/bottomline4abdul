@@ -41,7 +41,7 @@
 
     /* ─── Interactive Dashboard Options ─── */
     .halal-options { display: grid; gap: 0.75rem; }
-    .halal-option { background: #fff; border: 2px solid #e0d6cc; border-radius: 12px; padding: 1.25rem; cursor: pointer; text-align: left; transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s; font-family: inherit; }
+    .halal-option { background: #fff; border: 2px solid #e0d6cc; border-radius: 12px; padding: 1.25rem; cursor: pointer; text-align: left; transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s; font-family: inherit; width: 100%; }
     .halal-option:hover { border-color: #121c50; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
     .halal-option.active { border-color: #d21214; background: #fcf4ed; }
     .halal-option .opt-num { display: inline-block; background: #121c50; color: #fff; border-radius: 6px; font-size: 0.75rem; font-weight: 700; padding: 0.2em 0.6em; margin-right: 0.6rem; vertical-align: middle; }
@@ -68,25 +68,27 @@
 </section>
 <div class="tool-body">
   <div class="input-group" data-module-form>
-    <label>Option</label>
-    <select name="option">
+    <label for="halal-option-select">Option</label>
+    <select id="halal-option-select" name="option">
       <option value="">-- Select --</option>
       <option value="1">Financing Simulator</option>
       <option value="2">View Partner Network</option>
       <option value="3">Policy Brief</option>
     </select>
-    <label>Investment (for financing)</label>
-    <input name="investment" type="number" placeholder="50000" />
-    <a class="btn" data-module-run="halal_economy" data-output="#out-halal">Go →</a>
+    <label for="halal-investment">Investment (for financing)</label>
+    <input id="halal-investment" name="investment" type="number" placeholder="50000" inputmode="numeric" min="0" step="any" />
+    <div class="hint">Enter any dollar amount — the field is fully editable. Example: 25000, 75000, or 100000.</div>
+    <a class="btn" id="halal-run-btn" href="#">Go →</a>
   </div>
+
   <div class="output-card">
     <h3>🌙 Dashboard Output</h3>
-    <p style="color:#888;font-size:0.9rem;margin:0 0 1rem;">Click an option below to run the live Halal Economy module.</p>
+    <p style="color:#888;font-size:0.9rem;margin:0 0 1rem;">Click any option below to run the live Halal Economy module instantly.</p>
 
     <div class="halal-options" id="halal-options">
       <button class="halal-option" type="button" data-opt="1">
         <span class="opt-num">1</span><span class="opt-title">Financing Simulator</span>
-        <div class="opt-desc">Calculate interest-free financing equity buy-in for a community asset.</div>
+        <div class="opt-desc">Calculate interest-free financing equity buy-in for a community asset using your entered investment.</div>
       </button>
       <button class="halal-option" type="button" data-opt="2">
         <span class="opt-num">2</span><span class="opt-title">View Partner Network</span>
@@ -110,30 +112,83 @@
 
     var options = document.querySelectorAll('#halal-options .halal-option');
     var resultEl = document.getElementById('halal-result');
-    var investmentInput = document.querySelector('input[name="investment"]');
+    var investmentInput = document.getElementById('halal-investment');
+    var optionSelect = document.getElementById('halal-option-select');
+    var runBtn = document.getElementById('halal-run-btn');
 
+    // Fully editable investment input — no readonly, no disabled, always writable.
+    investmentInput.removeAttribute('readonly');
+    investmentInput.removeAttribute('disabled');
+
+    function syncSelect(optVal) {
+      if (optionSelect) optionSelect.value = optVal;
+    }
+
+    function highlightOption(optVal) {
+      options.forEach(function (o) {
+        o.classList.toggle('active', o.getAttribute('data-opt') === optVal);
+      });
+    }
+
+    function runModule(optVal, cb) {
+      var inv = investmentInput && investmentInput.value !== '' ? investmentInput.value : '50000';
+      var params = { option: optVal };
+      if (inv) params.investment = inv;
+
+      resultEl.textContent = 'Running…';
+
+      window.BottomlineModules.run('halal_economy', params)
+        .then(function (result) {
+          resultEl.textContent = result;
+          if (cb) cb();
+        })
+        .catch(function (err) {
+          resultEl.textContent = 'Error: ' + (err && err.message ? err.message : err);
+          if (cb) cb();
+        });
+    }
+
+    // Option buttons: click → run instantly, highlight, and sync select.
     options.forEach(function (opt) {
       opt.addEventListener('click', function () {
-        options.forEach(function (o) { o.classList.remove('active'); });
-        opt.classList.add('active');
-
-        var optionVal = opt.getAttribute('data-opt');
-        var params = { option: optionVal };
-        if (investmentInput && investmentInput.value) {
-          params.investment = investmentInput.value;
-        }
-
-        resultEl.textContent = 'Running…';
-
-        window.BottomlineModules.run('halal_economy', params)
-          .then(function (result) {
-            resultEl.textContent = result;
-          })
-          .catch(function (err) {
-            resultEl.textContent = 'Error: ' + (err && err.message ? err.message : err);
-          });
+        var optVal = opt.getAttribute('data-opt');
+        highlightOption(optVal);
+        syncSelect(optVal);
+        runModule(optVal);
       });
     });
+
+    // Select change → run instantly too.
+    if (optionSelect) {
+      optionSelect.addEventListener('change', function () {
+        var val = optionSelect.value;
+        if (!val) return;
+        highlightOption(val);
+        runModule(val);
+      });
+    }
+
+    // Go button → always uses the current select / highlighted option.
+    if (runBtn) {
+      runBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var optVal = optionSelect && optionSelect.value ? optionSelect.value : '1';
+        highlightOption(optVal);
+        runModule(optVal);
+      });
+    }
+
+    // Input 'Enter' key also runs the current highlighted / selected option.
+    if (investmentInput) {
+      investmentInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          var optVal = optionSelect && optionSelect.value ? optionSelect.value : '1';
+          highlightOption(optVal);
+          runModule(optVal);
+        }
+      });
+    }
   })();
 </script>
 

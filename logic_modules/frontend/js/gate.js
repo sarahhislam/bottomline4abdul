@@ -6,9 +6,9 @@
   'use strict';
 
   var STORAGE_KEY = 'bottomline_beta_ok';
-  // sha256("bottomline")
+  // sha256("abdulwillbenchtovictory26")
   var PASS_HASH =
-    '59685fb62ea95ab9b1b826840960c9eab97c0cf2f6bcda7ea392e87abf75aba0';
+    'cdc02b447fb6cccd6e94d07bbe94ee31fe986dec6e5e936d51db64185b05c4a3';
 
   function unlocked() {
     try {

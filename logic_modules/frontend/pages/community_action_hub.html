@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Community Action Hub & Synergy Grid — Abdul for Senate</title>
+  <script src="../js/gate.js"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/abdul-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
+    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .tool-header .brand em { color: #d21214; font-style: normal; }
+    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; }
+    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    .tool-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-body { max-width: 950px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
+    .grid-module { background: #fcf4ed; border: 2px solid #e0d6cc; border-radius: 12px; padding: 1.25rem; transition: border-color 0.15s, transform 0.15s; }
+    .grid-module:hover { border-color: #121c50; transform: translateY(-2px); }
+    .grid-module .module-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .grid-module .module-title { font-weight: 700; color: #121c50; font-size: 1rem; }
+    .grid-module .module-desc { color: #555; font-size: 0.85rem; line-height: 1.5; margin: 0.4rem 0 0.75rem; }
+    .matcher-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .matcher-row select, .matcher-row input { flex: 1; min-width: 130px; padding: 0.55em 0.7em; border: 2px solid #e0d6cc; border-radius: 8px; font-family: inherit; font-size: 0.85rem; background: #fff; }
+    .matcher-row select:focus, .matcher-row input:focus { outline: none; border-color: #121c50; }
+    .match-result { background: #fff; border-radius: 8px; padding: 0.85rem; font-size: 0.85rem; line-height: 1.5; border-left: 4px solid #2e7d32; color: #1c1d27; }
+    .pledge-form { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .pledge-form input { flex: 1; min-width: 140px; padding: 0.55em 0.7em; border: 2px solid #e0d6cc; border-radius: 8px; font-family: inherit; font-size: 0.85rem; background: #fff; }
+    .pledge-form input:focus { outline: none; border-color: #121c50; }
+    .pledge-list { display: flex; flex-direction: column; gap: 0.5rem; max-height: 180px; overflow-y: auto; }
+    .pledge-item { background: #fff; border-radius: 8px; padding: 0.7rem 0.85rem; font-size: 0.82rem; color: #1c1d27; border-left: 4px solid #121c50; }
+    .pledge-item .pledge-name { font-weight: 700; color: #121c50; }
+    .pledge-item .pledge-text { color: #555; margin-top: 0.2rem; }
+    .timeline { position: relative; padding-left: 1.25rem; }
+    .timeline::before { content: ''; position: absolute; left: 4px; top: 4px; bottom: 4px; width: 3px; background: #e0d6cc; border-radius: 3px; }
+    .timeline-item { position: relative; padding: 0.6rem 0 0.6rem 0.9rem; }
+    .timeline-item::before { content: ''; position: absolute; left: -1.25rem; top: 1rem; width: 11px; height: 11px; border-radius: 50%; background: #d21214; border: 2px solid #fff; box-shadow: 0 0 0 2px #d21214; }
+    .timeline-item.completed::before { background: #2e7d32; box-shadow: 0 0 0 2px #2e7d32; }
+    .timeline-item .tl-date { font-size: 0.72rem; font-weight: 700; color: #d21214; text-transform: uppercase; letter-spacing: 0.04em; }
+    .timeline-item.completed .tl-date { color: #2e7d32; }
+    .timeline-item .tl-title { font-weight: 700; color: #121c50; font-size: 0.9rem; }
+    .timeline-item .tl-desc { font-size: 0.82rem; color: #555; line-height: 1.45; margin-top: 0.2rem; }
+    .biz-card { background: #fff; border-radius: 10px; padding: 0.9rem; display: flex; gap: 0.75rem; margin-bottom: 0.6rem; }
+    .biz-card .biz-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .biz-card .biz-name { font-weight: 700; color: #121c50; font-size: 0.9rem; }
+    .biz-card .biz-type { font-size: 0.72rem; color: #888; text-transform: uppercase; letter-spacing: 0.04em; }
+    .biz-card .biz-impact { font-size: 0.82rem; color: #2e7d32; margin-top: 0.25rem; }
+    .biz-spotlight-main { background: #fff; border-radius: 12px; padding: 1rem; margin-bottom: 0.75rem; }
+    .biz-spotlight-main .spotlight-label { font-size: 0.7rem; font-weight: 700; color: #d21214; text-transform: uppercase; letter-spacing: 0.06em; }
+    .biz-spotlight-main .spotlight-name { font-size: 1.2rem; font-weight: 800; color: #121c50; margin: 0.3rem 0; }
+    .biz-spotlight-main .spotlight-desc { font-size: 0.85rem; color: #555; line-height: 1.5; }
+    .hub-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .hub-tab { border: 2px solid #e0d6cc; border-radius: 8px; padding: 0.5em 1em; font-family: inherit; font-size: 0.8rem; font-weight: 700; color: #121c50; background: #fff; cursor: pointer; transition: all 0.15s; }
+    .hub-tab:hover { border-color: #121c50; }
+    .hub-tab.active { background: #121c50; color: #fff; border-color: #121c50; }
+    .hub-panel { display: none; }
+    .hub-panel.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
+  </style>
+</head>
+<body>
+<header class="tool-header">
+  <div class="brand">Abdul <em>for Senate</em></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="translate-widget-container">
+      <div id="google_translate_element"></div>
+    </div>
+    <a href="../">← Back to Tools</a>
+  </div>
+</header>
+<section class="tool-hero">
+  <h1>🤝 Community Action Hub & Synergy Grid</h1>
+  <p>One unified space to match community needs with solutions, pledge your vision for the future, track legislative impact, and celebrate local businesses — together.</p>
+</section>
+<div class="tool-body">
+  <div class="output-card">
+    <h3>🤝 Community Action Hub & Synergy Grid</h3>
+    <p style="color:#888;font-size:0.9rem;margin:0 0 0.5rem;">A unified interactive hub integrating four community action tools into one cohesive interface.</p>
+    <div class="hub-tabs" id="hub-tabs">
+      <button class="hub-tab active" type="button" data-panel="matcher">🔧 Needs & Solutions</button>
+      <button class="hub-tab" type="button" data-panel="pledges">🌟 Vision Pledges</button>
+      <button class="hub-tab" type="button" data-panel="timeline">⚖️ Impact Timeline</button>
+      <button class="hub-tab" type="button" data-panel="spotlight">🏪 Business Spotlight</button>
+    </div>
+    <div class="hub-panel active" id="panel-matcher">
+      <div class="grid-module">
+        <div class="module-icon">🔧</div>
+        <div class="module-title">Community Needs & Solutions Matcher</div>
+        <div class="module-desc">Select a community need to see matched solutions already in motion across the district.</div>
+        <div class="matcher-row">
+          <select id="need-select">
+            <option value="">-- Select a Need --</option>
+            <option value="housing">Housing Stability</option>
+            <option value="transit">Public Transit</option>
+            <option value="healthcare">Healthcare Access</option>
+            <option value="youth">Youth Development</option>
+            <option value="food">Food Security</option>
+            <option value="digital">Digital Equity</option>
+          </select>
+          <button class="btn" id="need-match-btn" type="button">Find Solutions →</button>
+        </div>
+        <div class="match-result" id="match-result">Select a need above to see matching community solutions.</div>
+      </div>
+    </div>
+    <div class="hub-panel" id="panel-pledges">
+      <div class="grid-module">
+        <div class="module-icon">🌟</div>
+        <div class="module-title">Future Vision Pledge Board</div>
+        <div class="module-desc">Share your vision pledge for the future of Michigan. Public, self-contained, and community-powered.</div>
+        <div class="pledge-form">
+          <input id="pledge-name" type="text" placeholder="Your name or neighborhood" maxlength="40" />
+          <input id="pledge-text" type="text" placeholder="Your vision pledge…" maxlength="120" />
+          <button class="btn" id="pledge-add-btn" type="button">Pledge →</button>
+        </div>
+        <div class="pledge-list" id="pledge-list">
+          <div class="pledge-item"><span class="pledge-name">Dorothy W.</span><div class="pledge-text">"I pledge to volunteer at one community garden every month."</div></div>
+          <div class="pledge-item"><span class="pledge-name">Yusuf H.</span><div class="pledge-text">"I pledge to mentor one young person through college apps this year."</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="hub-panel" id="panel-timeline">
+      <div class="grid-module">
+        <div class="module-icon">⚖️</div>
+        <div class="module-title">Legislative Impact Timeline</div>
+        <div class="module-desc">Track key legislation milestones and their community impact over time.</div>
+        <div class="timeline" id="impact-timeline">
+          <div class="timeline-item completed">
+            <div class="tl-date">✓ Completed · 2025</div>
+            <div class="tl-title">No-Reason Absentee Voting</div>
+            <div class="tl-desc">Expanded access to absentee ballots for every registered Michigan voter.</div>
+          </div>
+          <div class="timeline-item completed">
+            <div class="tl-date">✓ Completed · 2025</div>
+            <div class="tl-title">Senior Property Tax Review</div>
+            <div class="tl-desc">Launched a district-wide review to cap property tax increases for residents 65+.</div>
+          </div>
+          <div class="timeline-item active">
+            <div class="tl-date">● In Progress · 2026</div>
+            <div class="tl-title">Halal Interest-Free Financing Pilot</div>
+            <div class="tl-desc">Community financing pilot for Muslim-owned small businesses across Detroit and Dearborn.</div>
+          </div>
+          <div class="timeline-item active">
+            <div class="tl-date">● In Progress · 2026</div>
+            <div class="tl-title">Youth Digital Literacy Initiative</div>
+            <div class="tl-desc">Rolling out senior and youth digital literacy workshops in Hamtramck and Flint.</div>
+          </div>
+          <div class="timeline-item upcoming">
+            <div class="tl-date">○ Upcoming · 2027</div>
+            <div class="tl-title">Green New Deal District Grid</div>
+            <div class="tl-desc">Zero-emission municipal logistics and lead pipe replacement across Michigan.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hub-panel" id="panel-spotlight">
+      <div class="grid-module">
+        <div class="module-icon">🏪</div>
+        <div class="module-title">Local Business Spotlight</div>
+        <div class="module-desc">Celebrating partnered Muslim-owned businesses powering the community economy.</div>
+        <div class="biz-spotlight-main" id="biz-spotlight-main">
+          <div class="spotlight-label">★ Spotlight of the Week</div>
+          <div class="spotlight-name" id="biz-spotlight-name">Kitab Cafe</div>
+          <div class="spotlight-desc" id="biz-spotlight-desc">Bookstore & Café in Detroit, MI — organizing youth literacy events and hosting community policy roundtables.</div>
+        </div>
+        <div id="biz-list"></div>
+        <div style="margin-top:0.75rem;">
+          <button class="btn" id="biz-next-btn" type="button">Next Spotlight →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../js/modules.js"></script>
+<script src="../js/main.js"></script>
+<script>
+(function () {
+  'use strict';
+  var tabs = document.querySelectorAll('#hub-tabs .hub-tab');
+  var panels = document.querySelectorAll('.hub-panel');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      panels.forEach(function (p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.getAttribute('data-panel')).classList.add('active');
+    });
+  });
+  var NEEDS = {
+    housing: { label: 'Housing Stability', solutions: ['Property tax cap expansion for residents 65+', 'Community land trust partnerships for affordable homeownership', 'Tenant right-to-counsel program for eviction defense'] },
+    transit: { label: 'Public Transit', solutions: ['New seating and shelters at high-traffic senior routes', 'Increased frequency on key corridors between Detroit and Dearborn', 'Zero-emission municipal shuttle pilot program'] },
+    healthcare: { label: 'Healthcare Access', solutions: ['Direct connection to low-cost prescription clinics', 'Mobile health screening units in underserved neighborhoods', 'Senior healthcare navigation hotline'] },
+    youth: { label: 'Youth Development', solutions: ['Youth mentorship apprenticeship program with local businesses', 'Expanded after-school STEM labs in Hamtramck and Flint', 'College application and FAFSA support clinics'] },
+    food: { label: 'Food Security', solutions: ['Halal food pantry network expansion', 'Community garden plots in every district neighborhood', 'Home-delivered meal programs for homebound seniors'] },
+    digital: { label: 'Digital Equity', solutions: ['Senior-only digital literacy workshops', 'Free public Wi-Fi at community centers and libraries', 'Refurbished device distribution program for students'] }
+  };
+  var needSelect = document.getElementById('need-select');
+  var needBtn = document.getElementById('need-match-btn');
+  var matchResult = document.getElementById('match-result');
+  function runMatcher() {
+    var key = needSelect.value;
+    if (!key) { matchResult.textContent = 'Please select a community need above.'; return; }
+    var data = NEEDS[key];
+    matchResult.innerHTML = '<strong>Matched Solutions for ' + data.label + ':</strong><br>• ' + data.solutions.join('<br>• ');
+  }
+  needBtn.addEventListener('click', runMatcher);
+  needSelect.addEventListener('change', runMatcher);
+  var pledgeName = document.getElementById('pledge-name');
+  var pledgeText = document.getElementById('pledge-text');
+  var pledgeBtn = document.getElementById('pledge-add-btn');
+  var pledgeList = document.getElementById('pledge-list');
+  pledgeBtn.addEventListener('click', function () {
+    var name = pledgeName.value.trim();
+    var text = pledgeText.value.trim();
+    if (!text) { alert('Please enter a vision pledge.'); return; }
+    var displayName = name ? name : 'Anonymous';
+    var item = document.createElement('div');
+    item.className = 'pledge-item';
+    item.innerHTML = '<span class="pledge-name">' + displayName + '</span><div class="pledge-text">"' + text + '"</div>';
+    pledgeList.insertBefore(item, pledgeList.firstChild);
+    pledgeName.value = '';
+    pledgeText.value = '';
+  });
+  var BIZLIST = [
+    { name: 'Kitab Cafe', type: 'Bookstore & Cafe', impact: '3 Youth Literacy Events · Detroit, MI', desc: 'A cozy bookstore and café hosting youth literacy events and community policy roundtables.' },
+    { name: 'Cannelle Detroit', type: 'Patisserie & Cafe', impact: 'Senior Outreach Sponsor · Detroit, MI', desc: 'Elegant patisserie sponsoring senior outreach programs across the district.' },
+    { name: 'A Taste of Marrakech', type: 'Moroccan Culinary', impact: 'Volunteer Catering Partner · Dearborn, MI', desc: 'Authentic Moroccan kitchen that volunteers catering for community iftars and events.' },
+    { name: 'Uyu Coffee', type: 'Specialty Coffee Shop', impact: 'Student Organizer Hub · Detroit, MI', desc: 'Specialty coffee shop serving as a hub for student organizers and civic groups.' },
+    { name: 'Cafe Sous Terre', type: 'Neighborhood Cafe', impact: 'Hosted 2 Policy Roundtables · Detroit, MI', desc: 'Neighborhood café that has hosted two successful policy roundtables.' },
+    { name: 'Zamzam Grocers', type: 'Grocery & Halal Butcher', impact: 'Food Security Partner · Hamtramck, MI', desc: 'Halal grocer and butcher partnering on food security initiatives in Hamtramck.' },
+    { name: 'Noor Textiles', type: 'Clothing & Tailoring', impact: 'Job Training Sponsor · Dearborn, MI', desc: 'Clothing and tailoring shop sponsoring job training programs in Dearborn.' }
+  ];
+  var bizIndex = 0;
+  var bizListEl = document.getElementById('biz-list');
+  var bizSpotName = document.getElementById('biz-spotlight-name');
+  var bizSpotDesc = document.getElementById('biz-spotlight-desc');
+  var bizNextBtn = document.getElementById('biz-next-btn');
+  function renderBizList() {
+    var html = '';
+    BIZLIST.forEach(function (b) {
+      html += '<div class="biz-card"><div class="biz-icon">🏪</div><div><div class="biz-name">' + b.name + '</div><div class="biz-type">' + b.type + '</div><div class="biz-impact">' + b.impact + '</div></div></div>';
+    });
+    bizListEl.innerHTML = html;
+  }
+  function renderSpotlight() {
+    var b = BIZLIST[bizIndex];
+    bizSpotName.textContent = b.name;
+    bizSpotDesc.textContent = b.desc;
+  }
+  bizNextBtn.addEventListener('click', function () {
+    bizIndex = (bizIndex + 1) % BIZLIST.length;
+    renderSpotlight();
+  });
+  renderBizList();
+  renderSpotlight();
+})();
+</script>
+<!-- Google Translate Element Scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+  (function() {
+    const observer = new MutationObserver(function(mutations) {
+      if (typeof google !== 'undefined' && google.translate) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              google.translate.TranslateElement.reload();
+            }
+          });
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
