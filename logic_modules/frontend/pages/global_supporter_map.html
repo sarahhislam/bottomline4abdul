@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Where We're From — Abdul for Senate</title>
+  <script src="../js/gate.js"></script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/abdul-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
+    .tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+    .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .tool-header .brand em { color: #d21214; font-style: normal; }
+    .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+    .tool-header a:hover { color: #fff; }
+    .tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+    .tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
+    .tool-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
+    .tool-body { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .output-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+    .output-card h3 { font-size: 0.85rem; font-weight: 700; color: #121c50; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 0.75rem; }
+    .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
+
+    /* ─── Supporter Map Card ─── */
+    .supporter-card {
+      background: linear-gradient(160deg, #121c50 0%, #1a2c70 50%, #0d1440 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+    .supporter-card::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(210,18,20,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .supporter-card::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .supporter-card .supporter-heading {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .supporter-card .supporter-heading em { color: #d21214; font-style: normal; }
+    .supporter-card .supporter-intro {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      line-height: 1.6;
+      max-width: 620px;
+      margin: 0 0 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+    .supporter-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 30px;
+      padding: 0.5em 1.2em;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+    .supporter-counter .counter-num {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffcc00;
+    }
+
+    /* ─── World Map ─── */
+    .world-map-wrap {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .world-map-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      cursor: crosshair;
+    }
+    .world-map-wrap svg .land {
+      fill: #2e4a7d;
+      stroke: rgba(255,255,255,0.3);
+      stroke-width: 0.5;
+      transition: fill 0.2s;
+    }
+    .world-map-wrap svg .land:hover { fill: #3a5c96; }
+    .world-map-wrap svg .ocean { fill: #0d1440; }
+    .map-pin {
+      animation: pinDrop 0.4s ease;
+      transform-origin: center;
+    }
+    @keyframes pinDrop {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .map-hint {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      text-align: center;
+      margin-top: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Pin Form ─── */
+    .pin-form {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+    .pin-form input {
+      flex: 1;
+      min-width: 140px;
+      padding: 0.55em 0.7em;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+    .pin-form input::placeholder { color: rgba(255,255,255,0.5); }
+    .pin-form input:focus { outline: none; border-color: #ffcc00; }
+    .pin-form .btn { background: #d21214; color: #fff; border: none; }
+    .pin-form .btn:hover { filter: brightness(1.1); }
+
+    /* ─── Recent Pins ─── */
+    .recent-pins {
+      max-height: 160px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .recent-pin {
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .recent-pin .pin-emoji { font-size: 1rem; }
+    .recent-pin .pin-name { font-weight: 700; color: #ffcc00; }
+    .recent-pin .pin-loc { color: rgba(255,255,255,0.7); }
+    .recent-pin .pin-note { color: rgba(255,255,255,0.6); font-style: italic; flex: 1; }
+    .recent-pin .pin-time { font-size: 0.7rem; color: rgba(255,255,255,0.4); white-space: nowrap; }
+
+    .empty-pins { text-align: center; color: rgba(255,255,255,0.5); font-size: 0.85rem; padding: 1rem; }
+
+    @media (max-width: 600px) {
+      .tool-hero h1 { font-size: 1.5rem; }
+      .supporter-card { padding: 1.25rem; }
+      .supporter-card .supporter-heading { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+<header class="tool-header">
+  <div class="brand">Abdul <em>for Senate</em></div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="translate-widget-container">
+      <div id="google_translate_element"></div>
+    </div>
+    <a href="../">← Back to Tools</a>
+  </div>
+</header>
+<section class="tool-hero">
+  <h1>🌍 Where We're From</h1>
+  <p>Drop a pin from anywhere in the world and join the global community supporting Abdul's vision for Michigan.</p>
+</section>
+<div class="tool-body">
+  <div class="supporter-card">
+    <h2 class="supporter-heading">Where <em>We're</em> From</h2>
+    <p class="supporter-intro">Thank you for taking the time to learn more about Abdul and this campaign. Wherever you are in the world, drop a pin below — no district restrictions, no limits. Let's build a global community together.</p>
+    <div class="supporter-counter">
+      <span>🌍 Global Supporters:</span>
+      <span class="counter-num" id="supporter-count">0</span>
+    </div>
+
+    <div class="world-map-wrap">
+      <svg id="world-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+        <rect class="ocean" x="0" y="0" width="1000" height="500" />
+        <!-- Simplified world landmasses -->
+        <g class="land">
+          <!-- North America -->
+          <path d="M120,80 L170,60 L230,70 L280,90 L300,120 L290,160 L270,190 L240,220 L210,250 L180,260 L160,240 L140,210 L130,180 L110,150 L100,120 Z" />
+          <path d="M180,260 L200,280 L210,310 L200,340 L180,350 L160,330 L150,300 L160,280 Z" />
+          <!-- South America -->
+          <path d="M240,350 L260,340 L280,360 L290,390 L280,430 L260,460 L240,470 L230,440 L225,400 L230,370 Z" />
+          <!-- Europe -->
+          <path d="M470,100 L500,90 L530,100 L550,120 L540,150 L520,170 L500,180 L480,170 L460,150 L455,130 Z" />
+          <!-- Africa -->
+          <path d="M480,190 L520,180 L550,200 L570,230 L580,270 L570,310 L550,350 L530,380 L510,400 L490,390 L475,360 L465,320 L460,280 L465,240 L470,210 Z" />
+          <!-- Asia -->
+          <path d="M560,90 L600,70 L650,60 L700,70 L750,80 L790,100 L800,130 L790,160 L770,180 L750,200 L720,220 L690,230 L660,240 L630,230 L600,220 L580,200 L560,180 L550,150 L545,120 Z" />
+          <!-- India -->
+          <path d="M660,240 L680,230 L700,250 L710,280 L700,310 L680,330 L665,310 L655,280 Z" />
+          <!-- Southeast Asia / Indonesia -->
+          <path d="M790,250 L810,240 L830,260 L820,280 L800,290 L785,270 Z" />
+          <path d="M830,290 L860,285 L880,300 L870,320 L845,325 L830,310 Z" />
+          <!-- Australia -->
+          <path d="M790,350 L830,340 L870,350 L890,370 L880,400 L860,420 L830,430 L800,420 L785,395 L780,370 Z" />
+          <!-- Japan -->
+          <path d="M810,120 L820,110 L830,120 L825,150 L815,160 L808,140 Z" />
+          <!-- UK -->
+          <path d="M455,100 L465,90 L475,95 L472,115 L462,120 L455,110 Z" />
+          <!-- Greenland -->
+          <path d="M320,40 L360,30 L390,45 L380,70 L350,80 L320,70 Z" />
+          <!-- Middle East -->
+          <path d="M580,180 L600,170 L620,180 L615,210 L595,220 L580,205 Z" />
+        </g>
+      </svg>
+      <div class="map-hint">Click anywhere on the map to drop your pin 🌍</div>
+    </div>
+
+    <div class="pin-form">
+      <input id="pin-name" type="text" placeholder="Your name (optional)" maxlength="40" />
+      <input id="pin-note" type="text" placeholder="Leave a short note (optional)" maxlength="80" />
+      <button class="btn" id="pin-drop-btn" type="button">Drop My Pin 📍</button>
+    </div>
+
+    <div class="recent-pins" id="recent-pins">
+      <div class="empty-pins">No pins yet — be the first to drop a pin from your corner of the world!</div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/modules.js"></script>
+<script src="../js/main.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'abdul_supporter_pins';
+  var mapSvg = document.getElementById('world-map');
+  var nameInput = document.getElementById('pin-name');
+  var noteInput = document.getElementById('pin-note');
+  var dropBtn = document.getElementById('pin-drop-btn');
+  var recentPinsEl = document.getElementById('recent-pins');
+  var counterEl = document.getElementById('supporter-count');
+
+  var pins = [];
+  var pendingPin = null; // { x, y, lat, lng }
+
+  // ─── Load saved pins from localStorage ───
+  try {
+    var saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) pins = JSON.parse(saved);
+  } catch (e) { /* ignore */ }
+
+  function savePins() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(pins));
+    } catch (e) { /* ignore */ }
+  }
+
+  function updateCounter() {
+    counterEl.textContent = pins.length;
+  }
+
+  function renderPins() {
+    // Clear existing pin markers
+    mapSvg.querySelectorAll('.map-pin').forEach(function (p) { p.remove(); });
+
+    // Re-add all pins as markers
+    pins.forEach(function (pin) {
+      addPinMarker(pin.x, pin.y, pin.name || '');
+    });
+
+    // Render recent pins list
+    if (pins.length === 0) {
+      recentPinsEl.innerHTML = '<div class="empty-pins">No pins yet — be the first to drop a pin from your corner of the world!</div>';
+    } else {
+      var html = '';
+      pins.slice().reverse().slice(0, 20).forEach(function (pin) {
+        var name = pin.name || 'Anonymous Supporter';
+        var note = pin.note ? ' · "' + pin.note + '"' : '';
+        var time = pin.time ? new Date(pin.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+        html += '<div class="recent-pin">' +
+          '<span class="pin-emoji">📍</span>' +
+          '<span class="pin-name">' + escapeHtml(name) + '</span>' +
+          '<span class="pin-loc">' + pin.lat.toFixed(1) + '°, ' + pin.lng.toFixed(1) + '°</span>' +
+          '<span class="pin-note">' + escapeHtml(note) + '</span>' +
+          '<span class="pin-time">' + time + '</span>' +
+          '</div>';
+      });
+      recentPinsEl.innerHTML = html;
+    }
+
+    updateCounter();
+  }
+
+  function addPinMarker(x, y, label) {
+    var NS = 'http://www.w3.org/2000/svg';
+    var g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'map-pin');
+    g.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+
+    var circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute('r', '7');
+    circle.setAttribute('fill', '#d21214');
+    circle.setAttribute('stroke', '#fff');
+    circle.setAttribute('stroke-width', '2');
+
+    var pulse = document.createElementNS(NS, 'circle');
+    pulse.setAttribute('r', '14');
+    pulse.setAttribute('fill', 'rgba(210,18,20,0.25)');
+
+    g.appendChild(pulse);
+    g.appendChild(circle);
+
+    if (label) {
+      var text = document.createElementNS(NS, 'text');
+      text.setAttribute('x', '10');
+      text.setAttribute('y', '-8');
+      text.setAttribute('fill', '#fff');
+      text.setAttribute('font-size', '10');
+      text.setAttribute('font-weight', '700');
+      text.textContent = label.length > 14 ? label.slice(0, 13) + '…' : label;
+      g.appendChild(text);
+    }
+
+    mapSvg.appendChild(g);
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str == null ? '' : String(str);
+    return div.innerHTML;
+  }
+
+  // ─── Click on map to drop a pin ───
+  mapSvg.addEventListener('click', function (e) {
+    var rect = mapSvg.getBoundingClientRect();
+    var x = (e.clientX - rect.left) * (1000 / rect.width);
+    var y = (e.clientY - rect.top) * (500 / rect.height);
+
+    // Convert SVG coords to approximate lat/lng (equirectangular)
+    var lat = 90 - (y / 500) * 180;
+    var lng = (x / 1000) * 360 - 180;
+
+    pendingPin = { x: x, y: y, lat: lat, lng: lng };
+
+    // Show a temporary preview pin
+    mapSvg.querySelectorAll('.map-pin').forEach(function (p) { p.remove(); });
+    pins.forEach(function (pin) { addPinMarker(pin.x, pin.y, pin.name || ''); });
+    addPinMarker(x, y, 'You');
+
+    // Flash the drop button
+    dropBtn.style.animation = 'none';
+    dropBtn.offsetHeight;
+    dropBtn.style.animation = 'pinDrop 0.4s ease';
+  });
+
+  // ─── Drop the pin with optional name/note ───
+  dropBtn.addEventListener('click', function () {
+    if (!pendingPin) {
+      alert('Click anywhere on the map first to place your pin!');
+      return;
+    }
+
+    var name = nameInput.value.trim();
+    var note = noteInput.value.trim();
+
+    pins.push({
+      x: pendingPin.x,
+      y: pendingPin.y,
+      lat: pendingPin.lat,
+      lng: pendingPin.lng,
+      name: name,
+      note: note,
+      time: new Date().toISOString()
+    });
+
+    savePins();
+    pendingPin = null;
+    nameInput.value = '';
+    noteInput.value = '';
+    renderPins();
+  });
+
+  // ─── Init ───
+  renderPins();
+})();
+</script>
+
+<!-- Google Translate Element Scripts -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'bn,ur,es,ar,hi,he,fa,it,pl,zh-CN,zh-TW,ja,ko',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  (function() {
+    const observer = new MutationObserver(function(mutations) {
+      if (typeof google !== 'undefined' && google.translate) {
+        mutations.forEach(function(mutation) {
+          mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) {
+              google.translate.TranslateElement.reload();
+            }
+          });
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

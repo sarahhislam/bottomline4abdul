@@ -6,9 +6,10 @@
   'use strict';
 
   var STORAGE_KEY = 'bottomline_beta_ok';
-  // sha256("abdulwillbenchtovictory26")
+  // TODO: Main page entry passcode / gate verification - change here
+  // sha256("bottomline26")
   var PASS_HASH =
-    'cdc02b447fb6cccd6e94d07bbe94ee31fe986dec6e5e936d51db64185b05c4a3';
+    '86f767893f5246b5b1cc54056d1526ea9fa4729b49972f019e165229d1061307';
 
   function unlocked() {
     try {

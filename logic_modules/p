@@ -1,0 +1,77 @@
+def run(policy=None, **kwargs):
+    """
+    Policy Deep Dive Analysis Backend.
+
+    Usage:
+      /api/policy_deep_dive
+      /api/policy_deep_dive?policy=1
+
+    ─────────────────────────────────────────────────────────
+    📝 HOW TO ADD A NEW POLICY — DEVELOPER GUIDE
+    ─────────────────────────────────────────────────────────
+    To add a new policy, simply add a new entry to the
+    `policies` dictionary below. Each entry has two fields:
+
+      1. "title" — The policy name shown in the menu
+      2. "data"  — The full policy analysis/description
+
+    Example — add a 5th policy:
+        "5": {
+            "title": "My New Policy Name",
+            "data": "Full description of the policy..."
+        }
+
+    The menu loop and detail router handle everything
+    automatically — no other code changes needed.
+    ─────────────────────────────────────────────────────────
+    """
+    # TODO: To add a new policy, add a new entry to this dictionary.
+    policies = {
+        "1": {
+            "title": "Medicare for All Framework",
+            "data": "Comprehensive single-payer architecture. Fully guarantees dental, vision, and mental healthcare with zero cost-sharing at delivery."
+        },
+        "2": {
+            "title": "Green New Deal Blueprint",
+            "data": "Infrastructure grid targeting lead pipe replacement networks and zero-emission municipal logistics across Michigan."
+        },
+        "3": {
+            "title": "Corporate Super PAC Bans",
+            "data": "Absolute ban on individual executive shell entities and campaign asset packaging via corporate lobbyists."
+        },
+        "4": {
+            "title": "NEW POLICY TITLE",
+            "data": "Details about the new policy go here."
+        }
+    }
+
+    # ─── Policy Detail Router ──────────────────────────────
+    # When a specific policy is requested (?policy=N), show
+    # just that policy's full analysis.
+    if policy is not None:
+        key = str(policy)
+        info = policies.get(key)
+        if not info:
+            return f"ERROR: Policy '{policy}' not found. Available: {', '.join(policies.keys())}"
+        output = "=" * 60 + "\n"
+        output += f" {info['title']} ".center(60, "=") + "\n"
+        output += "=" * 60 + "\n\n"
+        output += info["data"] + "\n\n"
+        output += "-" * 60 + "\n"
+        output += "Status: Analysis loaded."
+        return output
+
+    # ─── Menu / Overview ───────────────────────────────────
+    output = "=" * 60 + "\n"
+    output += " POLICY DEEP DIVE ANALYSIS BACKEND ".center(60, "=") + "\n"
+    output += "=" * 60 + "\n\n"
+    output += "Select platform structure matrix to unpack:\n\n"
+
+    # This loop handles everything automatically, no matter how many policies you add.
+    for key, info in policies.items():
+        output += f" [{key}] {info['title']}\n"
+
+    output += "\n" + "-" * 60 + "\n"
+    output += "Status: Ready for input."
+
+    return output

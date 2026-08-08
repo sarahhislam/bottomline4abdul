@@ -339,7 +339,19 @@
       return lines.join('\n');
     },
 
-    policy_deep_dive() {
+    policy_deep_dive(params) {
+      // ─── POLICY DATABASE ─────────────────────────────────
+      // 📝 HOW TO ADD A NEW POLICY — DEVELOPER GUIDE
+      // To add a new policy, just add a new entry to this
+      // policies object. Each entry has:
+      //   title — The policy name shown in the menu
+      //   data  — The full policy analysis/description
+      //
+      // Example — add a 5th policy:
+      //   '5': { title: 'My New Policy', data: 'Description...' }
+      //
+      // The menu and detail router handle everything automatically.
+      // ─────────────────────────────────────────────────────
       const policies = {
         '1': {
           title: 'Medicare for All Framework',
@@ -353,11 +365,32 @@
           title: 'Corporate Super PAC Bans',
           data: 'Absolute ban on individual executive shell entities and campaign asset packaging via corporate lobbyists.',
         },
+        // TODO: Add new policies here following the pattern above.
         '4': {
           title: 'NEW POLICY TITLE',
           data: 'Details about the new policy go here.',
         },
       };
+
+      const requested = params && params.policy !== undefined && params.policy !== '' ? String(params.policy) : null;
+
+      // ─── Policy Detail ───────────────────────────────────
+      // When a specific policy is requested (?policy=N),
+      // show just that policy's full analysis.
+      if (requested) {
+        const info = policies[requested];
+        if (!info) {
+          return `ERROR: Policy '${requested}' not found. Available: ${Object.keys(policies).join(', ')}`;
+        }
+        let out = '='.repeat(60) + '\n';
+        out += ' ' + info.title + ' '.padStart(Math.max(0, 47 - info.title.length), '=').padEnd(60, '=');
+        out += '\n' + '='.repeat(60) + '\n\n';
+        out += info.data + '\n\n' + '-'.repeat(60) + '\n';
+        out += 'Status: Analysis loaded.';
+        return out;
+      }
+
+      // ─── Menu / Overview ─────────────────────────────────
       let output = '='.repeat(60) + '\n';
       output += ' POLICY DEEP DIVE ANALYSIS BACKEND '.padStart(47, '=').padEnd(60, '=') + '\n';
       output += '='.repeat(60) + '\n\n';
