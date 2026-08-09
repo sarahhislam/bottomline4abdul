@@ -130,42 +130,94 @@
   </div>
 
 <script>
-  // Countdown logic
-  const ELECTION_DAY = new Date('2026-11-03T08:00:00');
-  const REG_DEADLINE = new Date('2026-10-05T23:59:59');
-  const ABSENTEE_DEADLINE = new Date('2026-10-30T23:59:59');
-  const MAIL_RETURN = new Date('2026-11-03T20:00:00');
+  // ─── Synchronized Countdown Logic ───
+  // Uses server-synchronized time via Date.now() offset if available
+  var timeSyncOffset = 0;
+  try {
+    var savedOffset = localStorage.getItem('abdul_time_offset');
+    if (savedOffset) timeSyncOffset = parseInt(savedOffset, 10) || 0;
+  } catch (e) { /* ignore */ }
 
-  function daysUntil(date) {
-    const now = new Date();
-    const diff = date - now;
+  function getSyncedTime() {
+    return new Date(Date.now() + timeSyncOffset);
+  }
+
+  // Attempt to sync time from a reliable source
+  function syncTime() {
+    var startTime = Date.now();
+    fetch('/api/time', { method: 'HEAD', cache: 'no-store' }).then(function(resp) {
+      var serverDate = new Date(resp.headers.get('Date'));
+      var roundTrip = Date.now() - startTime;
+      var estimatedServer = serverDate.getTime() + (roundTrip / 2);
+      timeSyncOffset = estimatedServer - Date.now();
+      try { localStorage.setItem('abdul_time_offset', String(timeSyncOffset)); } catch (e) { /* ignore */ }
+    }).catch(function() {
+      // Fallback: use local time (already the default)
+    });
+  }
+  syncTime();
+
+  // Also sync when returning from background
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) syncTime();
+  });
+
+  var ELECTION_DAY = new Date('2026-11-03T08:00:00');
+  var REG_DEADLINE = new Date('2026-10-05T23:59:59');
+  var ABSENTEE_DEADLINE = new Date('2026-10-30T23:59:59');
+  var MAIL_RETURN = new Date('2026-11-03T20:00:00');
+
+  function preciseDaysUntil(targetDate) {
+    var now = getSyncedTime();
+    var diff = targetDate - now;
     if (diff <= 0) return 0;
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    // Return fractional days for precision
+    return diff / (1000 * 60 * 60 * 24);
+  }
+
+  function formatDays(days) {
+    if (days === 0) return '0';
+    if (days < 1) return '<1';
+    if (days < 30) return days.toFixed(1);
+    return Math.round(days).toString();
+  }
+
+  function formatDaysAway(days) {
+    if (days === 0) return 'Today!';
+    if (days < 1) return 'Less than 1 day — hurry!';
+    if (days === 1) return '1 day away';
+    return Math.ceil(days) + ' days away';
   }
 
   function updateCountdowns() {
-    document.getElementById('cd-election-days').textContent = daysUntil(ELECTION_DAY);
-    document.getElementById('cd-register-days').textContent = daysUntil(REG_DEADLINE);
-    document.getElementById('cd-absentee-days').textContent = daysUntil(ABSENTEE_DEADLINE);
-    document.getElementById('cd-mail-days').textContent = daysUntil(MAIL_RETURN);
+    var electionDays = preciseDaysUntil(ELECTION_DAY);
+    var regDays = preciseDaysUntil(REG_DEADLINE);
+    var absenteeDays = preciseDaysUntil(ABSENTEE_DEADLINE);
+    var mailDays = preciseDaysUntil(MAIL_RETURN);
+
+    document.getElementById('cd-election-days').textContent = formatDays(electionDays);
+    document.getElementById('cd-register-days').textContent = formatDays(regDays);
+    document.getElementById('cd-absentee-days').textContent = formatDays(absenteeDays);
+    document.getElementById('cd-mail-days').textContent = formatDays(mailDays);
 
     // Update per-item countdowns
     document.querySelectorAll('[data-countdown]').forEach(function(el) {
-      const target = new Date(el.getAttribute('data-countdown'));
-      const days = daysUntil(target);
-      el.textContent = days === 0 ? 'Today!' : days + ' days away';
+      var target = new Date(el.getAttribute('data-countdown'));
+      var days = preciseDaysUntil(target);
+      el.textContent = formatDaysAway(days);
     });
 
     // Mark urgent cards (within 30 days)
     document.querySelectorAll('.countdown-card').forEach(function(card) {
-      const daysEl = card.querySelector('.days');
-      const days = parseInt(daysEl.textContent, 10);
-      if (days <= 30) card.classList.add('urgent');
+      var daysEl = card.querySelector('.days');
+      var days = parseFloat(daysEl.textContent);
+      if (days <= 30 && days >= 0) card.classList.add('urgent');
     });
   }
 
   updateCountdowns();
-  setInterval(updateCountdowns, 60000); // update every minute
+  // Update every second for real-time precision
+  setInterval(updateCountdowns, 1000);
 </script>
 
 <script src="../js/modules.js"></script>

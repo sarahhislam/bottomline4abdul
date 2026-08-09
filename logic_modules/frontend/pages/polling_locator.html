@@ -127,6 +127,27 @@
     .readiness-check:last-child { border-bottom: none; }
     .readiness-check input[type="checkbox"] { accent-color: #d21214; width: 18px; height: 18px; }
     .readiness-check .check-label { flex: 1; }
+
+    /* ─── Download Buttons ─── */
+    .download-actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+    .download-actions .btn {
+      background: #121c50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: filter 0.15s;
+    }
+    .download-actions .btn:hover { filter: brightness(1.2); }
+    .download-actions .btn.btn-green { background: #2e7d32; }
+    .download-actions .btn.btn-red { background: #d21214; }
+    .download-actions .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
     @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } }
   </style>
 </head>
@@ -188,6 +209,11 @@
         <p>Fill in your voting plan above and generate your personalized pledge card.</p>
       </div>
     </div>
+    <div class="download-actions" id="download-actions" style="display:none;">
+      <button class="btn" id="download-image-btn" type="button">⬇️ Download as Image</button>
+      <button class="btn btn-green" id="download-text-btn" type="button">⬇️ Download as Text</button>
+      <button class="btn btn-red" id="download-pdf-btn" type="button">⬇️ Download as PDF</button>
+    </div>
   </div>
 
 <script src="../js/modules.js"></script>
@@ -203,6 +229,12 @@
     var issueInput = document.getElementById('voting-issue');
     var generateBtn = document.getElementById('generate-card-btn');
     var outputEl = document.getElementById('pledge-card-output');
+    var downloadActions = document.getElementById('download-actions');
+    var downloadImageBtn = document.getElementById('download-image-btn');
+    var downloadTextBtn = document.getElementById('download-text-btn');
+    var downloadPdfBtn = document.getElementById('download-pdf-btn');
+
+    var currentCardData = null;
 
     function escapeHtml(str) {
       var div = document.createElement('div');
@@ -220,8 +252,17 @@
       var date = new Date();
       var dateStr = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
+      currentCardData = {
+        name: name,
+        method: method,
+        location: location,
+        time: time,
+        issue: issue,
+        dateStr: dateStr
+      };
+
       var html =
-        '<div class="pledge-card">' +
+        '<div class="pledge-card" id="pledge-card">' +
         '<div class="pledge-flag">🗳️</div>' +
         '<div class="pledge-badge">★ Pledge to Vote ★</div>' +
         '<div class="pledge-name">' + escapeHtml(name) + '</div>' +
@@ -236,6 +277,150 @@
         '</div>';
 
       outputEl.innerHTML = html;
+      downloadActions.style.display = 'flex';
+    });
+
+    // ─── Download as Image (PNG) ───
+    downloadImageBtn.addEventListener('click', function () {
+      if (!currentCardData) return;
+      var card = document.getElementById('pledge-card');
+      if (!card) return;
+
+      // Use html2canvas if available, otherwise fallback to SVG-based rendering
+      if (typeof html2canvas !== 'undefined') {
+        html2canvas(card, { scale: 2, backgroundColor: null }).then(function (canvas) {
+          var link = document.createElement('a');
+          link.download = 'pledge-card-' + currentCardData.name.replace(/\s+/g, '-').toLowerCase() + '.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        });
+      } else {
+        // Fallback: render the card to an SVG-based canvas manually
+        var canvas = document.createElement('canvas');
+        canvas.width = 480 * 2;
+        canvas.height = 560 * 2;
+        var ctx = canvas.getContext('2d');
+
+        // Background gradient
+        var grad = ctx.createLinearGradient(0, 0, 480 * 2, 560 * 2);
+        grad.addColorStop(0, '#121c50');
+        grad.addColorStop(0.6, '#1a2c70');
+        grad.addColorStop(1, '#d21214');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Text
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.font = 'bold 28px Inter, sans-serif';
+        ctx.fillText('🗳️', canvas.width / 2, 80);
+        ctx.font = 'bold 18px Inter, sans-serif';
+        ctx.fillText('★ PLEDGE TO VOTE ★', canvas.width / 2, 130);
+        ctx.font = 'bold 36px Inter, sans-serif';
+        ctx.fillText(currentCardData.name, canvas.width / 2, 190);
+        ctx.font = '20px Inter, sans-serif';
+        ctx.fillText('I pledge to vote in the Michigan General', canvas.width / 2, 230);
+        ctx.fillText('Election on November 3, 2026.', canvas.width / 2, 260);
+
+        // Details box
+        ctx.fillStyle = 'rgba(255,255,255,0.12)';
+        ctx.fillRect(60, 300, canvas.width - 120, 180);
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'left';
+        ctx.font = 'bold 14px Inter, sans-serif';
+        ctx.fillText('VOTING METHOD', 90, 330);
+        ctx.font = '18px Inter, sans-serif';
+        ctx.fillText(currentCardData.method, 90, 355);
+        ctx.font = 'bold 14px Inter, sans-serif';
+        ctx.fillText('LOCATION', 90, 385);
+        ctx.font = '18px Inter, sans-serif';
+        ctx.fillText(currentCardData.location, 90, 410);
+        ctx.font = 'bold 14px Inter, sans-serif';
+        ctx.fillText('PLANNED TIME', 90, 440);
+        ctx.font = '18px Inter, sans-serif';
+        ctx.fillText(currentCardData.time, 90, 465);
+
+        ctx.textAlign = 'center';
+        ctx.font = '14px Inter, sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.fillText('Generated on ' + currentCardData.dateStr + ' · Abdul for Senate · #VoteReady', canvas.width / 2, 530);
+
+        var link = document.createElement('a');
+        link.download = 'pledge-card-' + currentCardData.name.replace(/\s+/g, '-').toLowerCase() + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }
+    });
+
+    // ─── Download as Text ───
+    downloadTextBtn.addEventListener('click', function () {
+      if (!currentCardData) return;
+      var text =
+        '★ PLEDGE TO VOTE ★\n' +
+        '═══════════════════════════════════\n\n' +
+        'Name: ' + currentCardData.name + '\n\n' +
+        'I pledge to vote in the Michigan General Election on November 3, 2026.\n\n' +
+        'Voting Method: ' + currentCardData.method + '\n' +
+        'Location: ' + currentCardData.location + '\n' +
+        'Planned Time: ' + currentCardData.time + '\n' +
+        'Voting For: ' + currentCardData.issue + '\n\n' +
+        '═══════════════════════════════════\n' +
+        'Generated on ' + currentCardData.dateStr + ' · Abdul for Senate · #VoteReady\n';
+
+      var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      var link = document.createElement('a');
+      link.download = 'pledge-card-' + currentCardData.name.replace(/\s+/g, '-').toLowerCase() + '.txt';
+      link.href = URL.createObjectURL(blob);
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    // ─── Download as PDF (via print) ───
+    downloadPdfBtn.addEventListener('click', function () {
+      if (!currentCardData) return;
+      var card = document.getElementById('pledge-card');
+      if (!card) return;
+
+      // Create a printable version
+      var printWindow = window.open('', '_blank', 'width=600,height=800');
+      if (!printWindow) {
+        alert('Please allow pop-ups to download your pledge card as a PDF.');
+        return;
+      }
+
+      var printHtml =
+        '<!doctype html><html><head><title>Pledge Card — ' + escapeHtml(currentCardData.name) + '</title>' +
+        '<style>' +
+        'body { font-family: Inter, Arial, sans-serif; background: #fff; margin: 0; padding: 40px; }' +
+        '.pledge-card { background: linear-gradient(135deg, #121c50 0%, #1a2c70 60%, #d21214 100%); border-radius: 16px; padding: 2rem 1.75rem; color: #fff; text-align: center; max-width: 480px; margin: 0 auto; }' +
+        '.pledge-badge { display: inline-block; background: #d21214; color: #fff; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.35em 1em; border-radius: 30px; margin-bottom: 1rem; }' +
+        '.pledge-name { font-size: 1.4rem; font-weight: 800; margin: 0 0 0.25rem; }' +
+        '.pledge-plan { font-size: 0.95rem; opacity: 0.9; margin: 0 0 1rem; line-height: 1.5; }' +
+        '.pledge-details { background: rgba(255,255,255,0.12); border-radius: 10px; padding: 1rem; margin: 1rem 0; text-align: left; }' +
+        '.pledge-details div { font-size: 0.85rem; padding: 0.25rem 0; line-height: 1.4; }' +
+        '.detail-label { opacity: 0.7; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; }' +
+        '.pledge-footer { font-size: 0.7rem; opacity: 0.6; margin-top: 1rem; }' +
+        '.pledge-flag { font-size: 2rem; margin-bottom: 0.5rem; }' +
+        '@media print { body { padding: 0; } }' +
+        '</style></head><body>' +
+        '<div class="pledge-card">' +
+        '<div class="pledge-flag">🗳️</div>' +
+        '<div class="pledge-badge">★ Pledge to Vote ★</div>' +
+        '<div class="pledge-name">' + escapeHtml(currentCardData.name) + '</div>' +
+        '<div class="pledge-plan">I pledge to vote in the Michigan General Election on <strong>November 3, 2026</strong>.</div>' +
+        '<div class="pledge-details">' +
+        '<div><span class="detail-label">Voting Method</span><br>' + escapeHtml(currentCardData.method) + '</div>' +
+        '<div><span class="detail-label">Location</span><br>' + escapeHtml(currentCardData.location) + '</div>' +
+        '<div><span class="detail-label">Planned Time</span><br>' + escapeHtml(currentCardData.time) + '</div>' +
+        '<div><span class="detail-label">Voting For</span><br>' + escapeHtml(currentCardData.issue) + '</div>' +
+        '</div>' +
+        '<div class="pledge-footer">Generated on ' + escapeHtml(currentCardData.dateStr) + ' · Abdul for Senate · #VoteReady</div>' +
+        '</div>' +
+        '<script>window.onload = function() { window.print(); }<\/script>' +
+        '</body></html>';
+
+      printWindow.document.write(printHtml);
+      printWindow.document.close();
     });
   })();
 </script>

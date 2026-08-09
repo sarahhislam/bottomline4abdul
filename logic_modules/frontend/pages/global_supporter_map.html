@@ -106,14 +106,24 @@
       border-radius: 10px;
       cursor: crosshair;
     }
-    .world-map-wrap svg .land {
+    .world-map-wrap svg .country {
       fill: #2e4a7d;
-      stroke: rgba(255,255,255,0.3);
-      stroke-width: 0.5;
+      stroke: rgba(255,255,255,0.5);
+      stroke-width: 0.4;
       transition: fill 0.2s;
+      vector-effect: non-scaling-stroke;
     }
-    .world-map-wrap svg .land:hover { fill: #3a5c96; }
+    .world-map-wrap svg .country:hover { fill: #4a7ab5; }
+    .world-map-wrap svg .state {
+      fill: #3a5c96;
+      stroke: rgba(255,255,255,0.35);
+      stroke-width: 0.3;
+      transition: fill 0.2s;
+      vector-effect: non-scaling-stroke;
+    }
+    .world-map-wrap svg .state:hover { fill: #5a7cb5; }
     .world-map-wrap svg .ocean { fill: #0d1440; }
+    .world-map-wrap svg .lake { fill: #1a2c70; stroke: rgba(255,255,255,0.1); stroke-width: 0.3; }
     .map-pin {
       animation: pinDrop 0.4s ease;
       transform-origin: center;
@@ -217,34 +227,127 @@
     <div class="world-map-wrap">
       <svg id="world-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
         <rect class="ocean" x="0" y="0" width="1000" height="500" />
-        <!-- Simplified world landmasses -->
-        <g class="land">
+        <!-- Countries with clearly defined borders -->
+        <g id="countries" stroke="rgba(255,255,255,0.5)" stroke-width="0.4" vector-effect="non-scaling-stroke">
           <!-- North America -->
-          <path d="M120,80 L170,60 L230,70 L280,90 L300,120 L290,160 L270,190 L240,220 L210,250 L180,260 L160,240 L140,210 L130,180 L110,150 L100,120 Z" />
-          <path d="M180,260 L200,280 L210,310 L200,340 L180,350 L160,330 L150,300 L160,280 Z" />
-          <!-- South America -->
-          <path d="M240,350 L260,340 L280,360 L290,390 L280,430 L260,460 L240,470 L230,440 L225,400 L230,370 Z" />
-          <!-- Europe -->
-          <path d="M470,100 L500,90 L530,100 L550,120 L540,150 L520,170 L500,180 L480,170 L460,150 L455,130 Z" />
-          <!-- Africa -->
-          <path d="M480,190 L520,180 L550,200 L570,230 L580,270 L570,310 L550,350 L530,380 L510,400 L490,390 L475,360 L465,320 L460,280 L465,240 L470,210 Z" />
-          <!-- Asia -->
-          <path d="M560,90 L600,70 L650,60 L700,70 L750,80 L790,100 L800,130 L790,160 L770,180 L750,200 L720,220 L690,230 L660,240 L630,230 L600,220 L580,200 L560,180 L550,150 L545,120 Z" />
-          <!-- India -->
-          <path d="M660,240 L680,230 L700,250 L710,280 L700,310 L680,330 L665,310 L655,280 Z" />
-          <!-- Southeast Asia / Indonesia -->
-          <path d="M790,250 L810,240 L830,260 L820,280 L800,290 L785,270 Z" />
-          <path d="M830,290 L860,285 L880,300 L870,320 L845,325 L830,310 Z" />
-          <!-- Australia -->
-          <path d="M790,350 L830,340 L870,350 L890,370 L880,400 L860,420 L830,430 L800,420 L785,395 L780,370 Z" />
-          <!-- Japan -->
-          <path d="M810,120 L820,110 L830,120 L825,150 L815,160 L808,140 Z" />
-          <!-- UK -->
-          <path d="M455,100 L465,90 L475,95 L472,115 L462,120 L455,110 Z" />
+          <path class="country" id="us" d="M120,80 L170,60 L230,70 L280,90 L300,120 L290,160 L270,190 L240,220 L210,250 L180,260 L160,240 L140,210 L130,180 L110,150 L100,120 Z" />
+          <path class="country" id="us2" d="M180,260 L200,280 L210,310 L200,340 L180,350 L160,330 L150,300 L160,280 Z" />
+          <!-- Canada -->
+          <path class="country" id="ca" d="M100,50 L120,80 L280,90 L300,120 L340,110 L400,100 L450,80 L470,60 L440,40 L380,30 L320,25 L260,30 L200,35 L140,40 Z" />
+          <!-- Mexico -->
+          <path class="country" id="mx" d="M160,330 L200,340 L210,370 L200,390 L180,395 L160,380 L150,355 Z" />
+          <!-- Central America -->
+          <path class="country" id="ca-america" d="M180,350 L200,345 L210,355 L205,370 L195,380 L185,375 L180,360 Z" />
           <!-- Greenland -->
-          <path d="M320,40 L360,30 L390,45 L380,70 L350,80 L320,70 Z" />
+          <path class="country" id="gl" d="M320,40 L360,30 L390,45 L380,70 L350,80 L320,70 Z" />
+          <!-- South America -->
+          <path class="country" id="br" d="M240,350 L260,340 L280,360 L290,390 L280,430 L260,460 L240,470 L230,440 L225,400 L230,370 Z" />
+          <path class="country" id="co" d="M220,340 L240,335 L250,350 L245,365 L235,370 L225,360 Z" />
+          <path class="country" id="ar" d="M240,440 L260,455 L250,480 L240,490 L230,470 L235,450 Z" />
+          <path class="country" id="pe" d="M225,370 L245,365 L250,385 L245,410 L235,420 L225,400 Z" />
+          <!-- Europe -->
+          <path class="country" id="fr" d="M470,100 L490,95 L500,110 L495,130 L480,135 L470,125 L465,115 Z" />
+          <path class="country" id="de" d="M490,90 L510,85 L520,100 L515,115 L500,120 L490,110 Z" />
+          <path class="country" id="it" d="M490,135 L505,130 L510,145 L505,160 L495,155 L490,145 Z" />
+          <path class="country" id="es" d="M460,120 L475,115 L480,130 L470,140 L458,135 Z" />
+          <path class="country" id="uk" d="M455,100 L465,90 L475,95 L472,115 L462,120 L455,110 Z" />
+          <path class="country" id="pl" d="M520,85 L535,80 L545,95 L540,110 L525,105 L518,95 Z" />
+          <path class="country" id="se" d="M530,55 L545,50 L555,65 L550,85 L535,80 L528,65 Z" />
+          <path class="country" id="no" d="M510,50 L525,45 L535,55 L530,70 L520,65 L515,55 Z" />
+          <path class="country" id="ru-eu" d="M555,55 L575,50 L590,55 L600,70 L590,85 L575,90 L560,85 L550,70 Z" />
+          <!-- Africa -->
+          <path class="country" id="ma" d="M470,150 L490,145 L500,155 L495,170 L480,175 L470,165 Z" />
+          <path class="country" id="eg" d="M530,170 L545,165 L550,180 L545,200 L535,205 L525,195 L520,180 Z" />
+          <path class="country" id="ng" d="M505,210 L520,205 L530,220 L525,240 L510,245 L500,230 Z" />
+          <path class="country" id="za" d="M520,340 L540,335 L550,345 L545,365 L530,370 L520,360 L515,350 Z" />
+          <path class="country" id="ke" d="M530,250 L545,245 L555,260 L550,280 L540,285 L530,270 Z" />
+          <path class="country" id="et" d="M545,240 L560,235 L570,250 L565,270 L555,275 L545,260 Z" />
+          <path class="country" id="cd" d="M520,265 L540,260 L555,275 L560,300 L545,315 L530,310 L520,295 L515,280 Z" />
+          <path class="country" id="sd" d="M530,175 L550,170 L560,185 L565,210 L550,220 L535,215 L525,200 Z" />
+          <path class="country" id="dz" d="M470,155 L495,148 L510,155 L515,170 L500,180 L485,180 L475,170 Z" />
+          <path class="country" id="ml" d="M480,170 L510,165 L520,180 L515,195 L500,200 L485,195 L475,185 Z" />
+          <path class="country" id="ne" d="M510,175 L535,170 L545,185 L540,200 L525,205 L515,195 Z" />
+          <path class="country" id="gh" d="M490,200 L500,195 L510,205 L505,215 L495,215 L488,208 Z" />
+          <!-- Asia -->
+          <path class="country" id="cn" d="M600,70 L640,60 L680,65 L720,70 L760,80 L780,100 L770,130 L750,150 L730,170 L700,180 L670,190 L640,185 L620,170 L610,150 L600,130 L595,110 Z" />
+          <path class="country" id="in" d="M660,240 L680,230 L700,250 L710,280 L700,310 L680,330 L665,310 L655,280 Z" />
+          <path class="country" id="pk" d="M640,210 L655,205 L665,220 L660,250 L645,245 L635,230 Z" />
+          <path class="country" id="bd" d="M695,270 L705,265 L710,280 L705,295 L695,290 L690,280 Z" />
+          <path class="country" id="jp" d="M810,120 L820,110 L830,120 L825,150 L815,160 L808,140 Z" />
+          <path class="country" id="kr" d="M790,130 L798,125 L805,135 L800,150 L792,148 L788,140 Z" />
+          <path class="country" id="kp" d="M788,115 L798,110 L805,120 L800,130 L792,128 L785,120 Z" />
+          <path class="country" id="mn" d="M640,95 L680,90 L710,95 L700,120 L670,125 L645,115 Z" />
+          <path class="country" id="th" d="M720,280 L735,275 L745,290 L740,310 L730,320 L720,310 L715,295 Z" />
+          <path class="country" id="vn" d="M745,270 L758,268 L765,285 L760,305 L750,310 L742,295 Z" />
+          <path class="country" id="mm" d="M710,260 L725,255 L735,270 L730,290 L720,285 L712,275 Z" />
+          <path class="country" id="ph" d="M790,240 L800,235 L810,250 L805,270 L795,275 L785,260 Z" />
+          <path class="country" id="id" d="M790,290 L810,285 L830,295 L840,310 L830,325 L810,320 L795,310 Z" />
+          <path class="country" id="my" d="M750,290 L765,285 L775,300 L770,315 L758,312 L748,300 Z" />
+          <path class="country" id="np" d="M680,235 L695,230 L705,245 L700,258 L688,255 L678,245 Z" />
+          <path class="country" id="af" d="M640,190 L660,185 L670,200 L665,220 L650,218 L638,205 Z" />
+          <path class="country" id="ir" d="M595,180 L615,175 L630,185 L625,210 L610,220 L595,210 L590,195 Z" />
+          <path class="country" id="iq" d="M590,180 L605,175 L615,185 L610,205 L598,200 L588,190 Z" />
+          <path class="country" id="sa" d="M580,200 L600,195 L620,205 L615,230 L600,240 L585,230 L575,215 Z" />
+          <path class="country" id="ye" d="M590,240 L605,235 L615,245 L610,260 L598,258 L588,250 Z" />
+          <path class="country" id="om" d="M620,230 L635,225 L645,240 L640,258 L628,255 L618,242 Z" />
+          <path class="country" id="tr" d="M575,160 L595,155 L610,165 L605,180 L590,180 L578,170 Z" />
+          <path class="country" id="sy" d="M585,165 L600,160 L610,170 L605,185 L592,182 L582,175 Z" />
+          <path class="country" id="kz" d="M600,70 L640,60 L680,65 L700,80 L690,100 L660,105 L630,100 L610,90 L598,80 Z" />
+          <path class="country" id="uz" d="M630,100 L655,95 L675,105 L670,120 L650,120 L632,115 Z" />
+          <path class="country" id="ru-as" d="M700,50 L740,40 L780,45 L820,55 L850,70 L870,90 L860,110 L840,120 L820,115 L800,100 L780,85 L750,75 L720,70 L700,65 Z" />
+          <!-- Australia & Oceania -->
+          <path class="country" id="au" d="M790,350 L830,340 L870,350 L890,370 L880,400 L860,420 L830,430 L800,420 L785,395 L780,370 Z" />
+          <path class="country" id="nz" d="M910,400 L918,395 L925,405 L920,420 L912,418 L908,410 Z" />
+          <path class="country" id="pg" d="M830,330 L850,325 L865,340 L858,355 L840,350 L828,340 Z" />
           <!-- Middle East -->
-          <path d="M580,180 L600,170 L620,180 L615,210 L595,220 L580,205 Z" />
+          <path class="country" id="il" d="M585,175 L592,172 L598,180 L595,190 L588,188 L582,182 Z" />
+          <path class="country" id="jo" d="M585,185 L598,180 L605,190 L600,200 L590,196 L582,192 Z" />
+          <path class="country" id="lb" d="M582,168 L590,165 L595,172 L590,178 L584,176 Z" />
+
+          <!-- US States with clearly defined borders -->
+          <g id="us-states" fill="#3a5c96" stroke="rgba(255,255,255,0.35)" stroke-width="0.3" vector-effect="non-scaling-stroke">
+            <!-- Michigan -->
+            <path class="state" id="mi" d="M191,80 L205,75 L215,82 L218,95 L210,105 L200,102 L193,95 L188,88 Z" />
+            <path class="state" id="mi-up" d="M185,75 L200,70 L215,74 L218,80 L205,82 L195,80 L188,78 Z" />
+            <!-- Ohio -->
+            <path class="state" id="oh" d="M195,105 L215,100 L230,105 L235,115 L225,120 L210,118 L198,112 Z" />
+            <!-- Indiana -->
+            <path class="state" id="in" d="M185,95 L200,90 L210,95 L215,108 L205,110 L192,105 L182,100 Z" />
+            <!-- Illinois -->
+            <path class="state" id="il" d="M175,90 L195,85 L205,92 L210,105 L200,108 L188,104 L178,98 Z" />
+            <!-- Wisconsin -->
+            <path class="state" id="wi" d="M175,78 L195,72 L210,76 L215,85 L205,88 L190,85 L178,82 Z" />
+            <!-- New York -->
+            <path class="state" id="ny" d="M220,85 L240,80 L255,85 L260,95 L250,100 L235,98 L225,92 Z" />
+            <!-- Pennsylvania -->
+            <path class="state" id="pa" d="M220,98 L245,92 L260,97 L265,108 L255,112 L240,110 L225,105 Z" />
+            <!-- California -->
+            <path class="state" id="ca-state" d="M100,120 L115,115 L125,120 L130,140 L125,155 L115,160 L108,150 L103,135 Z" />
+            <!-- Texas -->
+            <path class="state" id="tx" d="M140,180 L160,175 L175,180 L180,195 L170,210 L155,215 L145,205 L138,190 Z" />
+            <!-- Florida -->
+            <path class="state" id="fl" d="M235,200 L250,195 L260,200 L265,215 L255,225 L245,220 L238,210 Z" />
+            <!-- Georgia -->
+            <path class="state" id="ga" d="M210,185 L225,180 L240,185 L245,195 L235,200 L222,198 L212,192 Z" />
+            <!-- North Carolina -->
+            <path class="state" id="nc" d="M225,165 L240,160 L255,165 L260,178 L250,182 L238,180 L228,173 Z" />
+            <!-- Virginia -->
+            <path class="state" id="va" d="M225,152 L245,148 L260,153 L265,165 L255,168 L242,165 L230,158 Z" />
+            <!-- Washington -->
+            <path class="state" id="wa" d="M105,55 L120,50 L130,55 L135,70 L125,75 L115,70 L108,62 Z" />
+            <!-- Oregon -->
+            <path class="state" id="or" d="M105,70 L120,65 L130,70 L132,85 L125,90 L115,85 L110,78 Z" />
+            <!-- Nevada -->
+            <path class="state" id="nv" d="M115,95 L128,90 L135,95 L138,110 L130,115 L120,110 L112,102 Z" />
+            <!-- Arizona -->
+            <path class="state" id="az" d="M120,130 L135,125 L142,130 L145,145 L138,150 L128,148 L122,140 Z" />
+            <!-- Colorado -->
+            <path class="state" id="co" d="M140,120 L155,115 L162,120 L165,135 L158,140 L148,138 L142,130 Z" />
+            <!-- Utah -->
+            <path class="state" id="ut" d="M130,108 L145,105 L152,110 L155,125 L148,128 L138,126 L132,118 Z" />
+            <!-- New Mexico -->
+            <path class="state" id="nm" d="M135,145 L152,140 L160,145 L162,158 L155,162 L145,160 L138,152 Z" />
+          </g>
         </g>
       </svg>
       <div class="map-hint">Click anywhere on the map to drop your pin 🌍</div>
