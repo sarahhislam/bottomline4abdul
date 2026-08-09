@@ -1,9 +1,9 @@
 """
-Supporter Map backend for the Global Supporter Map page.
+Supporter Map backend for the Global Bulletin Board page.
 Provides:
   - Persistent JSON storage of supporter pins
   - Type-ahead city/country database with approximate lat/lng
-  - Vibe badge definitions
+  - Expanded vibe badge definitions
   - API handler functions for GET (list) and POST (add)
 """
 import json
@@ -13,12 +13,29 @@ import time
 
 DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'supporters_data.json')
 
-# ─── Vibe Badges ───
+# ─── Expanded Vibe Badges ───
 VIBES = {
-    "Local Rooted": {"emoji": "🌱", "color": "#2e7d32"},
-    "Racing Fan Zone": {"emoji": "🏁", "color": "#d21214"},
-    "Tech Hub": {"emoji": "💻", "color": "#406bbf"},
-    "Globe Trotter": {"emoji": "🌍", "color": "#e68a00"}
+    # Academics, STEM & General Engineering
+    "First Principles": {"emoji": "📐", "color": "#406bbf", "category": "Academics & STEM"},
+    "Lab Bench & Code": {"emoji": "🔬", "color": "#6c5ce7", "category": "Academics & STEM"},
+    "Study Hall Regular": {"emoji": "📚", "color": "#0984e3", "category": "Academics & STEM"},
+    "Briefcase & Books": {"emoji": "⚖️", "color": "#b2bec3", "category": "Academics & STEM"},
+    # Sports & Racing Culture
+    "Paddock Pass": {"emoji": "🏁", "color": "#d21214", "category": "Sports & Racing"},
+    "Apex Predator": {"emoji": "⏱️", "color": "#e17055", "category": "Sports & Racing"},
+    "Supporters Section": {"emoji": "⚽", "color": "#00b894", "category": "Sports & Racing"},
+    "Hardwood Historian": {"emoji": "🏀", "color": "#e84393", "category": "Sports & Racing"},
+    "Matchday Energy": {"emoji": "🏟️", "color": "#fdcb6e", "category": "Sports & Racing"},
+    # Culture, Arts & Daily Life
+    "Third Wave Espresso": {"emoji": "☕", "color": "#a0522d", "category": "Culture & Arts"},
+    "Headphones In": {"emoji": "🎧", "color": "#636e72", "category": "Culture & Arts"},
+    "Canvas & Code": {"emoji": "🎨", "color": "#e056fd", "category": "Culture & Arts"},
+    "Rooted & Grounded": {"emoji": "🌱", "color": "#2e7d32", "category": "Culture & Arts"},
+    "Night Owl Shift": {"emoji": "🌙", "color": "#2d3436", "category": "Culture & Arts"},
+    # Global & General Movement
+    "Out of District": {"emoji": "🗺️", "color": "#00cec9", "category": "Global Movement"},
+    "Transit Lounge": {"emoji": "✈️", "color": "#74b9ff", "category": "Global Movement"},
+    "Global Grid": {"emoji": "🌍", "color": "#e68a00", "category": "Global Movement"},
 }
 
 # ─── Type-ahead City/Country Database (city, country, lat, lng) ───
@@ -288,7 +305,7 @@ def add_supporter(name, city, country, lat, lng, vibe, note=None):
         "country": (country or '').strip()[:60],
         "lat": lat,
         "lng": lng,
-        "vibe": vibe if vibe in VIBES else "Globe Trotter",
+        "vibe": vibe if vibe in VIBES else "Global Grid",
         "note": (note or '').strip()[:80],
         "time": time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime())
     }
@@ -310,7 +327,7 @@ def handle_add(payload):
     country = payload.get('country', '')
     lat = payload.get('lat')
     lng = payload.get('lng')
-    vibe = payload.get('vibe', 'Globe Trotter')
+    vibe = payload.get('vibe', 'Global Grid')
     note = payload.get('note', '')
 
     if not city:

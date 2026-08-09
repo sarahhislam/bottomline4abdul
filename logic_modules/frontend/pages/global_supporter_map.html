@@ -3,41 +3,39 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Where We're From — Abdul for Senate</title>
+<title>The Global Bulletin Board — Abdul for Senate</title>
 <script src="../js/gate.js"></script>
 <link rel="stylesheet" href="../css/style.css" />
 <link rel="stylesheet" href="../css/abdul-design-system.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
-body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin: 0; }
-.tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; }
+/* ═══════════════ BASE ═══════════════ */
+body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin: 0; }
+.tool-header { background: #121c50; color: #fff; padding: 0.75rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .tool-header .brand { font-weight: 800; font-size: 1.15rem; }
 .tool-header .brand em { color: #d21214; font-style: normal; }
 .tool-header a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
 .tool-header a:hover { color: #fff; }
-.tool-hero { background: #121c50; color: #fcf4ed; padding: 2.5rem 1.5rem 2rem; text-align: center; }
-.tool-hero h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; }
-.tool-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5; }
-.tool-body { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+/* ═══════════════ HERO ═══════════════ */
+.tool-hero { background: linear-gradient(135deg, #121c50 0%, #1a2c70 60%, #d21214 120%); color: #fcf4ed; padding: 3rem 1.5rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+.tool-hero::before { content: ''; position: absolute; top: -60px; left: -60px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); border-radius: 50%; }
+.tool-hero h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; position: relative; z-index: 1; }
+.tool-hero p { opacity: 0.85; max-width: 640px; margin: 0 auto; font-size: 1rem; line-height: 1.6; position: relative; z-index: 1; }
+.tool-body { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
 .btn { font-size: 0.85rem !important; padding: 0.5em 1.15em 0.65em !important; border-radius: 8px !important; }
-.supporter-card { background: linear-gradient(160deg, #121c50 0%, #1a2c70 50%, #0d1440 100%); border-radius: 20px; padding: 2rem; color: #fff; position: relative; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
-.supporter-card::before { content: ''; position: absolute; top: -80px; right: -80px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(210,18,20,0.25) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
-.supporter-card::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
-.supporter-card .supporter-heading { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; position: relative; z-index: 1; }
-.supporter-card .supporter-heading em { color: #d21214; font-style: normal; }
-.supporter-card .supporter-intro { font-size: 0.95rem; opacity: 0.85; line-height: 1.6; max-width: 620px; margin: 0 0 1.25rem; position: relative; z-index: 1; }
+
+/* ═══════════════ BULLETIN BOARD CONTAINER ═══════════════ */
+.board-card { background: linear-gradient(160deg, #121c50 0%, #1a2c70 50%, #0d1440 100%); border-radius: 20px; padding: 2rem; color: #fff; position: relative; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
+.board-card::before { content: ''; position: absolute; top: -80px; right: -80px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(210,18,20,0.25) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+.board-card::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+.board-card .board-heading { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; position: relative; z-index: 1; }
+.board-card .board-heading em { color: #d21214; font-style: normal; }
+.board-card .board-intro { font-size: 0.95rem; opacity: 0.85; line-height: 1.6; max-width: 620px; margin: 0 0 1.25rem; position: relative; z-index: 1; }
 .supporter-counter { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; padding: 0.5em 1.2em; font-size: 0.9rem; font-weight: 700; margin-bottom: 1.25rem; position: relative; z-index: 1; }
 .supporter-counter .counter-num { font-size: 1.3rem; font-weight: 800; color: #ffcc00; }
-.world-map-wrap { position: relative; z-index: 1; background: #0a143c; border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 0.75rem; margin-bottom: 1rem; }
-.world-map-wrap svg { width: 100%; height: auto; display: block; border-radius: 10px; }
-.world-map-wrap svg .land { fill: #3a8f63; stroke: rgba(255,255,255,0.7); stroke-width: 0.6; transition: fill 0.2s; }
-.world-map-wrap svg .land:hover { fill: #4fa878; }
-.world-map-wrap svg .ocean { fill: #0a143c; }
-.map-pin { animation: pinDrop 0.4s ease; transform-origin: center; }
-@keyframes pinDrop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
-.map-hint { font-size: 0.8rem; opacity: 0.7; text-align: center; margin-top: 0.5rem; position: relative; z-index: 1; }
 
-/* ─── Type-Ahead Input ─── */
+/* ═══════════════ TYPE-AHEAD ═══════════════ */
 .typeahead-wrap { position: relative; flex: 2; min-width: 220px; }
 .typeahead-wrap input { width: 100%; padding: 0.55em 0.7em; border: 2px solid rgba(255,255,255,0.25); border-radius: 8px; font-family: inherit; font-size: 0.85rem; background: rgba(255,255,255,0.1); color: #fff; }
 .typeahead-wrap input::placeholder { color: rgba(255,255,255,0.5); }
@@ -50,16 +48,17 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
 .typeahead-dropdown .suggestion .country-name { color: #888; font-size: 0.78rem; }
 .typeahead-dropdown .no-results { padding: 12px 14px; color: #888; font-size: 0.82rem; }
 
-/* ─── Vibe Badges ─── */
+/* ═══════════════ VIBE PICKER ═══════════════ */
 .vibe-section { margin-bottom: 0.75rem; position: relative; z-index: 1; }
 .vibe-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; margin-bottom: 0.4rem; }
+.vibe-category { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.55; margin: 0.85rem 0 0.35rem; }
 .vibe-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.vibe-badge { display: inline-flex; align-items: center; gap: 6px; padding: 0.45em 1em; border-radius: 30px; border: 2px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); color: #fff; cursor: pointer; font-size: 0.82rem; font-weight: 600; transition: all 0.15s; }
+.vibe-badge { display: inline-flex; align-items: center; gap: 6px; padding: 0.45em 1em; border-radius: 30px; border: 2px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); color: #fff; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.15s; }
 .vibe-badge:hover { border-color: #ffcc00; transform: translateY(-2px); }
 .vibe-badge.selected { border-color: #ffcc00; background: rgba(255,204,0,0.2); box-shadow: 0 4px 16px rgba(255,204,0,0.25); }
 .vibe-badge .badge-emoji { font-size: 1.05rem; }
 
-/* ─── Form ─── */
+/* ═══════════════ FORM ═══════════════ */
 .pin-form { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem; position: relative; z-index: 1; }
 .pin-form input { flex: 1; min-width: 140px; padding: 0.55em 0.7em; border: 2px solid rgba(255,255,255,0.25); border-radius: 8px; font-family: inherit; font-size: 0.85rem; background: rgba(255,255,255,0.1); color: #fff; }
 .pin-form input::placeholder { color: rgba(255,255,255,0.5); }
@@ -71,21 +70,32 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
 .form-status.ok { color: #8ce99a; }
 .form-status.err { color: #ffa8a8; }
 
-/* ─── Recent Feed ─── */
-.recent-pins { max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.4rem; position: relative; z-index: 1; }
-.recent-pin { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 0.6rem 0.85rem; font-size: 0.82rem; display: flex; align-items: center; gap: 0.5rem; }
-.recent-pin .pin-vibe { font-size: 1rem; flex-shrink: 0; }
-.recent-pin .pin-name { font-weight: 700; color: #ffcc00; }
-.recent-pin .pin-loc { color: rgba(255,255,255,0.7); }
-.recent-pin .pin-note { color: rgba(255,255,255,0.6); font-style: italic; flex: 1; }
-.recent-pin .pin-time { font-size: 0.7rem; color: rgba(255,255,255,0.4); white-space: nowrap; }
-.empty-pins { text-align: center; color: rgba(255,255,255,0.5); font-size: 0.85rem; padding: 1rem; }
+/* ═══════════════ BULLETIN WALL (Corkboard Grid) ═══════════════ */
+.bulletin-wall { position: relative; z-index: 1; background: linear-gradient(180deg, #d9c9a8 0%, #cbb891 15%, #b8a37c 100%); border: 10px solid #8a6d3b; border-radius: 6px; box-shadow: inset 0 0 40px rgba(0,0,0,0.15), 0 8px 32px rgba(0,0,0,0.3); padding: 1.5rem; min-height: 260px; }
+.bulletin-wall::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px); background-size: 18px 18px; pointer-events: none; }
+.board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.25rem; position: relative; z-index: 1; }
 
-/* ─── Status banner for offline/static mode ─── */
+/* ═══════════════ SUPPORTER CARD (Post-It / Polaroid) ═══════════════ */
+.supporter-note { background: #fffef7; border-radius: 6px 2px 6px 2px; padding: 1rem 1.1rem 1.2rem; box-shadow: 0 4px 14px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15); position: relative; transform: rotate(var(--tilt, 0deg)); transition: transform 0.2s, box-shadow 0.2s; border-top: 3px solid #ffd166; }
+.supporter-note:hover { transform: rotate(0deg) scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 5; }
+.supporter-note:nth-child(odd) { --tilt: -0.8deg; }
+.supporter-note:nth-child(even) { --tilt: 0.6deg; }
+.supporter-note::before { content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(4deg); width: 38px; height: 18px; background: rgba(0,0,0,0.12); border-radius: 50% 50% 0 0; }
+.supporter-note .note-vibe { position: absolute; top: 8px; right: 10px; font-size: 1.15rem; text-align: center; line-height: 1.1; }
+.supporter-note .note-vibe-label { font-size: 0.62rem; color: #888; display: block; max-width: 60px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.note-header { font-size: 0.92rem; font-weight: 800; color: #121c50; margin: 0.35rem 0 0.15rem; padding-right: 62px; }
+.note-loc { font-size: 0.75rem; color: #777; font-weight: 500; margin-bottom: 0.55rem; }
+.note-body { font-size: 0.85rem; color: #333; line-height: 1.5; margin-bottom: 0.6rem; min-height: 32px; }
+.note-time { font-size: 0.68rem; color: #aaa; text-align: right; border-top: 1px dashed #ddd; padding-top: 0.4rem; }
+
+/* ═══════════════ EMPTY STATE ═══════════════ */
+.board-empty { text-align: center; color: #5a4632; font-size: 1rem; padding: 3rem 1rem; position: relative; z-index: 1; font-style: italic; }
+
+/* ═══════════════ MISC ═══════════════ */
 .api-status { display: none; position: relative; z-index: 1; font-size: 0.75rem; opacity: 0.7; margin-bottom: 0.75rem; padding: 0.4em 0.9em; border-radius: 6px; background: rgba(255,204,0,0.15); border: 1px solid rgba(255,204,0,0.3); }
 .api-status.show { display: inline-block; }
 
-@media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } .supporter-card { padding: 1.25rem; } .supporter-card .supporter-heading { font-size: 1.4rem; } }
+@media (max-width: 600px) { .tool-hero h1 { font-size: 1.6rem; } .board-card { padding: 1.25rem; } .board-card .board-heading { font-size: 1.3rem; } .bulletin-wall { padding: 1rem; } .board-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -97,136 +107,22 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
     <a href="../">← Back to Tools</a>
   </div>
 </header>
+
 <section class="tool-hero">
-  <h1>🌍 Where We're From</h1>
-  <p>Type your city, pick your vibe, and join the global community supporting Abdul's vision for Michigan.</p>
+  <h1>📌 The Global Bulletin Board</h1>
+  <p>No district restrictions, no limits. Pin your note, rep your vibe, and see where supporters are tuning in from around the world.</p>
 </section>
+
 <div class="tool-body">
-  <div class="supporter-card">
-    <h2 class="supporter-heading">Where <em>We're</em> From</h2>
-    <p class="supporter-intro">Thank you for taking the time to learn more about Abdul and this campaign. Wherever you are in the world, add your pin below — no district restrictions, no limits. Let's build a global community together.</p>
+  <div class="board-card">
+    <h2 class="board-heading">Pin Your <em>Note</em> to the Board</h2>
+    <p class="board-intro">Drop your name, your city, and a message. Pick an origin vibe that captures your energy — from the engineering bench to the stands — and join supporters on every continent.</p>
+
     <div class="supporter-counter">
-      <span>🌍 Global Supporters:</span>
+      <span>🌍 Supporters on the Board:</span>
       <span class="counter-num" id="supporter-count">0</span>
     </div>
     <div class="api-status" id="api-status">⚠️ Running in demo mode — your pin will be saved on this device only.</div>
-
-    <div class="world-map-wrap">
-      <svg id="world-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-        <rect class="ocean" x="0" y="0" width="1000" height="500" />
-        <g class="land">
-          <!-- NORTH AMERICA (Alaska, Canada, USA, tapering to Mexico) -->
-          <path d="M78,70 C85,60 95,52 108,47 C120,42 134,40 148,42 C158,43 166,47 172,53
-                   L178,60 L183,68 L186,78 L188,88 L188,98 L186,108 L182,117 L176,126
-                   L168,134 L160,142 L152,150 L146,159 L141,169 L138,179 L136,190 L135,201
-                   L136,212 L139,222 L143,231 L149,239 L156,246 L164,251 L172,254 L181,255
-                   L191,254 L200,251 L209,246 L217,239 L225,230 L232,220 L240,208 L247,196
-                   L253,184 L258,170 L262,157 L266,144 L268,130 L270,116 L270,102 L269,92
-                   L266,82 L262,73 L256,66 L249,60 L242,56 L234,53 L226,52 L218,52 L210,54
-                   L203,57 L197,62 L192,68 L188,76 L186,86 L186,97 L188,108 L192,118 L198,127
-                   L205,134 L213,139 L222,142 L231,143 L240,142 L248,138 L255,132 L261,124
-                   L265,114 L268,104 L269,92 L269,81 L267,71 L263,63 L258,57 L252,53 L246,52
-                   L241,54 L237,58 L235,64 L235,72 L237,79 L241,85 L246,89 L252,90 L258,88
-                   L262,84 L264,78 L265,71 L265,64 L263,58 L260,54 L256,53 L253,54 L251,58
-                   L250,63 L251,68 L253,72 L256,74 L259,75 L261,73 L262,70 L261,66 L259,63
-                   L256,62 L254,63 L253,66 L254,69 L256,70 L258,69 L258,66 L256,64 L254,64
-                   L254,67 L255,69 L256,70 Z" />
-          <!-- MEXICO & CENTRAL AMERICA -->
-          <path d="M160,250 L170,256 L179,264 L187,274 L193,286 L197,299 L199,313 L199,327
-                   L197,341 L193,354 L187,365 L179,375 L170,383 L161,389 L152,393 L144,396
-                   L137,397 L130,397 L124,395 L119,393 L115,389 L112,385 L111,380 L112,375
-                   L115,371 L120,368 L126,366 L133,366 L140,367 L146,370 L152,374 L157,379
-                   L161,385 L165,391 L167,397 Z" />
-          <!-- GREENLAND -->
-          <path d="M300,36 L320,29 L343,29 L362,36 L376,49 L383,65 L383,83 L375,99
-                   L362,111 L346,119 L330,123 L315,122 L302,116 L292,106 L285,94 L282,79
-                   L283,62 L288,48 Z" />
-          <!-- SOUTH AMERICA (wide NE, curving east, tapering south) -->
-          <path d="M128,380 L138,372 L150,365 L163,360 L177,357 L190,357 L202,359 L214,363
-                   L224,369 L233,377 L240,387 L246,398 L250,410 L252,423 L252,437 L250,450
-                   L247,463 L242,476 L236,487 L228,497 L219,505 L209,511 L199,515 L189,517
-                   L180,516 L171,513 L163,508 L157,501 L152,493 L148,484 L145,474 L143,463
-                   L142,451 L141,439 L140,427 L139,415 L139,403 L139,391 Z" />
-          <!-- EUROPE (Iberia, main mass, Scandinavia, UK, Italy) -->
-          <path d="M430,104 L440,95 L452,89 L465,84 L480,82 L495,83 L510,86 L524,91
-                   L536,98 L546,107 L553,117 L558,129 L560,141 L559,153 L556,165 L551,176
-                   L544,186 L536,194 L526,200 L515,204 L504,206 L492,206 L481,204 L470,200
-                   L460,194 L452,186 L445,178 L440,168 L437,158 L435,148 L433,138 L432,127
-                   L432,117 L434,110 Z" />
-          <!-- Scandinavia -->
-          <path d="M528,44 L541,37 L555,35 L568,39 L578,48 L584,61 L585,75 L582,89
-                   L574,101 L564,111 L551,118 L538,123 L526,125 L518,123 L513,117 L512,109
-                   L514,100 L520,92 L527,83 L534,73 L538,60 Z" />
-          <!-- UK -->
-          <path d="M426,100 L432,93 L440,90 L448,92 L453,98 L455,106 L453,114 L448,120
-                   L441,123 L434,122 L429,117 L426,109 Z" />
-          <!-- Ireland -->
-          <path d="M418,104 L423,99 L429,99 L432,103 L431,109 L426,112 L421,109 Z" />
-          <!-- Italy -->
-          <path d="M450,140 L452,133 L456,128 L460,126 L463,128 L463,134 L460,142 L456,152
-                   L452,161 L449,169 L448,175 L450,179 L453,180 L455,177 L456,171 Z" />
-          <!-- AFRICA (bulge, Horn, taper south) -->
-          <path d="M445,178 L455,170 L468,164 L483,160 L500,158 L518,159 L535,163
-                   L551,170 L565,180 L575,193 L582,207 L584,222 L583,237 L579,251 L572,264
-                   L563,275 L553,285 L542,295 L532,306 L522,318 L513,331 L505,344 L499,357
-                   L495,370 L493,383 L493,396 L495,408 L499,419 L505,428 L513,435 L522,440
-                   L532,443 L542,444 L552,442 L561,438 L570,432 L578,425 L585,416 L592,406
-                   L598,395 L604,383 L609,371 L614,358 L618,345 L622,332 L624,318 L626,305
-                   L626,292 L625,280 L622,269 L618,259 L612,250 L604,243 L595,237 L585,233
-                   L574,230 L563,228 L551,227 L539,227 L528,228 L517,230 L507,233 L498,238
-                   L490,244 L484,251 L480,259 L478,268 L478,278 L481,288 L486,297 L493,305
-                   L502,311 L512,315 L524,317 L535,316 L546,313 L556,307 L565,299 L573,289
-                   L580,278 L585,266 L589,253 L592,239 L593,225 L592,212 L590,199 L586,187
-                   L580,177 L573,168 L563,161 L553,155 L541,150 L529,146 L517,143 L505,142
-                   L493,142 L481,143 L470,146 L460,151 L452,158 L446,166 L442,175 Z" />
-          <!-- Madagascar -->
-          <path d="M600,345 L607,340 L615,345 L620,357 L619,372 L611,383 L603,378
-                   L600,366 Z" />
-          <!-- ASIA (massive central-east landmass) -->
-          <path d="M575,88 L605,68 L640,53 L678,45 L718,43 L756,48 L792,59 L824,76
-                   L852,98 L874,125 L888,154 L894,184 L891,212 L881,238 L864,259 L842,275
-                   L818,285 L792,289 L765,287 L738,279 L713,266 L691,247 L674,225 L662,202
-                   L655,177 L654,153 L657,130 L666,110 L680,95 L698,85 L718,80 L740,79
-                   L762,82 L782,88 L799,98 L813,109 L822,122 L827,135 L826,148 L820,160
-                   L810,169 L797,176 L782,181 L766,184 L749,185 L732,184 L717,181 L703,177
-                   L691,172 L680,166 L672,159 L666,151 L662,143 L660,135 L660,127 L661,120 L664,113 L669,107 L675,102 Z" />
-          <!-- India -->
-          <path d="M642,186 L656,175 L673,169 L690,170 L705,178 L715,191 L720,207 L720,225
-                   L714,241 L703,255 L689,265 L671,272 L652,274 L635,270 L620,261 L609,246
-                   L603,227 L604,208 L611,195 L625,187 Z" />
-          <!-- Arabian Peninsula -->
-          <path d="M608,186 L622,178 L639,176 L655,181 L668,191 L676,205 L677,221 L671,237
-                   L660,249 L646,257 L630,260 L615,257 L603,249 L595,236 L594,220 L598,204 L605,192 Z" />
-          <!-- Southeast Asia peninsula -->
-          <path d="M720,210 L735,201 L751,197 L768,200 L784,210 L795,223 L802,239 L805,257
-                   L803,275 L797,292 L786,307 L772,319 L756,327 L738,332 L720,333 L703,330
-                   L689,322 L678,310 L671,295 L669,278 L672,262 L680,248 L692,236 L706,227 Z" />
-          <!-- Japan -->
-          <path d="M848,128 L854,120 L862,116 L871,118 L877,125 L879,135 L876,145 L868,153
-                   L860,157 L853,156 L849,151 L847,143 Z" />
-          <!-- Philippines -->
-          <path d="M815,215 L822,211 L829,213 L831,220 L827,228 L820,233 L814,235 L811,230 Z" />
-          <!-- Indonesia -->
-          <path d="M760,332 L778,324 L800,321 L821,325 L840,335 L855,350 L865,369 L869,390
-                   L866,411 L856,428 L841,440 L823,447 L804,448 L787,442 L774,430 L764,414
-                   L761,395 L762,375 Z" />
-          <!-- AUSTRALIA -->
-          <path d="M770,357 L790,347 L813,344 L836,348 L856,359 L872,375 L883,395 L888,417
-                   L887,440 L880,459 L866,475 L848,487 L827,493 L805,494 L783,490 L765,480
-                   L751,465 L742,445 L740,423 L744,402 L753,384 L766,368 Z" />
-          <!-- New Zealand -->
-          <path d="M902,456 L908,450 L916,450 L922,456 L923,465 L919,475 L912,483 L905,488
-                   L899,489 L896,482 L895,472 L897,463 Z" />
-          <!-- ANTARCTICA -->
-          <path d="M140,493 L200,484 L270,478 L350,474 L430,471 L520,469 L610,468 L700,467
-                   L790,466 L870,467 L898,474 L900,484 L892,493 L875,499 L851,503 L824,504
-                   L794,503 L764,503 L734,503 L704,503 L674,503 L644,503 L614,503 L584,503
-                   L554,503 L524,503 L494,503 L464,503 L434,503 L404,503 L374,503 L344,503
-                   L314,503 L284,503 L254,503 L226,502 L205,500 L178,498 L158,496 Z" />
-        </g>
-      </svg>
-      <div class="map-hint">🌍 Pins appear here after supporters drop them from around the world</div>
-    </div>
 
     <form id="supporter-form" class="pin-form" autocomplete="off">
       <div class="typeahead-wrap">
@@ -234,24 +130,49 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
         <div class="typeahead-dropdown" id="typeahead-dropdown"></div>
       </div>
       <input id="pin-name" type="text" placeholder="Your name (optional)" maxlength="40" />
-      <input id="pin-note" type="text" placeholder="Short note (optional)" maxlength="80" />
-      <button class="btn" id="pin-drop-btn" type="submit">Drop My Pin 📍</button>
+      <input id="pin-note" type="text" placeholder="Short note to the campaign (optional)" maxlength="80" />
+      <button class="btn" id="pin-drop-btn" type="submit">Pin It 📌</button>
     </form>
 
     <div class="vibe-section">
       <div class="vibe-label">Choose your origin vibe:</div>
-      <div class="vibe-badges" id="vibe-badges">
-        <span class="vibe-badge" data-vibe="Local Rooted"><span class="badge-emoji">🌱</span> Local Rooted</span>
-        <span class="vibe-badge" data-vibe="Racing Fan Zone"><span class="badge-emoji">🏁</span> Racing Fan Zone</span>
-        <span class="vibe-badge" data-vibe="Tech Hub"><span class="badge-emoji">💻</span> Tech Hub</span>
-        <span class="vibe-badge" data-vibe="Globe Trotter"><span class="badge-emoji">🌍</span> Globe Trotter</span>
+      <div class="vibe-category">Academics, STEM & General Engineering</div>
+      <div class="vibe-badges" id="vibes-academic">
+        <span class="vibe-badge" data-vibe="First Principles"><span class="badge-emoji">📐</span> First Principles</span>
+        <span class="vibe-badge" data-vibe="Lab Bench & Code"><span class="badge-emoji">🔬</span> Lab Bench & Code</span>
+        <span class="vibe-badge" data-vibe="Study Hall Regular"><span class="badge-emoji">📚</span> Study Hall Regular</span>
+        <span class="vibe-badge" data-vibe="Briefcase & Books"><span class="badge-emoji">⚖️</span> Briefcase & Books</span>
+      </div>
+      <div class="vibe-category">Sports & Racing Culture</div>
+      <div class="vibe-badges" id="vibes-sports">
+        <span class="vibe-badge" data-vibe="Paddock Pass"><span class="badge-emoji">🏁</span> Paddock Pass</span>
+        <span class="vibe-badge" data-vibe="Apex Predator"><span class="badge-emoji">⏱️</span> Apex Predator</span>
+        <span class="vibe-badge" data-vibe="Supporters Section"><span class="badge-emoji">⚽</span> Supporters Section</span>
+        <span class="vibe-badge" data-vibe="Hardwood Historian"><span class="badge-emoji">🏀</span> Hardwood Historian</span>
+        <span class="vibe-badge" data-vibe="Matchday Energy"><span class="badge-emoji">🏟️</span> Matchday Energy</span>
+      </div>
+      <div class="vibe-category">Culture, Arts & Daily Life</div>
+      <div class="vibe-badges" id="vibes-culture">
+        <span class="vibe-badge" data-vibe="Third Wave Espresso"><span class="badge-emoji">☕</span> Third Wave Espresso</span>
+        <span class="vibe-badge" data-vibe="Headphones In"><span class="badge-emoji">🎧</span> Headphones In</span>
+        <span class="vibe-badge" data-vibe="Canvas & Code"><span class="badge-emoji">🎨</span> Canvas & Code</span>
+        <span class="vibe-badge" data-vibe="Rooted & Grounded"><span class="badge-emoji">🌱</span> Rooted & Grounded</span>
+        <span class="vibe-badge" data-vibe="Night Owl Shift"><span class="badge-emoji">🌙</span> Night Owl Shift</span>
+      </div>
+      <div class="vibe-category">Global & General Movement</div>
+      <div class="vibe-badges" id="vibes-global">
+        <span class="vibe-badge" data-vibe="Out of District"><span class="badge-emoji">🗺️</span> Out of District</span>
+        <span class="vibe-badge" data-vibe="Transit Lounge"><span class="badge-emoji">✈️</span> Transit Lounge</span>
+        <span class="vibe-badge" data-vibe="Global Grid"><span class="badge-emoji">🌍</span> Global Grid</span>
       </div>
     </div>
 
     <p class="form-status" id="form-status"></p>
 
-    <div class="recent-pins" id="recent-pins">
-      <div class="empty-pins">Loading global supporters…</div>
+    <div class="bulletin-wall">
+      <div class="board-grid" id="board-grid">
+        <div class="board-empty" id="board-empty">The board is blank—be the first supporter to pin your note from your corner of the world!</div>
+      </div>
     </div>
   </div>
 </div>
@@ -264,42 +185,41 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
   'use strict';
 
   // ─── DOM refs ───
-  var mapSvg = document.getElementById('world-map');
   var cityInput = document.getElementById('pin-city');
   var nameInput = document.getElementById('pin-name');
   var noteInput = document.getElementById('pin-note');
   var dropBtn = document.getElementById('pin-drop-btn');
   var form = document.getElementById('supporter-form');
-  var recentPinsEl = document.getElementById('recent-pins');
+  var boardGrid = document.getElementById('board-grid');
+  var boardEmpty = document.getElementById('board-empty');
   var counterEl = document.getElementById('supporter-count');
   var typeaheadEl = document.getElementById('typeahead-dropdown');
   var statusEl = document.getElementById('form-status');
   var apiStatusEl = document.getElementById('api-status');
-  var vibeBadgesEl = document.getElementById('vibe-badges');
+  var vibeGroups = ['vibes-academic', 'vibes-sports', 'vibes-culture', 'vibes-global'];
 
   // ─── State ───
   var supporters = [];
-  var selectedCity = null;      // {city, country, lat, lng}
-  var selectedVibe = 'Local Rooted';
+  var selectedCity = null;
+  var selectedVibe = 'Rooted & Grounded';
   var apiAvailable = false;
   var LOCAL_KEY = 'abdul_supporter_pins_fallback';
 
-  // ─── Vibe config (inline fallback matching backend) ───
+  // ─── Vibe emoji lookup (mirrors backend) ───
   var VIBE_EMOJIS = {
-    'Local Rooted': '🌱',
-    'Racing Fan Zone': '🏁',
-    'Tech Hub': '💻',
-    'Globe Trotter': '🌍'
+    'First Principles': '📐', 'Lab Bench & Code': '🔬', 'Study Hall Regular': '📚', 'Briefcase & Books': '⚖️',
+    'Paddock Pass': '🏁', 'Apex Predator': '⏱️', 'Supporters Section': '⚽', 'Hardwood Historian': '🏀', 'Matchday Energy': '🏟️',
+    'Third Wave Espresso': '☕', 'Headphones In': '🎧', 'Canvas & Code': '🎨', 'Rooted & Grounded': '🌱', 'Night Owl Shift': '🌙',
+    'Out of District': '🗺️', 'Transit Lounge': '✈️', 'Global Grid': '🌍'
   };
 
-  // ─── Escape HTML ───
+  // ─── Helpers ───
   function escapeHtml(str) {
     var div = document.createElement('div');
     div.textContent = str == null ? '' : String(str);
     return div.innerHTML;
   }
 
-  // ─── API base detection (works from / and from /pages/…) ───
   function apiBase() {
     var scripts = document.querySelectorAll('script[src]');
     for (var i = 0; i < scripts.length; i++) {
@@ -311,16 +231,14 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
     return './';
   }
 
-  function apiUrl(path) {
-    return apiBase() + path.replace(/^\//, '');
-  }
+  function apiUrl(path) { return apiBase() + path.replace(/^\//, ''); }
 
   function setStatus(msg, isErr) {
     statusEl.textContent = msg || '';
     statusEl.className = 'form-status' + (isErr ? ' err' : ' ok');
   }
 
-  // ─── Type-ahead search ───
+  // ─── Type-ahead ───
   var searchTimer = null;
   cityInput.addEventListener('input', function () {
     clearTimeout(searchTimer);
@@ -342,7 +260,6 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
         renderSuggestions(results);
       })
       .catch(function () {
-        // Fallback: hide dropdown, let user type free-text
         typeaheadEl.classList.remove('show');
         typeaheadEl.innerHTML = '';
       });
@@ -360,9 +277,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
       div.className = 'suggestion';
       div.innerHTML = '<span class="city-name">' + escapeHtml(entry.city) + '</span>' +
                       '<span class="country-name">' + escapeHtml(entry.country) + '</span>';
-      div.addEventListener('click', function () {
-        selectCity(entry);
-      });
+      div.addEventListener('click', function () { selectCity(entry); });
       typeaheadEl.appendChild(div);
     });
     typeaheadEl.classList.add('show');
@@ -376,110 +291,72 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
     setStatus('📍 ' + entry.city + ', ' + entry.country + ' selected!');
   }
 
-  // Close type-ahead on outside click
   document.addEventListener('click', function (e) {
     if (!e.target.closest('.typeahead-wrap')) {
       typeaheadEl.classList.remove('show');
     }
   });
 
-  // ─── Vibe badges ───
-  vibeBadgesEl.addEventListener('click', function (e) {
-    var badge = e.target.closest('.vibe-badge');
-    if (!badge) return;
-    selectedVibe = badge.getAttribute('data-vibe');
-    vibeBadgesEl.querySelectorAll('.vibe-badge').forEach(function (b) {
-      b.classList.toggle('selected', b === badge);
+  // ─── Vibe badge selection (all groups) ───
+  vibeGroups.forEach(function (groupId) {
+    var group = document.getElementById(groupId);
+    if (!group) return;
+    group.addEventListener('click', function (e) {
+      var badge = e.target.closest('.vibe-badge');
+      if (!badge) return;
+      selectedVibe = badge.getAttribute('data-vibe');
+      // Deselect all badges in all groups
+      vibeGroups.forEach(function (gid) {
+        var g = document.getElementById(gid);
+        if (g) g.querySelectorAll('.vibe-badge').forEach(function (b) { b.classList.remove('selected'); });
+      });
+      badge.classList.add('selected');
     });
   });
-  // Default select first badge
-  vibeBadgesEl.querySelector('.vibe-badge').classList.add('selected');
 
-  // ─── Map pin rendering ───
-  function addPinMarker(lat, lng, label, vibe) {
-    // Convert lat/lng to SVG coordinates (invert lng for display)
-    var x = ((lng + 180) / 360) * 1000;
-    var y = ((90 - lat) / 180) * 500;
-    if (x < 0) x = 0;
-    if (x > 1000) x = 1000;
-    if (y < 0) y = 0;
-    if (y > 500) y = 500;
+  // Default select first vibe in academic group
+  var firstBadge = document.querySelector('#vibes-academic .vibe-badge');
+  if (firstBadge) firstBadge.classList.add('selected');
 
-    var NS = 'http://www.w3.org/2000/svg';
-    var g = document.createElementNS(NS, 'g');
-    g.setAttribute('class', 'map-pin');
-    g.setAttribute('transform', 'translate(' + x + ',' + y + ')');
-
-    var pulse = document.createElementNS(NS, 'circle');
-    pulse.setAttribute('r', '14');
-    pulse.setAttribute('fill', 'rgba(210,18,20,0.25)');
-
-    var circle = document.createElementNS(NS, 'circle');
-    circle.setAttribute('r', '7');
-    circle.setAttribute('fill', '#d21214');
-    circle.setAttribute('stroke', '#fff');
-    circle.setAttribute('stroke-width', '2');
-    g.appendChild(pulse);
-    g.appendChild(circle);
-
-    if (label) {
-      var text = document.createElementNS(NS, 'text');
-      text.setAttribute('x', '10');
-      text.setAttribute('y', '-8');
-      text.setAttribute('fill', '#fff');
-      text.setAttribute('font-size', '10');
-      text.setAttribute('font-weight', '700');
-      text.textContent = label.length > 14 ? label.slice(0, 13) + '…' : label;
-      g.appendChild(text);
-    }
-    mapSvg.appendChild(g);
-  }
-
-  function renderMap() {
-    mapSvg.querySelectorAll('.map-pin').forEach(function (p) { p.remove(); });
-    supporters.forEach(function (pin) {
-      addPinMarker(pin.lat, pin.lng, pin.name || '', pin.vibe);
-    });
-  }
-
-  // ─── Feed rendering ───
-  function renderFeed() {
+  // ─── Render bulletin board ───
+  function renderBoard() {
     counterEl.textContent = supporters.length;
-    if (!supporters.length) {
-      recentPinsEl.innerHTML = '<div class="empty-pins">No pins yet — be the first to drop a pin from your corner of the world!</div>';
-      return;
-    }
-    var html = '';
-    supporters.slice().reverse().slice(0, 20).forEach(function (pin) {
+    boardEmpty.style.display = supporters.length ? 'none' : 'block';
+    // Remove existing cards (keep empty state)
+    boardGrid.querySelectorAll('.supporter-note').forEach(function (n) { n.remove(); });
+    supporters.slice().reverse().forEach(function (pin) {
+      var note = document.createElement('div');
+      note.className = 'supporter-note';
+
       var name = pin.name || 'Anonymous Supporter';
       var loc = (pin.city || '') + (pin.country ? ', ' + pin.country : '');
-      var note = pin.note ? ' · "' + pin.note + '"' : '';
+      var body = pin.note || 'Proud to support Abdul for Senate! 🌟';
       var emoji = VIBE_EMOJIS[pin.vibe] || '🌍';
       var time = pin.time ? new Date(pin.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
-      html += '<div class="recent-pin">' +
-        '<span class="pin-vibe">' + emoji + '</span>' +
-        '<span class="pin-name">' + escapeHtml(name) + '</span>' +
-        '<span class="pin-loc">' + escapeHtml(loc) + '</span>' +
-        '<span class="pin-note">' + escapeHtml(note) + '</span>' +
-        '<span class="pin-time">' + time + '</span></div>';
+
+      note.innerHTML =
+        '<div class="note-vibe">' + emoji + '<span class="note-vibe-label">' + escapeHtml(pin.vibe || 'Global Grid') + '</span></div>' +
+        '<div class="note-header">' + escapeHtml(name) + '</div>' +
+        '<div class="note-loc">' + escapeHtml(loc) + '</div>' +
+        '<div class="note-body">' + escapeHtml(body) + '</div>' +
+        '<div class="note-time">' + time + '</div>';
+
+      boardGrid.appendChild(note);
     });
-    recentPinsEl.innerHTML = html;
   }
 
-  // ─── Load supporters (API first, localStorage fallback) ───
+  // ─── Load supporters ───
   function loadFallback() {
     try {
       var saved = localStorage.getItem(LOCAL_KEY);
       if (saved) {
         supporters = JSON.parse(saved);
-        renderMap();
-        renderFeed();
+        renderBoard();
         return;
       }
     } catch (e) {}
     supporters = [];
-    renderMap();
-    renderFeed();
+    renderBoard();
   }
 
   function loadSupporters() {
@@ -492,8 +369,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
         apiAvailable = true;
         apiStatusEl.classList.remove('show');
         supporters = data.supporters || [];
-        renderMap();
-        renderFeed();
+        renderBoard();
       })
       .catch(function () {
         apiAvailable = false;
@@ -502,7 +378,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
       });
   }
 
-  // ─── Submit pin ───
+  // ─── Submit ───
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var cityText = cityInput.value.trim();
@@ -514,7 +390,6 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
       return;
     }
     if (!selectedCity) {
-      // Try to auto-resolve from typed text through search API
       fetch(apiUrl('api/supporters/search') + '?q=' + encodeURIComponent(cityText))
         .then(function (r) { return r.json(); })
         .then(function (data) {
@@ -546,7 +421,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
     };
 
     dropBtn.disabled = true;
-    dropBtn.textContent = 'Dropping…';
+    dropBtn.textContent = 'Pinning…';
 
     if (apiAvailable) {
       fetch(apiUrl('api/supporters'), {
@@ -560,27 +435,25 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
         })
         .then(function (data) {
           supporters.push(data.supporter);
-          renderMap();
-          renderFeed();
+          renderBoard();
           resetForm();
-          setStatus('🎉 Pin dropped! Welcome to the global community, ' + (name || (selectedCity.city || 'friend')) + '!');
+          setStatus('🎉 Pin dropped! Welcome to the board, ' + (name || (selectedCity.city || 'friend')) + '!');
         })
         .catch(function () {
-          // Fall back to localStorage
           saveLocal(payload);
           resetForm();
           setStatus('⚠️ Could not reach server — pin saved on this device.', true);
         })
         .finally(function () {
           dropBtn.disabled = false;
-          dropBtn.textContent = 'Drop My Pin 📍';
+          dropBtn.textContent = 'Pin It 📌';
         });
     } else {
       saveLocal(payload);
       resetForm();
       setStatus('⚠️ Pin saved on this device only (demo mode).', true);
       dropBtn.disabled = false;
-      dropBtn.textContent = 'Drop My Pin 📍';
+      dropBtn.textContent = 'Pin It 📌';
     }
   }
 
@@ -598,8 +471,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
     };
     supporters.push(pin);
     try { localStorage.setItem(LOCAL_KEY, JSON.stringify(supporters)); } catch (e) {}
-    renderMap();
-    renderFeed();
+    renderBoard();
   }
 
   function resetForm() {
