@@ -8,7 +8,7 @@ app = Flask(__name__, static_folder='frontend', static_url_path='')
 ALLOWED_MODULES = {
     'endorsement_engine', 'financial_simulator', 'halal_economy', 'hazard_lookup',
     'myth_buster', 'policy_deep_dive', 'senior_engagement', 'simulation_history',
-    'tax_calculator', 'youth_amanah'
+    'tax_calculator', 'youth_amanah', 'supporter_map'
 }
 
 
@@ -38,6 +38,54 @@ def api_languages():
         code: {"name": name, "rtl": is_rtl(code)}
         for code, name in LANGUAGES.items()
     })
+
+
+# ─── Supporter Map API ───
+@app.route('/api/supporters', methods=['GET'])
+def api_supporters_list():
+    """GET /api/supporters → list all supporters."""
+    try:
+        from supporter_map import handle_get
+        result = handle_get()
+        return jsonify({'supporters': result})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/supporters', methods=['POST'])
+def api_supporters_add():
+    """POST /api/supporters → add a new supporter pin."""
+    data = request.get_json(silent=True) or {}
+    try:
+        from supporter_map import handle_add
+        result, status = handle_add(data)
+        if status >= 400:
+            return jsonify(result), status
+        return jsonify({'supporter': result}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/supporters/search')
+def api_supporters_search():
+    """GET /api/supporters/search?q=det → type-ahead city suggestions."""
+    q = request.args.get('q', '')
+    try:
+        from supporter_map import search_cities
+        results = search_cities(q)
+        return jsonify({'results': results})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/supporters/vibes')
+def api_supporters_vibes():
+    """GET /api/supporters/vibes → list of vibe badge definitions."""
+    try:
+        from supporter_map import VIBES
+        return jsonify({'vibes': VIBES})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/api/translate', methods=['POST'])

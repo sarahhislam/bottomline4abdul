@@ -29,27 +29,62 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
 .supporter-counter { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; padding: 0.5em 1.2em; font-size: 0.9rem; font-weight: 700; margin-bottom: 1.25rem; position: relative; z-index: 1; }
 .supporter-counter .counter-num { font-size: 1.3rem; font-weight: 800; color: #ffcc00; }
 .world-map-wrap { position: relative; z-index: 1; background: #0a143c; border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 0.75rem; margin-bottom: 1rem; }
-.world-map-wrap svg { width: 100%; height: auto; display: block; border-radius: 10px; cursor: crosshair; }
+.world-map-wrap svg { width: 100%; height: auto; display: block; border-radius: 10px; }
 .world-map-wrap svg .land { fill: #3a8f63; stroke: rgba(255,255,255,0.7); stroke-width: 0.6; transition: fill 0.2s; }
 .world-map-wrap svg .land:hover { fill: #4fa878; }
 .world-map-wrap svg .ocean { fill: #0a143c; }
 .map-pin { animation: pinDrop 0.4s ease; transform-origin: center; }
 @keyframes pinDrop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 .map-hint { font-size: 0.8rem; opacity: 0.7; text-align: center; margin-top: 0.5rem; position: relative; z-index: 1; }
+
+/* ─── Type-Ahead Input ─── */
+.typeahead-wrap { position: relative; flex: 2; min-width: 220px; }
+.typeahead-wrap input { width: 100%; padding: 0.55em 0.7em; border: 2px solid rgba(255,255,255,0.25); border-radius: 8px; font-family: inherit; font-size: 0.85rem; background: rgba(255,255,255,0.1); color: #fff; }
+.typeahead-wrap input::placeholder { color: rgba(255,255,255,0.5); }
+.typeahead-wrap input:focus { outline: none; border-color: #ffcc00; }
+.typeahead-dropdown { display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 100; background: #fff; border-radius: 10px; box-shadow: 0 12px 32px rgba(0,0,0,0.35); overflow: hidden; max-height: 220px; overflow-y: auto; }
+.typeahead-dropdown.show { display: block; }
+.typeahead-dropdown .suggestion { display: flex; align-items: center; gap: 8px; padding: 10px 14px; color: #1c1d27; cursor: pointer; border-bottom: 1px solid #f0e8e0; font-size: 0.85rem; text-align: left; }
+.typeahead-dropdown .suggestion:hover { background: #d6f3ff; }
+.typeahead-dropdown .suggestion .city-name { font-weight: 700; color: #121c50; }
+.typeahead-dropdown .suggestion .country-name { color: #888; font-size: 0.78rem; }
+.typeahead-dropdown .no-results { padding: 12px 14px; color: #888; font-size: 0.82rem; }
+
+/* ─── Vibe Badges ─── */
+.vibe-section { margin-bottom: 0.75rem; position: relative; z-index: 1; }
+.vibe-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; margin-bottom: 0.4rem; }
+.vibe-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.vibe-badge { display: inline-flex; align-items: center; gap: 6px; padding: 0.45em 1em; border-radius: 30px; border: 2px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); color: #fff; cursor: pointer; font-size: 0.82rem; font-weight: 600; transition: all 0.15s; }
+.vibe-badge:hover { border-color: #ffcc00; transform: translateY(-2px); }
+.vibe-badge.selected { border-color: #ffcc00; background: rgba(255,204,0,0.2); box-shadow: 0 4px 16px rgba(255,204,0,0.25); }
+.vibe-badge .badge-emoji { font-size: 1.05rem; }
+
+/* ─── Form ─── */
 .pin-form { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem; position: relative; z-index: 1; }
 .pin-form input { flex: 1; min-width: 140px; padding: 0.55em 0.7em; border: 2px solid rgba(255,255,255,0.25); border-radius: 8px; font-family: inherit; font-size: 0.85rem; background: rgba(255,255,255,0.1); color: #fff; }
 .pin-form input::placeholder { color: rgba(255,255,255,0.5); }
 .pin-form input:focus { outline: none; border-color: #ffcc00; }
 .pin-form .btn { background: #d21214; color: #fff; border: none; }
 .pin-form .btn:hover { filter: brightness(1.1); }
+.pin-form .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.form-status { font-size: 0.82rem; margin: 0.5rem 0 0; min-height: 1.2em; position: relative; z-index: 1; }
+.form-status.ok { color: #8ce99a; }
+.form-status.err { color: #ffa8a8; }
+
+/* ─── Recent Feed ─── */
 .recent-pins { max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.4rem; position: relative; z-index: 1; }
 .recent-pin { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 0.6rem 0.85rem; font-size: 0.82rem; display: flex; align-items: center; gap: 0.5rem; }
-.recent-pin .pin-emoji { font-size: 1rem; }
+.recent-pin .pin-vibe { font-size: 1rem; flex-shrink: 0; }
 .recent-pin .pin-name { font-weight: 700; color: #ffcc00; }
 .recent-pin .pin-loc { color: rgba(255,255,255,0.7); }
 .recent-pin .pin-note { color: rgba(255,255,255,0.6); font-style: italic; flex: 1; }
 .recent-pin .pin-time { font-size: 0.7rem; color: rgba(255,255,255,0.4); white-space: nowrap; }
 .empty-pins { text-align: center; color: rgba(255,255,255,0.5); font-size: 0.85rem; padding: 1rem; }
+
+/* ─── Status banner for offline/static mode ─── */
+.api-status { display: none; position: relative; z-index: 1; font-size: 0.75rem; opacity: 0.7; margin-bottom: 0.75rem; padding: 0.4em 0.9em; border-radius: 6px; background: rgba(255,204,0,0.15); border: 1px solid rgba(255,204,0,0.3); }
+.api-status.show { display: inline-block; }
+
 @media (max-width: 600px) { .tool-hero h1 { font-size: 1.5rem; } .supporter-card { padding: 1.25rem; } .supporter-card .supporter-heading { font-size: 1.4rem; } }
 </style>
 </head>
@@ -64,16 +99,17 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
 </header>
 <section class="tool-hero">
   <h1>🌍 Where We're From</h1>
-  <p>Drop a pin from anywhere in the world and join the global community supporting Abdul's vision for Michigan.</p>
+  <p>Type your city, pick your vibe, and join the global community supporting Abdul's vision for Michigan.</p>
 </section>
 <div class="tool-body">
   <div class="supporter-card">
     <h2 class="supporter-heading">Where <em>We're</em> From</h2>
-    <p class="supporter-intro">Thank you for taking the time to learn more about Abdul and this campaign. Wherever you are in the world, drop a pin below — no district restrictions, no limits. Let's build a global community together.</p>
+    <p class="supporter-intro">Thank you for taking the time to learn more about Abdul and this campaign. Wherever you are in the world, add your pin below — no district restrictions, no limits. Let's build a global community together.</p>
     <div class="supporter-counter">
       <span>🌍 Global Supporters:</span>
       <span class="counter-num" id="supporter-count">0</span>
     </div>
+    <div class="api-status" id="api-status">⚠️ Running in demo mode — your pin will be saved on this device only.</div>
 
     <div class="world-map-wrap">
       <svg id="world-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
@@ -189,17 +225,33 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
                    L314,503 L284,503 L254,503 L226,502 L205,500 L178,498 L158,496 Z" />
         </g>
       </svg>
-      <div class="map-hint">Click anywhere on the map to drop your pin 🌍</div>
+      <div class="map-hint">🌍 Pins appear here after supporters drop them from around the world</div>
     </div>
 
-    <div class="pin-form">
+    <form id="supporter-form" class="pin-form" autocomplete="off">
+      <div class="typeahead-wrap">
+        <input id="pin-city" type="text" placeholder="Type your city or country…" maxlength="60" required />
+        <div class="typeahead-dropdown" id="typeahead-dropdown"></div>
+      </div>
       <input id="pin-name" type="text" placeholder="Your name (optional)" maxlength="40" />
-      <input id="pin-note" type="text" placeholder="Leave a short note (optional)" maxlength="80" />
-      <button class="btn" id="pin-drop-btn" type="button">Drop My Pin 📍</button>
+      <input id="pin-note" type="text" placeholder="Short note (optional)" maxlength="80" />
+      <button class="btn" id="pin-drop-btn" type="submit">Drop My Pin 📍</button>
+    </form>
+
+    <div class="vibe-section">
+      <div class="vibe-label">Choose your origin vibe:</div>
+      <div class="vibe-badges" id="vibe-badges">
+        <span class="vibe-badge" data-vibe="Local Rooted"><span class="badge-emoji">🌱</span> Local Rooted</span>
+        <span class="vibe-badge" data-vibe="Racing Fan Zone"><span class="badge-emoji">🏁</span> Racing Fan Zone</span>
+        <span class="vibe-badge" data-vibe="Tech Hub"><span class="badge-emoji">💻</span> Tech Hub</span>
+        <span class="vibe-badge" data-vibe="Globe Trotter"><span class="badge-emoji">🌍</span> Globe Trotter</span>
+      </div>
     </div>
+
+    <p class="form-status" id="form-status"></p>
 
     <div class="recent-pins" id="recent-pins">
-      <div class="empty-pins">No pins yet — be the first to drop a pin from your corner of the world!</div>
+      <div class="empty-pins">Loading global supporters…</div>
     </div>
   </div>
 </div>
@@ -210,35 +262,158 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
 <script>
 (function () {
   'use strict';
-  var STORAGE_KEY = 'abdul_supporter_pins';
+
+  // ─── DOM refs ───
   var mapSvg = document.getElementById('world-map');
+  var cityInput = document.getElementById('pin-city');
   var nameInput = document.getElementById('pin-name');
   var noteInput = document.getElementById('pin-note');
   var dropBtn = document.getElementById('pin-drop-btn');
+  var form = document.getElementById('supporter-form');
   var recentPinsEl = document.getElementById('recent-pins');
   var counterEl = document.getElementById('supporter-count');
-  var pins = [];
-  var pendingPin = null;
+  var typeaheadEl = document.getElementById('typeahead-dropdown');
+  var statusEl = document.getElementById('form-status');
+  var apiStatusEl = document.getElementById('api-status');
+  var vibeBadgesEl = document.getElementById('vibe-badges');
 
-  try { var saved = localStorage.getItem(STORAGE_KEY); if (saved) pins = JSON.parse(saved); } catch (e) {}
+  // ─── State ───
+  var supporters = [];
+  var selectedCity = null;      // {city, country, lat, lng}
+  var selectedVibe = 'Local Rooted';
+  var apiAvailable = false;
+  var LOCAL_KEY = 'abdul_supporter_pins_fallback';
 
-  function savePins() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(pins)); } catch (e) {} }
-  function updateCounter() { counterEl.textContent = pins.length; }
+  // ─── Vibe config (inline fallback matching backend) ───
+  var VIBE_EMOJIS = {
+    'Local Rooted': '🌱',
+    'Racing Fan Zone': '🏁',
+    'Tech Hub': '💻',
+    'Globe Trotter': '🌍'
+  };
 
+  // ─── Escape HTML ───
   function escapeHtml(str) {
     var div = document.createElement('div');
     div.textContent = str == null ? '' : String(str);
     return div.innerHTML;
   }
 
-  function addPinMarker(x, y, label) {
+  // ─── API base detection (works from / and from /pages/…) ───
+  function apiBase() {
+    var scripts = document.querySelectorAll('script[src]');
+    for (var i = 0; i < scripts.length; i++) {
+      var s = scripts[i];
+      if (s.src && s.src.indexOf('language-selector.js') !== -1) {
+        return s.src.replace(/js\/language-selector\.js(\?.*)?$/, '');
+      }
+    }
+    return './';
+  }
+
+  function apiUrl(path) {
+    return apiBase() + path.replace(/^\//, '');
+  }
+
+  function setStatus(msg, isErr) {
+    statusEl.textContent = msg || '';
+    statusEl.className = 'form-status' + (isErr ? ' err' : ' ok');
+  }
+
+  // ─── Type-ahead search ───
+  var searchTimer = null;
+  cityInput.addEventListener('input', function () {
+    clearTimeout(searchTimer);
+    selectedCity = null;
+    var q = cityInput.value.trim();
+    if (q.length < 2) {
+      typeaheadEl.classList.remove('show');
+      typeaheadEl.innerHTML = '';
+      return;
+    }
+    searchTimer = setTimeout(function () { doSearch(q); }, 200);
+  });
+
+  function doSearch(q) {
+    fetch(apiUrl('api/supporters/search') + '?q=' + encodeURIComponent(q))
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var results = data.results || [];
+        renderSuggestions(results);
+      })
+      .catch(function () {
+        // Fallback: hide dropdown, let user type free-text
+        typeaheadEl.classList.remove('show');
+        typeaheadEl.innerHTML = '';
+      });
+  }
+
+  function renderSuggestions(results) {
+    typeaheadEl.innerHTML = '';
+    if (!results.length) {
+      typeaheadEl.innerHTML = '<div class="no-results">No matches — try another city or country</div>';
+      typeaheadEl.classList.add('show');
+      return;
+    }
+    results.forEach(function (entry) {
+      var div = document.createElement('div');
+      div.className = 'suggestion';
+      div.innerHTML = '<span class="city-name">' + escapeHtml(entry.city) + '</span>' +
+                      '<span class="country-name">' + escapeHtml(entry.country) + '</span>';
+      div.addEventListener('click', function () {
+        selectCity(entry);
+      });
+      typeaheadEl.appendChild(div);
+    });
+    typeaheadEl.classList.add('show');
+  }
+
+  function selectCity(entry) {
+    selectedCity = entry;
+    cityInput.value = entry.city + ', ' + entry.country;
+    typeaheadEl.classList.remove('show');
+    typeaheadEl.innerHTML = '';
+    setStatus('📍 ' + entry.city + ', ' + entry.country + ' selected!');
+  }
+
+  // Close type-ahead on outside click
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.typeahead-wrap')) {
+      typeaheadEl.classList.remove('show');
+    }
+  });
+
+  // ─── Vibe badges ───
+  vibeBadgesEl.addEventListener('click', function (e) {
+    var badge = e.target.closest('.vibe-badge');
+    if (!badge) return;
+    selectedVibe = badge.getAttribute('data-vibe');
+    vibeBadgesEl.querySelectorAll('.vibe-badge').forEach(function (b) {
+      b.classList.toggle('selected', b === badge);
+    });
+  });
+  // Default select first badge
+  vibeBadgesEl.querySelector('.vibe-badge').classList.add('selected');
+
+  // ─── Map pin rendering ───
+  function addPinMarker(lat, lng, label, vibe) {
+    // Convert lat/lng to SVG coordinates (invert lng for display)
+    var x = ((lng + 180) / 360) * 1000;
+    var y = ((90 - lat) / 180) * 500;
+    if (x < 0) x = 0;
+    if (x > 1000) x = 1000;
+    if (y < 0) y = 0;
+    if (y > 500) y = 500;
+
     var NS = 'http://www.w3.org/2000/svg';
     var g = document.createElementNS(NS, 'g');
     g.setAttribute('class', 'map-pin');
     g.setAttribute('transform', 'translate(' + x + ',' + y + ')');
+
     var pulse = document.createElementNS(NS, 'circle');
     pulse.setAttribute('r', '14');
     pulse.setAttribute('fill', 'rgba(210,18,20,0.25)');
+
     var circle = document.createElementNS(NS, 'circle');
     circle.setAttribute('r', '7');
     circle.setAttribute('fill', '#d21214');
@@ -246,6 +421,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
     circle.setAttribute('stroke-width', '2');
     g.appendChild(pulse);
     g.appendChild(circle);
+
     if (label) {
       var text = document.createElementNS(NS, 'text');
       text.setAttribute('x', '10');
@@ -259,52 +435,183 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #fcf4ed; margin:
     mapSvg.appendChild(g);
   }
 
-  function renderPins() {
+  function renderMap() {
     mapSvg.querySelectorAll('.map-pin').forEach(function (p) { p.remove(); });
-    pins.forEach(function (pin) { addPinMarker(pin.x, pin.y, pin.name || ''); });
-    if (pins.length === 0) {
-      recentPinsEl.innerHTML = '<div class="empty-pins">No pins yet — be the first to drop a pin from your corner of the world!</div>';
-    } else {
-      var html = '';
-      pins.slice().reverse().slice(0, 20).forEach(function (pin) {
-        var name = pin.name || 'Anonymous Supporter';
-        var note = pin.note ? ' · "' + pin.note + '"' : '';
-        var time = pin.time ? new Date(pin.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
-        html += '<div class="recent-pin"><span class="pin-emoji">📍</span><span class="pin-name">' + escapeHtml(name) + '</span><span class="pin-loc">' + pin.lat.toFixed(1) + '°, ' + pin.lng.toFixed(1) + '°</span><span class="pin-note">' + escapeHtml(note) + '</span><span class="pin-time">' + time + '</span></div>';
-      });
-      recentPinsEl.innerHTML = html;
-    }
-    updateCounter();
+    supporters.forEach(function (pin) {
+      addPinMarker(pin.lat, pin.lng, pin.name || '', pin.vibe);
+    });
   }
 
-  mapSvg.addEventListener('click', function (e) {
-    var rect = mapSvg.getBoundingClientRect();
-    var x = (e.clientX - rect.left) * (1000 / rect.width);
-    var y = (e.clientY - rect.top) * (500 / rect.height);
-    var lat = 90 - (y / 500) * 180;
-    var lng = (x / 1000) * 360 - 180;
-    pendingPin = { x: x, y: y, lat: lat, lng: lng };
-    mapSvg.querySelectorAll('.map-pin').forEach(function (p) { p.remove(); });
-    pins.forEach(function (pin) { addPinMarker(pin.x, pin.y, pin.name || ''); });
-    addPinMarker(x, y, 'You');
-    dropBtn.style.animation = 'none';
-    dropBtn.offsetHeight;
-    dropBtn.style.animation = 'pinDrop 0.4s ease';
-  });
+  // ─── Feed rendering ───
+  function renderFeed() {
+    counterEl.textContent = supporters.length;
+    if (!supporters.length) {
+      recentPinsEl.innerHTML = '<div class="empty-pins">No pins yet — be the first to drop a pin from your corner of the world!</div>';
+      return;
+    }
+    var html = '';
+    supporters.slice().reverse().slice(0, 20).forEach(function (pin) {
+      var name = pin.name || 'Anonymous Supporter';
+      var loc = (pin.city || '') + (pin.country ? ', ' + pin.country : '');
+      var note = pin.note ? ' · "' + pin.note + '"' : '';
+      var emoji = VIBE_EMOJIS[pin.vibe] || '🌍';
+      var time = pin.time ? new Date(pin.time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+      html += '<div class="recent-pin">' +
+        '<span class="pin-vibe">' + emoji + '</span>' +
+        '<span class="pin-name">' + escapeHtml(name) + '</span>' +
+        '<span class="pin-loc">' + escapeHtml(loc) + '</span>' +
+        '<span class="pin-note">' + escapeHtml(note) + '</span>' +
+        '<span class="pin-time">' + time + '</span></div>';
+    });
+    recentPinsEl.innerHTML = html;
+  }
 
-  dropBtn.addEventListener('click', function () {
-    if (!pendingPin) { alert('Click anywhere on the map first to place your pin!'); return; }
+  // ─── Load supporters (API first, localStorage fallback) ───
+  function loadFallback() {
+    try {
+      var saved = localStorage.getItem(LOCAL_KEY);
+      if (saved) {
+        supporters = JSON.parse(saved);
+        renderMap();
+        renderFeed();
+        return;
+      }
+    } catch (e) {}
+    supporters = [];
+    renderMap();
+    renderFeed();
+  }
+
+  function loadSupporters() {
+    fetch(apiUrl('api/supporters'))
+      .then(function (r) {
+        if (!r.ok) throw new Error('API unavailable');
+        return r.json();
+      })
+      .then(function (data) {
+        apiAvailable = true;
+        apiStatusEl.classList.remove('show');
+        supporters = data.supporters || [];
+        renderMap();
+        renderFeed();
+      })
+      .catch(function () {
+        apiAvailable = false;
+        apiStatusEl.classList.add('show');
+        loadFallback();
+      });
+  }
+
+  // ─── Submit pin ───
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var cityText = cityInput.value.trim();
     var name = nameInput.value.trim();
     var note = noteInput.value.trim();
-    pins.push({ x: pendingPin.x, y: pendingPin.y, lat: pendingPin.lat, lng: pendingPin.lng, name: name, note: note, time: new Date().toISOString() });
-    savePins();
-    pendingPin = null;
-    nameInput.value = '';
-    noteInput.value = '';
-    renderPins();
+
+    if (!cityText) {
+      setStatus('⚠️ Please type your city or country.', true);
+      return;
+    }
+    if (!selectedCity) {
+      // Try to auto-resolve from typed text through search API
+      fetch(apiUrl('api/supporters/search') + '?q=' + encodeURIComponent(cityText))
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var results = data.results || [];
+          if (results.length) {
+            selectedCity = results[0];
+            submitPin(name, note);
+          } else {
+            setStatus('⚠️ Please select a city from the suggestions below.', true);
+          }
+        })
+        .catch(function () {
+          setStatus('⚠️ Please select a city from the suggestions below.', true);
+        });
+      return;
+    }
+    submitPin(name, note);
   });
 
-  renderPins();
+  function submitPin(name, note) {
+    var payload = {
+      name: name,
+      city: selectedCity.city,
+      country: selectedCity.country,
+      lat: selectedCity.lat,
+      lng: selectedCity.lng,
+      vibe: selectedVibe,
+      note: note
+    };
+
+    dropBtn.disabled = true;
+    dropBtn.textContent = 'Dropping…';
+
+    if (apiAvailable) {
+      fetch(apiUrl('api/supporters'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error('save failed');
+          return r.json();
+        })
+        .then(function (data) {
+          supporters.push(data.supporter);
+          renderMap();
+          renderFeed();
+          resetForm();
+          setStatus('🎉 Pin dropped! Welcome to the global community, ' + (name || (selectedCity.city || 'friend')) + '!');
+        })
+        .catch(function () {
+          // Fall back to localStorage
+          saveLocal(payload);
+          resetForm();
+          setStatus('⚠️ Could not reach server — pin saved on this device.', true);
+        })
+        .finally(function () {
+          dropBtn.disabled = false;
+          dropBtn.textContent = 'Drop My Pin 📍';
+        });
+    } else {
+      saveLocal(payload);
+      resetForm();
+      setStatus('⚠️ Pin saved on this device only (demo mode).', true);
+      dropBtn.disabled = false;
+      dropBtn.textContent = 'Drop My Pin 📍';
+    }
+  }
+
+  function saveLocal(payload) {
+    var pin = {
+      id: Date.now().toString(36),
+      name: payload.name,
+      city: payload.city,
+      country: payload.country,
+      lat: payload.lat,
+      lng: payload.lng,
+      vibe: payload.vibe,
+      note: payload.note,
+      time: new Date().toISOString()
+    };
+    supporters.push(pin);
+    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(supporters)); } catch (e) {}
+    renderMap();
+    renderFeed();
+  }
+
+  function resetForm() {
+    cityInput.value = '';
+    nameInput.value = '';
+    noteInput.value = '';
+    selectedCity = null;
+    typeaheadEl.classList.remove('show');
+  }
+
+  // ─── Init ───
+  loadSupporters();
 })();
 </script>
 
