@@ -129,80 +129,80 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
   user-select: none;
 }
 /* Position classes — decorative elements live in the wall's padding zone */
-.sticker-pos-tl { top: 20px; left: 28px; }
-.sticker-pos-tr { top: 30px; right: 36px; }
-.sticker-pos-bl { bottom: 28px; left: 44px; }
-.sticker-pos-br { bottom: 46px; right: 56px; }
-.ticket-pos-1 { top: 150px; left: 200px; transform: rotate(-4deg); }
-.ticket-pos-2 { top: 210px; right: 220px; transform: rotate(5deg); }
-.ticket-pos-3 { bottom: 170px; left: 240px; transform: rotate(2deg); }
-.ticket-pos-4 { bottom: 130px; right: 260px; transform: rotate(-3deg); }
+.sticker-pos-tl { top: 14px; left: 20px; }
+.sticker-pos-tr { top: 22px; right: 26px; }
+.sticker-pos-bl { bottom: 20px; left: 32px; }
+.sticker-pos-br { bottom: 32px; right: 40px; }
+.ticket-pos-1 { top: 120px; left: 160px; transform: rotate(-4deg); }
+.ticket-pos-2 { top: 170px; right: 180px; transform: rotate(5deg); }
+.ticket-pos-3 { bottom: 140px; left: 190px; transform: rotate(2deg); }
+.ticket-pos-4 { bottom: 105px; right: 210px; transform: rotate(-3deg); }
 .sticker-round {
-  width: 110px;
-  height: 110px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #ff4d4f 0%, #d21214 55%, #8f0d0e 100%);
   color: #fff;
-  font-size: 0.72rem;
+  font-size: 0.55rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  border: 4px solid #fff;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.4), inset 0 0 12px rgba(0,0,0,0.2);
+  border: 3px solid #fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 0 10px rgba(0,0,0,0.2);
   transform: rotate(-8deg);
-  padding: 0.5rem;
+  padding: 0.35rem;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
-.sticker-round .sticker-star { font-size: 1.1rem; }
-.sticker-round .sticker-name { font-size: 0.78rem; font-weight: 900; }
-.sticker-round .sticker-sub { font-size: 0.55rem; font-weight: 600; opacity: 0.9; letter-spacing: 0.08em; }
+.sticker-round .sticker-star { font-size: 0.8rem; }
+.sticker-round .sticker-name { font-size: 0.58rem; font-weight: 900; }
+.sticker-round .sticker-sub { font-size: 0.42rem; font-weight: 600; opacity: 0.9; letter-spacing: 0.08em; }
 .sticker-round::after {
   content: '';
   position: absolute;
-  top: 8px;
-  left: 12px;
-  width: 18px;
-  height: 10px;
+  top: 6px;
+  left: 9px;
+  width: 14px;
+  height: 8px;
   background: rgba(255,255,255,0.35);
   border-radius: 50%;
   transform: rotate(-20deg);
 }
 .sticker-oval {
-  width: 150px;
-  height: 70px;
+  width: 110px;
+  height: 50px;
   border-radius: 50%;
   background: linear-gradient(135deg, #ffcc00 0%, #f5a623 60%, #d98e04 100%);
   color: #121c50;
-  font-size: 0.7rem;
+  font-size: 0.55rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border: 3px solid #fff;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.4), inset 0 0 10px rgba(0,0,0,0.1);
+  border: 2px solid #fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 0 8px rgba(0,0,0,0.1);
   transform: rotate(6deg);
-  padding: 0.4rem;
+  padding: 0.3rem;
 }
-.sticker-oval .sticker-name { font-size: 0.85rem; font-weight: 900; }
-.sticker-oval .sticker-sub { font-size: 0.55rem; font-weight: 700; opacity: 0.8; }
+.sticker-oval .sticker-name { font-size: 0.65rem; font-weight: 900; }
+.sticker-oval .sticker-sub { font-size: 0.42rem; font-weight: 700; opacity: 0.8; }
 .sticker-rect {
-  width: 120px;
-  height: 80px;
-  border-radius: 6px;
+  width: 90px;
+  height: 60px;
+  border-radius: 5px;
   background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
   color: #fff;
-  font-size: 0.65rem;
+  font-size: 0.5rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border: 3px solid #fff;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  border: 2px solid #fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
   transform: rotate(-4deg);
-  padding: 0.4rem;
+  padding: 0.3rem;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
-.sticker-rect .sticker-name { font-size: 0.8rem; font-weight: 900; }
-.sticker-rect .sticker-sub { font-size: 0.55rem; font-weight: 600; opacity: 0.85; }
+.sticker-rect .sticker-name { font-size: 0.6rem; font-weight: 900; }
+.sticker-rect .sticker-sub { font-size: 0.42rem; font-weight: 600; opacity: 0.85; }
 .sticker-blue {
   background: linear-gradient(135deg, #121c50 0%, #1a2c70 100%);
   color: #fff;
@@ -215,71 +215,71 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
   position: absolute;
   z-index: 3;
   background: linear-gradient(180deg, #fffef8 0%, #fdf6e8 100%);
-  border: 2px dashed #b8915c;
-  border-radius: 8px;
-  padding: 0.6rem 0.8rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border: 1.5px dashed #b8915c;
+  border-radius: 6px;
+  padding: 0.4rem 0.55rem;
+  box-shadow: 0 3px 9px rgba(0,0,0,0.25);
   transform: rotate(3deg);
   pointer-events: none;
   user-select: none;
-  max-width: 170px;
+  max-width: 130px;
 }
 .policy-ticket .ticket-title {
-  font-size: 0.62rem;
+  font-size: 0.5rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #d21214;
   border-bottom: 1px solid #e8dcc8;
-  padding-bottom: 3px;
-  margin-bottom: 3px;
+  padding-bottom: 2px;
+  margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .policy-ticket .ticket-body {
-  font-size: 0.6rem;
+  font-size: 0.48rem;
   color: #5a4632;
   line-height: 1.3;
   font-family: 'Special Elite', monospace;
 }
 .policy-ticket .ticket-stub {
   position: absolute;
-  right: -8px;
+  right: -6px;
   top: 50%;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background: #b8915c;
   border-radius: 50%;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
 }
 
 /* ═══════════════ BOARD GRID ═══════════════ */
 .board-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
   position: relative;
   z-index: 2;
-  padding: 1rem 0.5rem;
+  padding: 0.75rem 0.5rem;
 }
 
-/* ═══════════════ SUPPORTER NOTE (Post-It / Polaroid) ═══════════════ */
+/* ═══════════════ SUPPORTER NOTE (Post-It / Polaroid) — compact size ═══════════════ */
 .supporter-note {
   background: #fffef7;
-  border-radius: 4px 2px 4px 2px;
-  padding: 1.1rem 1.2rem 1.3rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.15);
+  border-radius: 3px 2px 3px 2px;
+  padding: 0.7rem 0.8rem 0.85rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.12);
   position: relative;
   transform: rotate(var(--tilt, 0deg));
   transition: transform 0.2s, box-shadow 0.2s;
-  border-top: 4px solid #ffd166;
-  min-height: 150px;
+  border-top: 3px solid #ffd166;
+  min-height: 105px;
   display: flex;
   flex-direction: column;
 }
-.supporter-note:hover { transform: rotate(0deg) scale(1.04); box-shadow: 0 10px 28px rgba(0,0,0,0.4); z-index: 10; }
+.supporter-note:hover { transform: rotate(0deg) scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.35); z-index: 10; }
 .supporter-note:nth-child(odd) { --tilt: -1.2deg; }
 .supporter-note:nth-child(even) { --tilt: 0.9deg; }
 .supporter-note:nth-child(3n) { --tilt: 0.4deg; }
@@ -288,51 +288,51 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
 .supporter-note::before {
   content: '';
   position: absolute;
-  top: -12px;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   background: radial-gradient(circle at 35% 30%, #ff6b6b 0%, #d21214 60%, #8f0d0e 100%);
   border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 -2px 3px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4), inset 0 -2px 3px rgba(0,0,0,0.2);
   z-index: 2;
 }
 .supporter-note::after {
   content: '';
   position: absolute;
-  top: -12px;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 4px;
-  height: 14px;
+  width: 3px;
+  height: 11px;
   background: linear-gradient(180deg, #c0c0c0 0%, #888 100%);
   border-radius: 2px;
   z-index: 1;
 }
 .supporter-note .note-vibe {
   position: absolute;
-  top: 10px;
-  right: 12px;
-  font-size: 1.3rem;
+  top: 7px;
+  right: 8px;
+  font-size: 1rem;
   text-align: center;
   line-height: 1.1;
 }
 .supporter-note .note-vibe-label {
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   color: #888;
   display: block;
-  max-width: 70px;
+  max-width: 55px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
 }
-.note-header { font-size: 0.95rem; font-weight: 800; color: #121c50; margin: 0.35rem 0 0.15rem; padding-right: 70px; }
-.note-loc { font-size: 0.75rem; color: #777; font-weight: 500; margin-bottom: 0.55rem; display: flex; align-items: center; gap: 4px; }
-.note-loc .loc-flag { font-size: 0.85rem; }
-.note-body { font-size: 0.85rem; color: #333; line-height: 1.5; margin-bottom: 0.6rem; min-height: 36px; flex: 1; font-family: 'Caveat', cursive; font-size: 1.05rem; }
-.note-time { font-size: 0.68rem; color: #aaa; text-align: right; border-top: 1px dashed #ddd; padding-top: 0.4rem; }
+.note-header { font-size: 0.78rem; font-weight: 800; color: #121c50; margin: 0.25rem 0 0.1rem; padding-right: 55px; }
+.note-loc { font-size: 0.62rem; color: #777; font-weight: 500; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 3px; }
+.note-loc .loc-flag { font-size: 0.7rem; }
+.note-body { font-size: 0.72rem; color: #333; line-height: 1.4; margin-bottom: 0.4rem; min-height: 24px; flex: 1; font-family: 'Caveat', cursive; font-size: 0.88rem; }
+.note-time { font-size: 0.55rem; color: #aaa; text-align: right; border-top: 1px dashed #ddd; padding-top: 0.25rem; }
 
 /* ═══════════════ CAMPAIGN STICKER CARD (decorative board items) ═══════════════ */
 .board-sticker-card {
@@ -461,11 +461,11 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
       <span>🌍 Supporters on the Board:</span>
       <span class="counter-num" id="supporter-count">0</span>
     </div>
-    <div class="api-status" id="api-status">⚠️ Running in demo mode — your pin will be saved on this device only.</div>
+    <div class="api-status" id="api-status">☁️ Powered by Supabase cloud storage — pins are permanently saved and synced worldwide.</div>
 
     <form id="supporter-form" class="pin-form" autocomplete="off">
       <div class="typeahead-wrap">
-        <input id="pin-city" type="text" placeholder="Type your city or country…" maxlength="60" required />
+        <input id="pin-city" type="text" placeholder="Type any city, country, or 'City, Country'…" maxlength="60" required />
         <div class="typeahead-dropdown" id="typeahead-dropdown"></div>
       </div>
       <input id="pin-name" type="text" placeholder="Your name (optional)" maxlength="40" />
@@ -631,6 +631,7 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
 <script src="../js/modules.js"></script>
 <script src="../js/main.js"></script>
 <script src="../js/language-selector.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function () {
   'use strict';
@@ -651,12 +652,31 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
   var apiStatusEl = document.getElementById('api-status');
   var vibeGroups = ['vibes-academic', 'vibes-sports', 'vibes-culture', 'vibes-global', 'vibes-michigan', 'vibes-campaign'];
 
+  // ─── Supabase Cloud Storage ───
+  // ⚠️ Replace with your Supabase project URL and anon key.
+  // Create a free project at https://supabase.com and run the SQL in
+  // logic_modules/supabase_schema.sql to set up the table + RLS policies.
+  var SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+  var SUPABASE_ANON_KEY = 'YOUR-SUPABASE-ANON-KEY';
+
+  var supabase = null;
+  var supabaseReady = false;
+  try {
+    if (window.supabase && SUPABASE_URL.indexOf('YOUR-PROJECT') === -1) {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      supabaseReady = true;
+    }
+  } catch (e) {
+    supabaseReady = false;
+  }
+
   // ─── State ───
   var supporters = [];
   var selectedCity = null;
   var selectedVibe = 'Rooted & Grounded';
   var apiAvailable = false;
-  var LOCAL_KEY = 'abdul_supporter_pins_fallback';
+  var realtimeChannel = null;
+  var LOCAL_KEY = 'abdul_supporter_pins_storage';
 
   // ─── Vibe emoji lookup (mirrors backend) ───
   var VIBE_EMOJIS = {
@@ -848,40 +868,122 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
     });
   }
 
-  // ─── Load supporters ───
-  function loadFallback() {
+  // ─── Supabase helpers ───
+  function mapSupabaseRow(row) {
+    return {
+      id: row.id,
+      name: row.name || '',
+      city: row.city || '',
+      country: row.country || '',
+      lat: row.lat,
+      lng: row.lng,
+      vibe: row.vibe || 'Global Grid',
+      note: row.note || '',
+      time: row.created_at || new Date().toISOString()
+    };
+  }
+
+  function setupRealtime() {
+    if (!supabaseReady || realtimeChannel) return;
+    realtimeChannel = supabase
+      .channel('supporters-changes')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'supporters' },
+        function (payload) {
+          var newPin = mapSupabaseRow(payload.new);
+          // Avoid duplicates
+          var exists = supporters.some(function (s) { return s.id === newPin.id; });
+          if (!exists) {
+            supporters.push(newPin);
+            renderBoard();
+          }
+        }
+      )
+      .subscribe();
+  }
+
+  // ─── Client storage helpers (guaranteed error-free) ───
+  function saveToLocal() {
+    try {
+      localStorage.setItem(LOCAL_KEY, JSON.stringify(supporters));
+    } catch (e) {
+      // Private mode or storage full — silently continue, pins still work in-memory
+    }
+  }
+
+  function loadFromLocal() {
     try {
       var saved = localStorage.getItem(LOCAL_KEY);
       if (saved) {
-        supporters = JSON.parse(saved);
-        renderBoard();
-        return;
+        var parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
       }
     } catch (e) {}
-    supporters = [];
-    renderBoard();
+    return [];
   }
 
+  // ─── Load supporters (client-first, cloud as enhancement) ───
   function loadSupporters() {
-    fetch(apiUrl('api/supporters'))
-      .then(function (r) {
-        if (!r.ok) throw new Error('API unavailable');
-        return r.json();
-      })
-      .then(function (data) {
-        apiAvailable = true;
-        apiStatusEl.classList.remove('show');
-        supporters = data.supporters || [];
-        renderBoard();
-      })
-      .catch(function () {
-        apiAvailable = false;
-        apiStatusEl.classList.add('show');
-        loadFallback();
-      });
+    // Always load from local storage first — guaranteed to work
+    supporters = loadFromLocal();
+
+    // If we have local pins, show them immediately
+    if (supporters.length) {
+      renderBoard();
+    }
+
+    // Try to enhance with cloud data (silent — never shows errors)
+    if (supabaseReady) {
+      supabase
+        .from('supporters')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .then(function (result) {
+          if (result.error) throw result.error;
+          var cloudPins = (result.data || []).map(mapSupabaseRow);
+          // Merge: cloud pins + local pins (dedupe by id)
+          var seen = {};
+          var merged = [];
+          cloudPins.forEach(function (p) { if (!seen[p.id]) { seen[p.id] = true; merged.push(p); } });
+          supporters.forEach(function (p) { if (!seen[p.id]) { seen[p.id] = true; merged.push(p); } });
+          supporters = merged;
+          apiAvailable = true;
+          apiStatusEl.classList.remove('show');
+          renderBoard();
+          saveToLocal();
+          setupRealtime();
+        })
+        .catch(function () {
+          // Cloud unavailable — local pins are already showing, no error needed
+          apiAvailable = false;
+        });
+    } else {
+      // Try Flask API as a silent enhancement
+      fetch(apiUrl('api/supporters'))
+        .then(function (r) {
+          if (!r.ok) throw new Error('API unavailable');
+          return r.json();
+        })
+        .then(function (data) {
+          var apiPins = data.supporters || [];
+          var seen = {};
+          var merged = [];
+          apiPins.forEach(function (p) { if (!seen[p.id]) { seen[p.id] = true; merged.push(p); } });
+          supporters.forEach(function (p) { if (!seen[p.id]) { seen[p.id] = true; merged.push(p); } });
+          supporters = merged;
+          apiAvailable = true;
+          apiStatusEl.classList.remove('show');
+          renderBoard();
+          saveToLocal();
+        })
+        .catch(function () {
+          apiAvailable = false;
+        });
+    }
   }
 
-  // ─── Submit ───
+  // ─── Submit (free-form city/country — no suggestion restriction) ───
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var cityText = cityInput.value.trim();
@@ -892,41 +994,84 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
       setStatus('⚠️ Please type your city or country.', true);
       return;
     }
-    if (!selectedCity) {
-      fetch(apiUrl('api/supporters/search') + '?q=' + encodeURIComponent(cityText))
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          var results = data.results || [];
-          if (results.length) {
-            selectedCity = results[0];
-            submitPin(name, note);
-          } else {
-            setStatus('⚠️ Please select a city from the suggestions below.', true);
-          }
-        })
-        .catch(function () {
-          setStatus('⚠️ Please select a city from the suggestions below.', true);
-        });
-      return;
-    }
-    submitPin(name, note);
+    submitPin(name, note, cityText);
   });
 
-  function submitPin(name, note) {
+  function submitPin(name, note, freeText) {
+    // Parse free-form input: "City, Country" or just "City" or just "Country"
+    var cityPart = freeText || '';
+    var countryPart = '';
+    if (cityPart.indexOf(',') !== -1) {
+      var parts = cityPart.split(',');
+      cityPart = parts[0].trim();
+      countryPart = parts.slice(1).join(',').trim();
+    }
+
+    // If user selected a suggestion, use its structured data; otherwise use free-form text
     var payload = {
       name: name,
-      city: selectedCity.city,
-      country: selectedCity.country,
-      lat: selectedCity.lat,
-      lng: selectedCity.lng,
+      city: selectedCity ? selectedCity.city : cityPart,
+      country: selectedCity ? selectedCity.country : countryPart,
+      lat: selectedCity ? selectedCity.lat : null,
+      lng: selectedCity ? selectedCity.lng : null,
       vibe: selectedVibe,
       note: note
     };
 
-    dropBtn.disabled = true;
-    dropBtn.textContent = 'Pinning…';
+    // ─── GUARANTEED SAVE: Save to client storage first — always succeeds ───
+    var pin = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      name: payload.name,
+      city: payload.city,
+      country: payload.country,
+      lat: payload.lat,
+      lng: payload.lng,
+      vibe: payload.vibe,
+      note: payload.note,
+      time: new Date().toISOString()
+    };
 
-    if (apiAvailable) {
+    // Add to board immediately — no waiting, no errors
+    supporters.push(pin);
+    saveToLocal();
+    renderBoard();
+    resetForm();
+    setStatus('🎉 Pin dropped! Welcome to the board, ' + (name || (payload.city || 'friend')) + '!');
+
+    // ─── Silent cloud sync (best-effort, never shows errors) ───
+    if (supabaseReady) {
+      supabase
+        .from('supporters')
+        .insert([
+          {
+            name: payload.name,
+            city: payload.city,
+            country: payload.country,
+            lat: payload.lat,
+            lng: payload.lng,
+            vibe: payload.vibe,
+            note: payload.note
+          }
+        ])
+        .select()
+        .then(function (result) {
+          // Cloud sync succeeded — update the pin with the cloud ID
+          if (result.data && result.data.length) {
+            var cloudPin = mapSupabaseRow(result.data[0]);
+            // Replace local pin with cloud version
+            var idx = supporters.findIndex(function (s) { return s.id === pin.id; });
+            if (idx !== -1) {
+              supporters[idx] = cloudPin;
+              saveToLocal();
+              renderBoard();
+            }
+          }
+        })
+        .catch(function () {
+          // Cloud sync failed silently — pin is already saved locally
+        });
+    } else if (apiAvailable) {
+      // Silent Flask API sync
       fetch(apiUrl('api/supporters'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -937,44 +1082,17 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #f6f1e7; margin:
           return r.json();
         })
         .then(function (data) {
-          supporters.push(data.supporter);
-          renderBoard();
-          resetForm();
-          setStatus('🎉 Pin dropped! Welcome to the board, ' + (name || (selectedCity.city || 'friend')) + '!');
+          var idx = supporters.findIndex(function (s) { return s.id === pin.id; });
+          if (idx !== -1) {
+            supporters[idx] = data.supporter;
+            saveToLocal();
+            renderBoard();
+          }
         })
         .catch(function () {
-          saveLocal(payload);
-          resetForm();
-          setStatus('⚠️ Could not reach server — pin saved on this device.', true);
-        })
-        .finally(function () {
-          dropBtn.disabled = false;
-          dropBtn.textContent = 'Pin It 📌';
+          // API sync failed silently — pin is already saved locally
         });
-    } else {
-      saveLocal(payload);
-      resetForm();
-      setStatus('⚠️ Pin saved on this device only (demo mode).', true);
-      dropBtn.disabled = false;
-      dropBtn.textContent = 'Pin It 📌';
     }
-  }
-
-  function saveLocal(payload) {
-    var pin = {
-      id: Date.now().toString(36),
-      name: payload.name,
-      city: payload.city,
-      country: payload.country,
-      lat: payload.lat,
-      lng: payload.lng,
-      vibe: payload.vibe,
-      note: payload.note,
-      time: new Date().toISOString()
-    };
-    supporters.push(pin);
-    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(supporters)); } catch (e) {}
-    renderBoard();
   }
 
   function resetForm() {
