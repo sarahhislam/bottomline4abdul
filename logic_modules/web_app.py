@@ -8,7 +8,7 @@ app = Flask(__name__, static_folder='frontend', static_url_path='')
 ALLOWED_MODULES = {
     'endorsement_engine', 'financial_simulator', 'halal_economy', 'hazard_lookup',
     'myth_buster', 'policy_deep_dive', 'senior_engagement', 'simulation_history',
-    'tax_calculator', 'youth_amanah', 'supporter_map'
+    'tax_calculator', 'youth_amanah'
 }
 
 
@@ -18,7 +18,7 @@ def index():
 
 
 try:
-    from translator import translate_batch, LANGUAGES, is_rtl
+    from logic_modules.translator import translate_batch, LANGUAGES, is_rtl
     _TRANSLATOR_AVAILABLE = True
 except ImportError:
     _TRANSLATOR_AVAILABLE = False
@@ -45,7 +45,7 @@ def api_languages():
 def api_supporters_list():
     """GET /api/supporters → list all supporters."""
     try:
-        from supporter_map import handle_get
+        from logic_modules.supporter_map import handle_get
         result = handle_get()
         return jsonify({'supporters': result})
     except Exception as e:
@@ -57,7 +57,7 @@ def api_supporters_add():
     """POST /api/supporters → add a new supporter pin."""
     data = request.get_json(silent=True) or {}
     try:
-        from supporter_map import handle_add
+        from logic_modules.supporter_map import handle_add
         result, status = handle_add(data)
         if status >= 400:
             return jsonify(result), status
@@ -71,7 +71,7 @@ def api_supporters_search():
     """GET /api/supporters/search?q=det → type-ahead city suggestions."""
     q = request.args.get('q', '')
     try:
-        from supporter_map import search_cities
+        from logic_modules.supporter_map import search_cities
         results = search_cities(q)
         return jsonify({'results': results})
     except Exception as e:
@@ -82,7 +82,7 @@ def api_supporters_search():
 def api_supporters_vibes():
     """GET /api/supporters/vibes → list of vibe badge definitions."""
     try:
-        from supporter_map import VIBES
+        from logic_modules.supporter_map import VIBES
         return jsonify({'vibes': VIBES})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -139,7 +139,7 @@ def api_module(module_name):
 
     try:
         # import the module from the local package / path
-        mod = importlib.import_module(module_name)
+        mod = importlib.import_module(f'logic_modules.{module_name}')
     except Exception as e:
         return jsonify({'error': f'Cannot import module: {e}'}), 500
 

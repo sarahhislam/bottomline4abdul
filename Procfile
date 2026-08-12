@@ -1,0 +1,1 @@
+web: gunicorn logic_modules.web_app:app
