@@ -15,6 +15,17 @@
  *   2. FALLBACK — Google Translate widget (only used when the
  *      backend API is not reachable, e.g. static GitHub Pages).
  *
+ * RESILIENCE (cloud-deployment rate limits / errors):
+ *   - Automatic retry with exponential backoff on HTTP 429/503
+ *     (respecting the server's Retry-After header when present).
+ *   - Client-side circuit breaker: repeated backend failures
+ *     pause API attempts for a cooldown, then fall back to the
+ *     Google Translate widget so the page still works.
+ *   - Race guard: rapid language switching cancels in-flight
+ *     translation jobs so responses can never interleave.
+ *   - Non-blocking toast notification when translation is
+ *     temporarily unavailable.
+ *
  * HOW TO ADD/REMOVE A LANGUAGE:
  *   Edit the LANGUAGES array below. Each entry has:
  *     - code:   Translation language code (must be accepted by
@@ -56,6 +67,33 @@ const SKIP_SELECTOR =
   'script, style, noscript, template, pre, code, textarea, select, ' +
   'input, [contenteditable="true"], #lang-selector-wrap, ' +
   '.translate-widget-container, .goog-te-banner-frame iframe';
+
+// ─── Client-side resilience knobs ───
+const RETRY_MAX_ATTEMPTS = 3;                 // per language selection
+const RETRY_BASE_DELAY_MS = 800;              // base backoff (exponential)
+const RETRY_MAX_DELAY_MS = 5000;              // cap for backoff
+const CLIENT_CIRCUIT_THRESHOLD = 4;           // failures before cooldown
+const CLIENT_CIRCUIT_COOLDOWN_MS = 60000;     // 60s pause after repeated failures
+
+// ─── Client-side circuit breaker state ───
+let _clientFailures = 0;
+let _clientCircuitOpenUntil = 0;              // timestamp (Date.now())
+
+function _clientCircuitOpen() {
+  return Date.now() < _clientCircuitOpenUntil;
+}
+
+function _recordClientFailure() {
+  _clientFailures += 1;
+  if (_clientFailures >= CLIENT_CIRCUIT_THRESHOLD) {
+    _clientCircuitOpenUntil = Date.now() + CLIENT_CIRCUIT_COOLDOWN_MS;
+    _clientFailures = 0;
+  }
+}
+
+function _recordClientSuccess() {
+  _clientFailures = 0;
+}
 
 // Patterns that are never worth translating (numbers, URLs, emails,
 // currency amounts, pure symbols, etc.)
@@ -129,6 +167,49 @@ function collectPlaceholders(root) {
   return els;
 }
 
+// ─── Non-blocking toast for user feedback ───
+let _toastTimer = null;
+function showTranslationNotice(msg) {
+  let toast = document.getElementById('lang-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'lang-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    Object.assign(toast.style, {
+      position: 'fixed',
+      bottom: '16px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      background: 'rgba(20, 20, 20, 0.92)',
+      color: '#fff',
+      padding: '10px 18px',
+      borderRadius: '8px',
+      fontSize: '14px',
+      zIndex: '2147483647',
+      boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+      maxWidth: '90vw',
+      textAlign: 'center'
+    });
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.display = 'block';
+
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function () {
+    toast.style.display = 'none';
+  }, 5000);
+}
+
+// ─── Race guard: token to cancel stale translations ───
+let _translationToken = 0;
+
+// ─── Sleep helper ───
+function sleep(ms) {
+  return new Promise(function (resolve) { setTimeout(resolve, ms); });
+}
+
 // ─── Primary path: translate through the custom backend API ───
 async function translateViaApi(code) {
   // Build de-duplicated batch from originals (English) so
@@ -155,38 +236,83 @@ async function translateViaApi(code) {
     entry.type === 'node' ? getSourceText(entry.node) : getSourcePlaceholder(entry.el)
   );
 
-  const res = await fetch(apiUrl('api/translate'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ texts: texts, target: code })
-  });
-
-  if (!res.ok) {
-    const errText = await res.text().catch(() => '');
-    throw new Error('API ' + res.status + ': ' + errText.slice(0, 120));
+  // Client-side circuit breaker: if previous attempts failed repeatedly,
+  // don't hammer the backend — fall back to Google widget immediately.
+  if (_clientCircuitOpen()) {
+    throw new Error('Client circuit open — backend paused; using fallback.');
   }
 
-  const data = await res.json();
-  if (!data.translations || data.translations.length !== texts.length) {
-    throw new Error('Unexpected API response shape');
-  }
+  const payload = { texts: texts, target: code };
+  const headers = { 'Content-Type': 'application/json' };
 
-  // Store originals on first translation, then apply translations
-  ordered.forEach((entry, i) => {
-    const translated = data.translations[i];
-    if (translated == null) return;
-    if (entry.type === 'node') {
-      if (!_origTextNode.has(entry.node)) {
-        _origTextNode.set(entry.node, entry.node.data);
+  let lastErr = null;
+  for (let attempt = 0; attempt < RETRY_MAX_ATTEMPTS; attempt++) {
+    let res;
+    try {
+      res = await fetch(apiUrl('api/translate'), {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(payload)
+      });
+    } catch (netErr) {
+      // Network-level failure (backend unreachable) — retry with backoff
+      lastErr = netErr;
+      _recordClientFailure();
+      if (attempt < RETRY_MAX_ATTEMPTS - 1) {
+        await sleep(Math.min(RETRY_MAX_DELAY_MS, RETRY_BASE_DELAY_MS * Math.pow(2, attempt)));
+        continue;
       }
-      entry.node.data = translated;
-    } else {
-      if (!_origPlaceholder.has(entry.el)) {
-        _origPlaceholder.set(entry.el, entry.el.getAttribute('placeholder') || '');
-      }
-      entry.el.setAttribute('placeholder', translated);
+      break;
     }
-  });
+
+    if (res.ok) {
+      _recordClientSuccess();
+      const data = await res.json();
+      if (!data.translations || data.translations.length !== texts.length) {
+        throw new Error('Unexpected API response shape');
+      }
+
+      // Store originals on first translation, then apply translations
+      ordered.forEach((entry, i) => {
+        const translated = data.translations[i];
+        if (translated == null) return;
+        if (entry.type === 'node') {
+          if (!_origTextNode.has(entry.node)) {
+            _origTextNode.set(entry.node, entry.node.data);
+          }
+          entry.node.data = translated;
+        } else {
+          if (!_origPlaceholder.has(entry.el)) {
+            _origPlaceholder.set(entry.el, entry.el.getAttribute('placeholder') || '');
+          }
+          entry.el.setAttribute('placeholder', translated);
+        }
+      });
+      return;
+    }
+
+    // Non-2xx response. If there's a Retry-After header, honor it.
+    lastErr = new Error('API ' + res.status);
+    _recordClientFailure();
+
+    const serverRetryAfter = parseInt(res.headers.get('Retry-After') || '0', 10);
+    const delayMs = serverRetryAfter > 0
+      ? Math.min(serverRetryAfter * 1000, RETRY_MAX_DELAY_MS * 3)
+      : Math.min(RETRY_MAX_DELAY_MS, RETRY_BASE_DELAY_MS * Math.pow(2, attempt));
+
+    // 429 (rate limit) and 5xx (unavailable) are worth retrying.
+    const retriable = res.status === 429 || res.status >= 500;
+    if (retriable && attempt < RETRY_MAX_ATTEMPTS - 1) {
+      await sleep(delayMs);
+      continue;
+    }
+    break;
+  }
+
+  if (lastErr) {
+    throw lastErr;
+  }
+  throw new Error('Translation request failed');
 }
 
 // ─── Fallback path: Google Translate widget (static hosting) ───
@@ -234,6 +360,10 @@ function restoreEnglish() {
 
 // ─── Select a language and trigger translation ───
 async function selectLanguage(code, name) {
+  // Race guard: bump the token so any in-flight translation
+  // from a previous selection is discarded when it resolves.
+  const myToken = ++_translationToken;
+
   // Update the button text
   const btnText = document.getElementById('lang-btn-text');
   if (btnText) btnText.textContent = name;
@@ -258,15 +388,25 @@ async function selectLanguage(code, name) {
       triggerGoogleTranslate('en'); // ensure Google widget resets too
     } else {
       try {
-        // PRIMARY: custom backend translation API
+        // PRIMARY: custom backend translation API (with retry/backoff)
         await translateViaApi(code);
       } catch (apiErr) {
-        // FALLBACK: Google Translate widget (static GitHub Pages)
+        // Cancel if a newer language selection superseded this one
+        if (myToken !== _translationToken) return;
+
+        // FALLBACK: Google Translate widget (static GitHub Pages /
+        // backend rate-limited / circuit breaker open)
+        const fallbackMessage =
+          'Live translation is temporarily unavailable. ' +
+          'Showing the page in English.';
+        showTranslationNotice(fallbackMessage);
         triggerGoogleTranslate(code);
       }
     }
   } finally {
-    if (btn) btn.removeAttribute('aria-busy');
+    if (myToken === _translationToken) {
+      if (btn) btn.removeAttribute('aria-busy');
+    }
   }
 }
 
